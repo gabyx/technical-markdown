@@ -4,7 +4,7 @@ sed -n -E "s/.*'(Museo-\w+\.woff2)'.*/\1/p" museo.css | xargs -P 4 -n 1 -I {} ba
 
 cp museo.css museo-mod.css
 
-for file in ./*.dat; do 
+for file in ./*.dat; do
     echo "$file"
     base64=$(cat "$file")
     fileName=$(basename "$file" | sed -E "s/(.*)\.dat/\1/")
