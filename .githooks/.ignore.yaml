@@ -1,0 +1,3 @@
+patterns:
+  - "**/*.md"
+  - "**/*export-staged"

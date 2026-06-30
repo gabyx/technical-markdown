@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 sed -n -E "s/.*'(MuseoSans-\w+\.woff2)'.*/\1/p" museo-sans.css | xargs -P 4 -n 1 -I {} bash -c "base64 -w 0 {} >{}.dat "
 

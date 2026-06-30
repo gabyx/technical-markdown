@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 format="$1"
 [ -z "$format" ] && format="json"
