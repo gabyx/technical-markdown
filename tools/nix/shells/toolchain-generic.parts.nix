@@ -18,6 +18,9 @@
             pkgs.haskellPackages.pandoc-crossref
             pkgs.lessc
 
+            pkgs.texliveMedium
+            pkgs.texlivePackages.multirow
+
             pkgs.watchman
             pkgs.python315Packages.pywatchman
 

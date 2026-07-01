@@ -21,17 +21,17 @@ def debug-enabled [] {
 }
 
 def "log info" [msg: string] {
-    print --stderr $"📄 (ansi green_bold)INFO (ansi reset) ($msg)"
+    print --stderr $"🌻 (ansi blue_bold)INFO (ansi reset) ($msg)"
 }
 def "log warn" [msg: string] {
-    print --stderr $"📄 (ansi yellow_bold)WARN (ansi reset) ($msg)"
+    print --stderr $"🌻 (ansi yellow_bold)WARN (ansi reset) ($msg)"
 }
 def "log error" [msg: string] {
-    print --stderr $"📄 (ansi red_bold)ERROR(ansi reset) ($msg)"
+    print --stderr $"🌻 (ansi red_bold)ERROR(ansi reset) ($msg)"
 }
 def "log debug" [msg: string] {
     if (debug-enabled) {
-        print --stderr $"📄 (ansi blue_bold)DEBUG(ansi reset) ($msg)"
+        print --stderr $"🌻 (ansi magenta_bold)DEBUG(ansi reset) ($msg)"
     }
 }
 
@@ -133,7 +133,7 @@ def up-to-date-impl [inputs: list<string>, outputs: list<string>] {
     let in_max = $ins | each {|f| ls $f | get 0.modified } | math max
     let out_min = $outs | each {|f| ls $f | get 0.modified } | math min
 
-    log debug $"in_max:($in_max) <= ($out_min) empty."
+    # log debug $"in_max:($in_max) <= ($out_min) empty."
     ($in_max <= $out_min)
 }
 
@@ -149,29 +149,26 @@ def pandoc-args [
     fail_if_warning: bool
     p: record
 ] {
-    mut a = []
-    if $fail_if_warning { $a = ($a | append "--fail-if-warnings") }
-    if $verbose { $a = ($a | append "--verbose") }
+    let latex_args = if $export_type == "latex" {
+        [
+            "-M" $"latex-include-paths=($p.convert_dir)/includes/"
+            "-M" $"latex-include-paths=($p.project_dir)/"
+            "--pdf-engine-opt=-r" $"--pdf-engine-opt=($p.tools_dir)/.latexmkrc"
+            $"--pdf-engine-opt=-outdir=($p.build_dir)/output-tex"
+        ]
+    } else { [] }
 
-    $a = ($a | append $"--data-dir=($p.convert_dir)")
-    $a = ($a | append $"--resource-path=($p.convert_dir)")
-    $a = ($a | append "--defaults=pandoc-dirs.yaml")
-    $a = ($a | append "--defaults=pandoc-general.yaml")
-    $a = ($a | append $"--defaults=pandoc-($export_type).yaml")
-    $a = ($a | append "--defaults=pandoc-filters.yaml")
-
-    if $export_type == "latex" {
-        $a = ($a | append "-M")
-        $a = ($a | append $"latex-include-paths=($p.convert_dir)/includes/")
-        $a = ($a | append "-M")
-        $a = ($a | append $"latex-include-paths=($p.project_dir)/")
-        $a = ($a | append "--pdf-engine-opt=-r")
-        $a = ($a | append $"--pdf-engine-opt=($p.tools_dir)/.latexmkrc")
-        $a = ($a | append $"--pdf-engine-opt=-outdir=($p.build_dir)/output-tex")
-    }
-
-    $a = ($a | append $"--log=($p.build_dir)/pandoc-($export_type).log")
-    $a
+    [
+        ...(if $fail_if_warning { ["--fail-if-warnings"] } else { [] })
+        ...(if $verbose { ["--verbose"] } else { [] })
+        $"--data-dir=($p.convert_dir)"
+        $"--resource-path=($p.convert_dir)"
+        "--defaults=pandoc-dirs.yaml"
+        "--defaults=pandoc-general.yaml"
+        $"--defaults=pandoc-($export_type).yaml"
+        "--defaults=pandoc-filters.yaml" ...$latex_args
+        $"--log=($p.build_dir)/pandoc-($export_type).log"
+    ]
 }
 
 # Run pandoc for the given export type.
@@ -187,14 +184,15 @@ def run-pandoc [
     let p = (repo-paths)
     mkdir $p.build_dir
 
-    let inputs = ([$input_file]
-        | append ($p.project_dir | path join "chapters/**/*.md")
-        | append ($p.project_dir | path join "chapters/**/*.html")
-        | append ($p.project_dir | path join "chapters/**/*.tex")
-        | append ($p.project_dir | path join "files/**/*")
-        | append ($p.project_dir | path join "literature/**/*")
-        | append ($p.convert_dir | path join "**/*"))
-
+    let inputs = [
+        $input_file
+        ($p.project_dir | path join "chapters/**/*.md")
+        ($p.project_dir | path join "chapters/**/*.html")
+        ($p.project_dir | path join "chapters/**/*.tex")
+        ($p.project_dir | path join "files/**/*")
+        ($p.project_dir | path join "literature/**/*")
+        ($p.convert_dir | path join "**/*")
+    ]
     if (up-to-date $inputs [$output_file] "run-pandoc") {
         return
     }
@@ -392,12 +390,17 @@ def task-package-html [] {
     let p = (repo-paths)
     let dst = $p.root | path join "docs/html-package" $p.project_name
 
-    # Inputs: the built site under build_dir; outputs: the packaged copy.
-    # let inputs = ([($p.build_dir | path join "Content.html")]
-    #     | append (glob ($p.build_dir | path join "css/**/*"))
-    #     | append (glob ($p.build_dir | path join "files/**/*")))
-    # let outputs = [($dst | path join "Content.html")]
-    # if (up-to-date $inputs $outputs) { log info "package-html: up to date"; return }
+    let inputs = [
+        ($p.build_dir | path join "Content.html")
+        ($p.build_dir | path join "css/**/*")
+        ($p.build_dir | path join "files/**/*")
+    ]
+    let outputs = [
+        ($dst | path join "Content.html")
+    ]
+    if (up-to-date $inputs $outputs "package-html") {
+        return
+    }
 
     mkdir $dst
 
@@ -416,6 +419,7 @@ def task-package-html [] {
         let files_dst = $dst | path join "files"
         if ($files_dst | path exists) { rm -rf $files_dst }
         cp -r $files $dst
+
         # exclude files/generated/**
         let gen = $files_dst | path join "generated"
         if ($gen | path exists) { rm -rf $gen }
