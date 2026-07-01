@@ -8,19 +8,20 @@
     {
       toolchains.generic = [
         {
-          packages = with pkgs; [
-            nodejs-slim_26
-            pnpm
-            browser-sync
+          packages = [
+            pkgs.nodejs-slim_26
+            pkgs.pnpm
+            pkgs.browser-sync
 
-            pandoc
-            haskellPackages.citeproc
-            haskellPackages.pandoc-crossref
+            pkgs.pandoc
+            pkgs.haskellPackages.citeproc
+            pkgs.haskellPackages.pandoc-crossref
+            pkgs.lessc
 
-            watchman
-            python315Packages.pywatchman
+            pkgs.watchman
+            pkgs.python315Packages.pywatchman
 
-            process-compose
+            pkgs.process-compose
           ];
 
           # Disable all process-compose stuff.

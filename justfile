@@ -25,9 +25,15 @@ format *args:
 setup *args:
     cd "{{root_dir}}" && ./tools/scripts/setup.sh
 
+
 # Run commands over the ci development shell.
 ci *args:
     just nix::develop "ci" "$@"
+
+[group('general')]
+clean:
+   rm -rf .output
+
 # Lint the project.
 [group('general')]
 lint *args:

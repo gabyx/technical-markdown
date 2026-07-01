@@ -8,7 +8,7 @@
 #
 # - Do NOT add here ignores which are deeply nested in the
 #   repository structure, instead
-#   use deidcated local `.gitignore` files inside the directories to
+#   use dedicated local `.gitignore` files inside the directories to
 #   ignore what you need. This file should ONLY deal common top-level
 #   ignores and things you want to ignore.
 
@@ -24,3 +24,5 @@
 .prettierrc.yaml
 .yamllint.yaml
 .typos.toml
+
+__pycache*
