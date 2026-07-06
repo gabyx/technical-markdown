@@ -1,53 +1,29 @@
 % % Start: header.tex =======================================
-\usepackage{xcolor}
-\usepackage{amsmath,amssymb}
-\usepackage{etoolbox}
-\usepackage{calc}
 
-% Set include paths
+%% Geometry ==========================================
+\usepackage[]{geometry}
+% ====================================================
+
+%% Graphics ==========================================
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[]{adjustbox}
+\usepackage[]{pdfpages}
+\usepackage{wrapfig}
+\usepackage[]{placeins} % float barrier at each section
+\usepackage{svg}
+% ====================================================
+
+% Set include paths ==================================
 \makeatletter
 \providecommand*{\input@path}{}
 \edef\input@path{$for(latex-include-paths)${$latex-include-paths$}$endfor${./}\input@path}% prepend
 \makeatother
-
-%% Geometry ==========================================
-\newlength{\innermargin}
-\setlength{\innermargin}{2.1cm}
-\usepackage[nomarginpar,
-            textwidth=16.5cm,
-            textheight=240mm,
-            bottom=2.5cm,
-            headheight=15pt,
-            headsep=30pt,
-            footskip=30pt,
-            bindingoffset=7mm,
-            inner=\innermargin,
-            twoside
-            ]{geometry}
+\svgsetup{extractpath=files/generated/svg-extract,inkscapepath=files/generated/svg-inkscape}
 % ====================================================
-
-%% Graphics ===========================================
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage[export]{adjustbox}
-\usepackage[final]{pdfpages}
-\usepackage{wrapfig}
-\usepackage[section]{placeins} % float barrier at
-                               % each section
-\usepackage{svg}
-\svgsetup{extractpath=files/generated/svg-extract, inkscapepath=files/generated/svg-inkscape}
-% ====================================================
-
 
 %% Caption ===========================================
-\usepackage[%
-    format=plain,%
-    justification=justified,%
-    margin=3mm,%
-    font={normal},%
-    labelfont=bf%
-]{caption}
-
+\usepackage[]{caption}
 \DeclareCaptionStyle{figcaption}{
     justification=justified,
     font={normal},
@@ -69,7 +45,7 @@
 % ====================================================
 
 %% Header/Footer =====================================
-\usepackage[automark,headsepline]{scrlayer-scrpage}
+\usepackage[]{scrlayer-scrpage}
 \clearpairofpagestyles
 \setkomafont{pagehead}{\normalfont\rmfamily\bfseries}
 %\setkomafont{pagenumber}{\normalfont\rmfamily}
@@ -84,7 +60,7 @@
 \lohead{}
 
 % Footnotes
-\usepackage[perpage,para]{footmisc}
+\usepackage[]{footmisc}
 % ====================================================
 
 %% Enumitems =========================================
@@ -115,7 +91,7 @@
 % ====================================================
 
 %% Quotes =============================================
-\usepackage[font=itshape,vskip=5pt]{quoting}
+\usepackage[]{quoting}
 
 %% Todo Notes =========================================
 % \usepackage[textsize=tiny,disable]{todonotes}
@@ -132,10 +108,6 @@
 %\makeglossaries
 % ====================================================
 
-%% Own styles! ========================================
-% \input{GeneralMacros.sty}
-% \input{Math.sty}
-% ====================================================
 
 %% Custom Part Heading ===============================
 \addtokomafont{part}{\Huge\selectfont\rmfamily\bfseries}
@@ -232,7 +204,7 @@
 % \usepackage{titletoc}
 % \newcommand{\setupTOC}[2]{%
 %     \titlecontents{#1}
-%     [8em] % ie, 1.5em (chapter) + 2.3em
+%     [8em] % ie, 1.5em () + 2.3em
 %     {\rightskip=10mm plus 1fil\hyphenpenalty=10000\normalsize\bfseries\protect\addvspace{15pt}\contentsmargin{3em}}
 %     {\contentslabel[{\color{gray}#2\enspace\thecontentslabel}]{8em}}
 %     {\hspace*{-8em}}
@@ -264,7 +236,7 @@
 
 % Footnotes ============================================
 \usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\usepackage{xurl} % add URL line breaks if available
 \urlstyle{$if(urlstyle)$$urlstyle$$else$same$endif$}
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
@@ -277,13 +249,12 @@ $endif$
 
 % Clever Refs ==========================================
 % Clever Refs: must be loaded *after* hyperref (pulled in by bookmark above).
-\usepackage[capitalise]{cleveref}
+\usepackage[]{cleveref}
 % ======================================================
 
 % General Settings
 \KOMAoptions{cleardoublepage=empty}
 \raggedbottom
-
 
 % End: header.tex =======================================
 

@@ -30,35 +30,37 @@ top-level-division: chapter
 secnumdepth: 3
 ---
 
-# Hello World
+:::{include-if-format=}
 
-<!-- :::{include-if-format=} -->
-<!-- Reasonable applied defaults before the above yaml meta block are found in: -->
-<!-- - `tools/convert/defaults/pandoc-general.yaml` for all output formats -->
-<!-- - `tools/convert/defaults/pandoc-html.yaml` for HTML -->
-<!-- - `tools/convert/defaults/pandoc-latex.yaml` for LaTex output -->
-<!-- Note: This is a Div block which get discarded because of the `{include-if-format=}` -->
-<!-- ::: -->
-<!---->
-<!-- ```{.include format=html include-if-format=html;html5} -->
-<!-- includes/Math.html -->
-<!-- ``` -->
-<!---->
-<!-- ```{.include} -->
-<!-- ${env:TECHMD_ROOT_DIR}/chapters/Acknowledgement.md -->
-<!-- ``` -->
-<!---->
-<!-- # Intro -->
-<!---->
-<!-- Read the [Readme.md](https://github.com/gabyx/TechnicalMarkdown/blob/master/Readme.md) -->
-<!-- for futher information. -->
-<!---->
-<!-- # Samples -->
-<!---->
-<!-- ```{.include} -->
-<!-- ${env:TECHMD_ROOT_DIR}/chapters/KonvexeProbleme.md -->
-<!-- ${env:TECHMD_ROOT_DIR}/chapters/MarkdownSamples.md -->
-<!-- ${env:TECHMD_ROOT_DIR}/chapters/TableSamples.md -->
-<!-- ``` -->
+Reasonable applied defaults before the above yaml meta block are found in:
+
+- `tools/convert/defaults/pandoc-general.yaml` for all output formats
+- `tools/convert/defaults/pandoc-html.yaml` for HTML
+- `tools/convert/defaults/pandoc-latex.yaml` for LaTex output Note: This is a
+  Div block which get discarded because of the `{include-if-format=}`
+
+:::
+
+```{.include format=html include-if-format=html;html5}
+includes/Math.html
+```
+
+```{.include}
+${env:TECHMD_ROOT_DIR}/chapters/acknowledgement.md
+```
+
+# Intro
+
+Read the
+[Readme.md](https://github.com/gabyx/TechnicalMarkdown/blob/master/Readme.md)
+for futher information.
+
+# Samples
+
+```{.include}
+${env:TECHMD_ROOT_DIR}/chapters/konvexe-probleme.md
+${env:TECHMD_ROOT_DIR}/chapters/markdown-samples.md
+${env:TECHMD_ROOT_DIR}/chapters/table-samples.md
+```
 
 <!-- # References -->

@@ -340,9 +340,9 @@ def task-convert-tables [] {
 # keeping only lines that start with a backslash.
 def task-transform-math [] {
     let p = (repo-paths)
-    let src = $p.project_dir | path join "includes/Math.html"
+    let src = $p.project_dir | path join "includes/math.html"
     let out_dir = $p.project_dir | path join "includes/generated"
-    let out = $out_dir | path join "Math.tex"
+    let out = $out_dir | path join "math.tex"
 
     if (up-to-date [$src] [$out] "transform-math") {
         return

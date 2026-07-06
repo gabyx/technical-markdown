@@ -1,4 +1,4 @@
-\ProvidesPackage{GeneralMacros}[general style definitions]
+\ProvidesFile{general-macros.sty}[general style definitions]
 \RequirePackage{graphicx}
 \RequirePackage{xparse}
 \RequirePackage{svg}
@@ -38,7 +38,7 @@
     }
 }
 
-% Ruler commands 
+% Ruler commands
 % https://tex.stackexchange.com/a/309705/7083
 % \xhrulefill[height=-2pt,thickness=1pt,fill=3cm]
 \ExplSyntaxOn
@@ -77,7 +77,7 @@
  {
   \keys_set:nn { severin/xhrulefill } { #1 }
   \leavevmode
-  \leaders\hrule 
+  \leaders\hrule
     height \dim_eval:n { \l_severin_xhrule_thickness_dim + \l_severin_xhrule_height_dim }
     depth  \dim_eval:n { -\l_severin_xhrule_height_dim }
   \skip_horizontal:N \l_severin_xhrule_fill_skip

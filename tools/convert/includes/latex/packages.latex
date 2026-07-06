@@ -1,0 +1,49 @@
+% Colors.
+\usepackage{xcolor}
+
+% Math.
+\usepackage{amsmath,amssymb}
+
+% General functionality.
+\usepackage{etoolbox}
+\usepackage{calc}
+
+% Geometry.
+\newlength{\innermargin}
+\setlength{\innermargin}{2.1cm}
+\PassOptionsToPackage{
+    nomarginpar,
+    textwidth=16.5cm,
+    textheight=240mm,
+    bottom=2.5cm,
+    headheight=15pt,
+    headsep=30pt,
+    footskip=30pt,
+    bindingoffset=7mm,
+    inner=\innermargin,
+    twoside
+}{geometry}
+
+% Graphics.
+\PassOptionsToPackage{export}{adjustbox}
+\PassOptionsToPackage{final}{pdfpages}
+\PassOptionsToPackage{section}{placeins} % float barrier at each section
+
+% Captions.
+\PassOptionsToPackage{
+    format=plain,
+    justification=justified,
+    margin=3mm,
+    font={normal},
+    labelfont=bf
+}{caption}
+
+% Header/Footer
+\PassOptionsToPackage{automark,headsepline}{scrlayer-scrpage}
+\PassOptionsToPackage{perpage,para}{footmisc}
+
+% Quoting
+\PassOptionsToPackage{font=itshape,vskip=5pt}{quoting}
+
+% Cleveref
+\PassOptionsToPackage{capitalise}{cleveref}

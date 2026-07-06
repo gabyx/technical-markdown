@@ -7,41 +7,7 @@ $-- paragraph formatting
 $--
 $if(indent)$
 $else$
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-$endif$
-$if(block-headings)$
-% Make \paragraph and \subparagraph free-standing
-\makeatletter
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-\makeatother
+\KOMAoptions{parskip=half}
 $endif$
 
 $--
@@ -112,19 +78,7 @@ $--
 $-- strikeout/underline
 $--
 $if(strikeout)$
-\ifLuaTeX
-  \usepackage{luacolor}
-  \usepackage[soul]{lua-ul}
-\else
-  \usepackage{soul}
-$if(CJKmainfont)$
-  \ifXeTeX
-    % soul's \st doesn't work for CJK:
-    \usepackage{xeCJKfntef}
-    \renewcommand{\st}[1]{\sout{#1}}
-  \fi
-$endif$
-\fi
+\usepackage{soul}
 $endif$
 
 $--
@@ -170,25 +124,15 @@ $--
 $-- Babel language support
 $--
 $if(lang)$
-\ifLuaTeX
-\usepackage[bidi=basic,shorthands=off,$for(babeloptions)$,$babeloptions$$endfor$]{babel}
-\else
 \usepackage[bidi=default,shorthands=off,$for(babeloptions)$,$babeloptions$$endfor$]{babel}
-\fi
 $if(babel-lang)$
 $if(mainfont)$
-\ifPDFTeX
-\else
 \babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$$if(mainfontfallback)$,RawFeature={fallback=mainfontfallback}$endif$]{$mainfont$}
-\fi
 $endif$
 $endif$
 $for(babelfonts/pairs)$
 \babelfont[$babelfonts.key$]{rm}{$babelfonts.value$}
 $endfor$
-\ifLuaTeX
-  \usepackage{selnolig} % disable illegal ligatures
-\fi
 $endif$
 
 $--
@@ -213,19 +157,6 @@ $-- subfigure support
 $--
 $if(subfigure)$
 \usepackage{subcaption}
-$endif$
-
-$--
-$-- text direction support for pdftex
-$--
-$if(dir)$
-\ifPDFTeX
-  \TeXXeTstate=1
-  \newcommand{\RL}[1]{\beginR #1\endR}
-  \newcommand{\LR}[1]{\beginL #1\endL}
-  \newenvironment{RTL}{\beginR}{\endR}
-  \newenvironment{LTR}{\beginL}{\endL}
-\fi
 $endif$
 
 $--

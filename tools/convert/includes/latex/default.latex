@@ -17,59 +17,56 @@ $for(classoption)$
 $endfor$
 ]{$documentclass$}
 
+$packages.latex()$
 $section-numbering.latex()$
 $fonts.latex()$
 $font-settings.latex()$
 $common.latex()$
-$for(header-includes)$
-$header-includes$
-$endfor$
 $header.latex()$
 $hypersetup.latex()$
 $title-settings.latex()$
+$macros.latex()$
 
 \begin{document}
-hello
+%
+$if(has-frontmatter)$
+\frontmatter
+$endif$
+%
+$if(title)$
+$title.latex()$
+$endif$
+%
+\cleardoublepage
+\pagenumbering{roman}
+\pagestyle{scrheadings}
+\setcounter{page}{1}
+%
+$if(abstract)$
+$abstract.latex()$
+$endif$
+%
+$if(acknowledgement)$
+$acknowledgement.latex()$
+$endif$
+%
+$for(include-before)$
+$include-before$
 
-$-- %
-$-- $if(has-frontmatter)$
-$-- \frontmatter
-$-- $endif$
-$-- %
-$-- $if(title)$
-$-- $title.latex()$
-$-- $endif$
-$-- %
-$-- \cleardoublepage
-$-- \pagenumbering{roman}
-$-- \pagestyle{scrheadings}
-$-- \setcounter{page}{1}
-$-- %
-$-- $if(abstract)$
-$-- $abstract.latex()$
-$-- $endif$
-$-- %
-$-- $if(acknowledgement)$
-$-- $acknowledgement.latex()$
-$-- $endif$
-$-- %
-$-- $for(include-before)$
-$-- $include-before$
-$--
-$-- $endfor$
-$-- %
-$-- $if(toc)$
-$-- $toc.latex()$
-$-- $endif$
-$-- %
-$-- $lists.latex()$
-$-- %
-$-- $body-settings.latex()$
-$-- $if(has-frontmatter)$
-$-- \mainmatter
-$-- $endif$
+$endfor$
+%
+$if(toc)$
+$toc.latex()$
+$endif$
+%
+$lists.latex()$
+%
+$body-settings.latex()$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
 $-- $body$
-$--
+
 $-- %
 $-- $if(has-frontmatter)$
 $-- \backmatter
