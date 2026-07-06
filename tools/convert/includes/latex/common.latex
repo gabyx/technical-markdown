@@ -18,8 +18,6 @@ $else$
   \KOMAoptions{parskip=half}}
 \makeatother
 $endif$
-$if(beamer)$
-$else$
 $if(block-headings)$
 % Make \paragraph and \subparagraph free-standing
 \makeatletter
@@ -44,7 +42,6 @@ $if(block-headings)$
   \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 \makeatother
-$endif$
 $endif$
 
 $--
@@ -77,13 +74,6 @@ $if(multirow)$
 \usepackage{multirow}
 $endif$
 \usepackage{calc} % for calculating minipage widths
-$if(beamer)$
-\usepackage{caption}
-% Make caption package work with longtable
-\makeatletter
-\def\fnum@table{\tablename~\thetable}
-\makeatother
-$else$
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -92,7 +82,6 @@ $else$
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-$endif$
 $endif$
 
 $--
@@ -128,15 +117,6 @@ $if(strikeout)$
   \usepackage[soul]{lua-ul}
 \else
   \usepackage{soul}
-$if(beamer)$
-  \makeatletter
-  \let\HL\hl
-  \renewcommand\hl{% fix for beamer highlighting
-    \let\set@color\beamerorig@set@color
-    \let\reset@color\beamerorig@reset@color
-    \HL}
-  \makeatother
-$endif$
 $if(CJKmainfont)$
   \ifXeTeX
     % soul's \st doesn't work for CJK:

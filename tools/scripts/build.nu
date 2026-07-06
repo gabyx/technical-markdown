@@ -171,6 +171,7 @@ def pandoc-args [
         $latex_args = $latex_args | append [
             "--pdf-engine-opt=-r" $"--pdf-engine-opt=($p.tools_dir)/.latexmkrc"
             $"--pdf-engine-opt=-outdir=($p.build_dir_tex)"
+            $"--pdf-engine-opt=-auxdir=($p.build_dir_tex)"
         ]
     }
 
@@ -457,9 +458,9 @@ def "main copy-less" [] { task-copy-less }
 def "main copy-assets" [] { task-copy-assets }
 def "main convert-tables" [] { task-convert-tables }
 def "main transform-math" [] { task-transform-math }
-def "main build-html" [] { task-build-html }
-def "main build-pdf" [] { task-build-pdf }
-def "main build-latex" [] { task-build-latex }
+def "main html" [] { task-build-html }
+def "main pdf" [] { task-build-pdf }
+def "main latex" [] { task-build-latex }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
 
@@ -472,9 +473,9 @@ def main [] {
     print "  copy-assets      Copy files/ into the build dir"
     print "  convert-tables   Convert HTML/MD tables to .tex"
     print "  transform-math   Extract \\ macros from Math.html -> Math.tex"
-    print "  build-html       md -> html"
-    print "  build-pdf        md -> latex -> pdf"
-    print "  build-latex      md -> latex"
+    print "  html             md -> html"
+    print "  pdf              md -> latex -> pdf"
+    print "  latex            md -> latex"
     print "  view-html        Serve built HTML with browser-sync"
     print "  package-html     Copy built site into docs/html-package/techmd"
     print ""

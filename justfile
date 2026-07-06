@@ -39,15 +39,10 @@ clean:
 lint *args:
     echo "TODO: Not implemented"
 
-# Build the module.
+# Build.
 [group('general')]
 build *args:
-    echo "TODO: Not implemented"
-
-# Test the project.
-[group('general')]
-test *args:
-    echo "TODO: Not implemented"
+    nu tools/scripts/build.nu "$@"
 
 # Run the markdown render services.
 [group('general')]
