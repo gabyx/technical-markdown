@@ -35,6 +35,10 @@ def "log debug" [msg: string] {
     }
 }
 
+def print-cmd [cmd: list<string>] {
+    print $"Cmd: ($cmd | str join ' ')"
+}
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -207,13 +211,16 @@ def run-pandoc [
     log debug $"PYTHONPATH: '($p.pythonpath)'"
     log debug $"LUA_PATH: '($p.lua_path)'"
 
+    let cmd = ["pandoc" ...$all_args]
+    print-cmd $cmd
+
     cd $p.project_dir
     with-env {
         TECHMD_ROOT_DIR: $p.project_dir
         PYTHONPATH: $p.pythonpath
         LUA_PATH: $p.lua_path
     } {
-        ^pandoc ...$all_args
+        ^$cmd
     }
 
     log info " =============================================="
