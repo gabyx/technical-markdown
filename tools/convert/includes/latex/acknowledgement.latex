@@ -1,0 +1,9 @@
+$if(acknowledgement-title)$
+\newcommand{\acknowledgementtitle}{$acknowledgement-title$}
+$else$
+\newcommand{\acknowledgementtitle}{Acknowledgement}
+$endif$
+\thispagestyle{plain}
+\chapter*{\acknowledgementtitle}
+$acknowledgement$
+\cleardoublepage

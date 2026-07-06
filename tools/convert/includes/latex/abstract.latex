@@ -1,0 +1,9 @@
+$if(abstract-title)$
+\newcommand{\abstracttitle}{$abstract-title$}
+$else$
+\newcommand{\abstracttitle}{Abstract}
+$endif$
+\chapter*{\abstracttitle}
+\thispagestyle{plain}
+$abstract$
+\cleardoublepage

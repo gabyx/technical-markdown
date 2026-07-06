@@ -1,4 +1,4 @@
-$-- User font settings (must come after default font and Beamer theme)
+$-- User font settings
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $endif$

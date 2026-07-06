@@ -35,6 +35,12 @@ variables:
 
 number-sections: true
 
+pdf-engine: latexmk
+pdf-engine-opt:
+  - "-xelatex"
+  - --silent
+  - "-gg"
+
 template: includes/latex/default.latex
 
 eol: lf

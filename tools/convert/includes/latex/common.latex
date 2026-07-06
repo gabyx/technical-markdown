@@ -1,6 +1,7 @@
 $if(linestretch)$
 \usepackage{setspace}
 $endif$
+
 $--
 $-- paragraph formatting
 $--
@@ -45,12 +46,14 @@ $if(block-headings)$
 \makeatother
 $endif$
 $endif$
+
 $--
 $-- verbatim in notes
 $--
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
+
 $-- highlighting
 $if(listings)$
 \usepackage{listings}
@@ -64,6 +67,7 @@ $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+
 $--
 $-- tables
 $--
@@ -90,6 +94,7 @@ $else$
 \makesavenoteenv{longtable}
 $endif$
 $endif$
+
 $--
 $-- graphics
 $--
@@ -113,6 +118,7 @@ $endif$
 $if(svg)$
 \usepackage{svg}
 $endif$
+
 $--
 $-- strikeout/underline
 $--
@@ -140,6 +146,7 @@ $if(CJKmainfont)$
 $endif$
 \fi
 $endif$
+
 $--
 $-- CSL citations
 $--
@@ -178,6 +185,7 @@ $if(csl-refs)$
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
+
 $--
 $-- Babel language support
 $--
@@ -202,16 +210,19 @@ $endfor$
   \usepackage{selnolig} % disable illegal ligatures
 \fi
 $endif$
+
 $--
 $-- pagestyle
 $--
 $if(pagestyle)$
 \pagestyle{$pagestyle$}
 $endif$
+
 $--
 $-- prevent overfull lines
 $--
 \setlength{\emergencystretch}{3em} % prevent overfull lines
+
 $--
 $-- tight lists
 $--
@@ -223,6 +234,7 @@ $--
 $if(subfigure)$
 \usepackage{subcaption}
 $endif$
+
 $--
 $-- text direction support for pdftex
 $--
@@ -235,6 +247,7 @@ $if(dir)$
   \newenvironment{LTR}{\beginL}{\endL}
 \fi
 $endif$
+
 $--
 $-- bibliography support support for natbib and biblatex
 $--
@@ -248,6 +261,7 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
+
 $--
 $-- csquotes
 $--

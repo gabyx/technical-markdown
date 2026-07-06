@@ -39,6 +39,8 @@ def print-cmd [cmd: list<string>] {
     print $"Cmd: ($cmd | str join ' ')"
 }
 
+const tooling_input = ["tools/**"]
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -60,6 +62,7 @@ def repo-paths [] {
     let convert_dir = (if $convert_env == "" { $convert_default } else { $convert_env })
 
     let build_dir = $env.TECHMD_OUTPUT_DIR? | default ($root | path join ".output/build/techmd")
+    let build_dir_tex = $build_dir | path join "output-tex"
     let project_dir = $root | path join "src/techmd"
     let project_name = $env.TECHMD_PROJECT_NAME? | default "techmd"
 
@@ -73,6 +76,7 @@ def repo-paths [] {
         tools_dir: $tools_dir
         convert_dir: $convert_dir
         build_dir: $build_dir
+        build_dir_tex: $build_dir_tex
         project_name: $project_name
         filters: $filters
         lua_path: $lua_path
@@ -106,6 +110,7 @@ def files-of [patterns: list<string>] {
 }
 
 def up-to-date [inputs: list<string>, outputs: list<string>, task: string] {
+    mut inputs = [...$inputs ...$tooling_input]
     if (up-to-date-impl $inputs $outputs) {
         log info $"($task): up to date"
         return true
@@ -153,14 +158,21 @@ def pandoc-args [
     fail_if_warning: bool
     p: record
 ] {
-    let latex_args = if $export_type == "latex" {
-        [
+    mut latex_args = []
+
+    if $export_type in ["latex" "pdf"] {
+        $latex_args = [
             "-M" $"latex-include-paths=($p.convert_dir)/includes/"
             "-M" $"latex-include-paths=($p.project_dir)/"
-            "--pdf-engine-opt=-r" $"--pdf-engine-opt=($p.tools_dir)/.latexmkrc"
-            $"--pdf-engine-opt=-outdir=($p.build_dir)/output-tex"
         ]
-    } else { [] }
+    }
+
+    if $export_type == "pdf" {
+        $latex_args = $latex_args | append [
+            "--pdf-engine-opt=-r" $"--pdf-engine-opt=($p.tools_dir)/.latexmkrc"
+            $"--pdf-engine-opt=-outdir=($p.build_dir_tex)"
+        ]
+    }
 
     [
         ...(if $fail_if_warning { ["--fail-if-warnings"] } else { [] })
@@ -186,7 +198,11 @@ def run-pandoc [
     additional_args: list<string>
 ] {
     let p = (repo-paths)
+
     mkdir $p.build_dir
+    if $export_type in ["pdf" "latex"] {
+        mkdir $p.build_dir_tex
+    }
 
     let inputs = [
         $input_file
@@ -359,18 +375,17 @@ def task-build-pdf [] {
     let p = (repo-paths)
     let input = $p.project_dir | path join "Content.md"
     let output = $p.build_dir | path join "Content.pdf"
-    run-pandoc "md -> latex -> pdf" $input $output "latex" false true []
+    run-pandoc "md -> latex -> pdf" $input $output "pdf" false true []
 }
 
-# build-jira: md -> jira  (fail-if-warnings disabled)
-def task-build-jira [] {
+def task-build-latex [] {
     task-convert-tables
     task-transform-math
 
     let p = (repo-paths)
     let input = $p.project_dir | path join "Content.md"
-    let output = $p.build_dir | path join "Content.jira"
-    run-pandoc "md -> jira" $input $output "jira" false false []
+    let output = $p.build_dir | path join "output-tex/input.tex"
+    run-pandoc "md -> latex -> pdf" $input $output "latex" false true []
 }
 
 # view-html: serve the built HTML with live reload.
@@ -444,7 +459,7 @@ def "main convert-tables" [] { task-convert-tables }
 def "main transform-math" [] { task-transform-math }
 def "main build-html" [] { task-build-html }
 def "main build-pdf" [] { task-build-pdf }
-def "main build-jira" [] { task-build-jira }
+def "main build-latex" [] { task-build-latex }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
 
@@ -459,7 +474,7 @@ def main [] {
     print "  transform-math   Extract \\ macros from Math.html -> Math.tex"
     print "  build-html       md -> html"
     print "  build-pdf        md -> latex -> pdf"
-    print "  build-jira       md -> jira"
+    print "  build-latex      md -> latex"
     print "  view-html        Serve built HTML with browser-sync"
     print "  package-html     Copy built site into docs/html-package/techmd"
     print ""

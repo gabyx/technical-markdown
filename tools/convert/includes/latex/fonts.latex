@@ -1,0 +1,9 @@
+$if(mathspec)$
+\usepackage{mathspec} % this also loads fontspec
+$else$
+\usepackage{unicode-math} % this also loads fontspec
+$endif$
+%
+\defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
+\defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+%
