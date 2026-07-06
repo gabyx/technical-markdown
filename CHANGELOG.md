@@ -11,12 +11,12 @@ Features:
 
 - feat: Latex template update.
 
-
 ## Version `v2.0.3` (2022-04-23)
 
 Bugfixes:
 
-- fix: Improve ruler syntax. See [`chapters/MarkdownSample.md`](chapters/MarkdownSamples.md).
+- fix: Improve ruler syntax. See
+  [`chapters/MarkdownSample.md`](chapters/MarkdownSamples.md).
 
 ## Version `v2.0.2` (2022-04-23)
 

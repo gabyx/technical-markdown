@@ -16,35 +16,37 @@ end
 
 function make_unique(block)
     local id = get(block, "identifier")
-    if id == nil or id == "" then return nil end
+    if id == nil or id == "" then
+        return nil
+    end
 
     local index = ids[id]
 
     -- get master count if possible
     local baseId = id:match("^(.*)-%d+$")
     if baseId then
-      id = baseId
-      index = ids[id]
+        id = baseId
+        index = ids[id]
     end
 
     if index == nil then
-      ids[id] = 0 -- initialize counter
+        ids[id] = 0 -- initialize counter
     end
 
     -- we have duplicate id, e.g 'id: name-3', 'index: 3', baseId = "name"
     if index then
-      -- Replace id
-      index = index + 1
-      newId = id .. "-" .. tostring(index)
+        -- Replace id
+        index = index + 1
+        newId = id .. "-" .. tostring(index)
 
-      ids[id] = index
-      ids[newId] = index
+        ids[id] = index
+        ids[newId] = index
 
-      io.stderr:write("Adjust existing identifier " .. id .. " to: '" .. newId .. "'\n")
-      block.identifier = newId
-      return block
+        io.stderr:write("Adjust existing identifier " .. id .. " to: '" .. newId .. "'\n")
+        block.identifier = newId
+        return block
     end
     return nil
 end
 
-return {{Header = make_unique}}
+return { { Header = make_unique } }

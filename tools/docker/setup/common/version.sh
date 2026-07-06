@@ -18,7 +18,6 @@ sys.exit(0 if cmp(\"$1\", \"$2\", \"$3\", loose=False) else 1)
     return 0
 }
 
-
 # Checks a version "$2" to be in ["$3", "$4").
 function assertVersionMinMax() {
     local what="$1"

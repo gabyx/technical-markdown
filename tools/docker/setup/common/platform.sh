@@ -2,7 +2,7 @@
 # shellcheck disable=SC1090,SC1091,SC2034
 # =============================================================================
 # TechnicalMarkdown
-# 
+#
 # @date Sun Mar 06 2022
 # @author Gabriel Nützi, gnuetzi@gmail.com
 # =============================================================================
@@ -12,14 +12,14 @@ function getPlatformOS() {
     PLATFORM_OS_DIST=""
     PLATFORM_OS_VERSION=""
 
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [[ $OSTYPE == "linux-gnu"* ]]; then
         PLATFORM_OS="linux"
-    elif [[ "$OSTYPE" == "linux-musl"* ]]; then
+    elif [[ $OSTYPE == "linux-musl"* ]]; then
         # Alpine linux
         PLATFORM_OS="linux"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
+    elif [[ $OSTYPE == "darwin"* ]]; then
         PLATFORM_OS="darwin"
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
+    elif [[ $OSTYPE == "freebsd"* ]]; then
         PLATFORM_OS="freebsd"
     else
         die "Platform: '$OSTYPE' not supported."

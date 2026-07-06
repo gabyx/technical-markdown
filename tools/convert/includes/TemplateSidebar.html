@@ -2,19 +2,37 @@
  This is the sidebar stuff.
 -->
 
-<a id="sidenav-btn" class="button" href="javascript:void(0)" onclick="openSideNav()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12">
-        <path fill="currentColor" d="M0 0h18v2H0zM0 5h18v2H0zM0 10h18v2H0z" />
-    </svg>
+<a
+  id="sidenav-btn"
+  class="button"
+  href="javascript:void(0)"
+  onclick="openSideNav()"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="12"
+    viewBox="0 0 18 12"
+  >
+    <path fill="currentColor" d="M0 0h18v2H0zM0 5h18v2H0zM0 10h18v2H0z" />
+  </svg>
 </a>
 
 <div id="sidenav" class="sidenav">
-    <div id="nav-menu">
-        <a class="expand-btn" id="expand" href="javascript:void(0)" onClick="toggleExpandCollapse()" style="baseline-shift:-10%">⊞</a>
-        <a class="close-btn" href="javascript:void(0)" onclick="closeSideNav()">&times;</a>
-    </div>
-    $if(toc)$
-    <div id="sidenav-content">
-    </div>
-    $endif$
+  <div id="nav-menu">
+    <a
+      class="expand-btn"
+      id="expand"
+      href="javascript:void(0)"
+      onClick="toggleExpandCollapse()"
+      style="baseline-shift: -10%"
+      >⊞</a
+    >
+    <a class="close-btn" href="javascript:void(0)" onclick="closeSideNav()"
+      >&times;</a
+    >
+  </div>
+  $if(toc)$
+  <div id="sidenav-content"></div>
+  $endif$
 </div>

@@ -23,7 +23,6 @@ technical documents:**
   [`pandoc`](https://github.com/jgm/pandoc) such that exporting
   ([Content.md](https://raw.githubusercontent.com/gabyx/TechnicalMarkdown/master/Content.md))
   is done in the background:
-
   - **export to PDF** with `pandoc` to `xelatex` using `latexmk`
     [See Output](docs/output/techmd/Content.pdf)
   - **export to HTML** with `pandoc` to `html`
@@ -33,7 +32,6 @@ technical documents:**
 
 - **[pandoc filters](https://pandoc.org/filters.html)** for different AST
   (abstract syntax tree) conversions:
-
   - [own filters](https://github.com/gabyx/TechnicalMarkdown/tree/master/tools/convert/filters)
     with [panflute](https://github.com/sergiocorreia/panflute)
     [[doc](http://scorreia.com/software/panflute)]
@@ -47,7 +45,7 @@ technical documents:**
     for file transclusion
 
 - Full-fledged [VS Code](https://code.visualstudio.com/) setup to write and
-  style your document in one of the best IDEs (*nvim is better 😏*).
+  style your document in one of the best IDEs (_nvim is better 😏_).
 
 ## Quick-Start
 
@@ -61,8 +59,8 @@ This will build the HTML output from its [markdown main file](Content.md).
 
 ## Demo Project
 
-There is also a demo showing a [full thesis](https://github.com/gabyx/technical-markdown-demo) project.
-
+There is also a demo showing a
+[full thesis](https://github.com/gabyx/technical-markdown-demo) project.
 
 ## Rational
 
@@ -72,7 +70,6 @@ documentation is pretty flawless and the community (including him) is really
 helpful. That is why we rely heavily on pandoc.
 
 1. We target the output formats `html5` and `latex`, because
-
    - HTML can be viewed in all browsers and web standards such as CSS3 etc. have
      become a major advantage and enables ridiculuous dynamic, interactive
      styling. Collapsable table of contents is just the beginning.
@@ -123,7 +120,6 @@ The following directories are important for the styling of the output:
   pandoc related output configs. It acts as pandocs
   [`data-dir`](https://pandoc.org/MANUAL.html#option--data-dir). See
   [env. variables](#environment-variables) in docker builds.
-
   - [`tools/convert/defaults`](tools/convert/defaults) : `pandoc` defaults .
   - [`tools/convert/includes`](tools/convert/includes) : `pandoc` templates in
     for HTML and PDF output settings.

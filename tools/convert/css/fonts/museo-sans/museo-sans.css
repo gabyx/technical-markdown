@@ -1,70 +1,69 @@
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-100.woff2') format('woff2');
-    font-weight: 100;
-    font-style: normal;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-100.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-100Italic.woff2') format('woff2');
-    font-weight: 100;
-    font-style: italic;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-100Italic.woff2") format("woff2");
+  font-weight: 100;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-900.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-300Italic.woff2') format('woff2');
-    font-weight: 300;
-    font-style: italic;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-300Italic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-300.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-500Italic.woff2') format('woff2');
-    font-weight: 500;
-    font-style: italic;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-500Italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-700Italic.woff2') format('woff2');
-    font-weight: 700;
-    font-style: italic;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-700Italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-700.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-500.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Museo Sans';
-    src: url('MuseoSans-900Italic.woff2') format('woff2');
-    font-weight: 900;
-    font-style: italic;
+  font-family: "Museo Sans";
+  src: url("MuseoSans-900Italic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
 }
-

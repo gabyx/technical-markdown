@@ -72,7 +72,7 @@
       "label": "🛠️ Build with latexmk",
       "type": "shell",
       "command": "latexmk",
-      
+
       "args": [
         "-xelatex",
         "-r",

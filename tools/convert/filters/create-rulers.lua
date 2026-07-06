@@ -1,29 +1,29 @@
---- Pandoc filter for replacing the rule elements: 
+--- Pandoc filter for replacing the rule elements:
 ---
 --- - `[]{.hrule-fill thickness=0.5pt height=5pt}` corresponding to `\hrulefill`.
 --- - `[]{.hrule thickness=0.5pt width=2cm height=5pt}` corresponding to `\rule`.
 ---
 --- with the corresponding rule element in HTML and Latex.
 
-local List = require 'pandoc.List'
+local List = require("pandoc.List")
 
 function create_latex_rule(element, cmd)
     width = element.attributes["width"]
     thickness = element.attributes["thickness"]
     height = element.attributes["height"]
-    
-    cmd =  "\\" ..  cmd
+
+    cmd = "\\" .. cmd
 
     args = ""
     if width ~= nil then
         if width:match("%d*%%") then
             _, _, percentage = string.find(width, "^(%d*)")
-            width = string.format("%0.4f", tonumber(percentage)/100.0) .. "\\textwidth"
+            width = string.format("%0.4f", tonumber(percentage) / 100.0) .. "\\textwidth"
         end
 
         args = args .. string.format(",fill=%s", width)
     end
-    
+
     if thickness ~= nil then
         args = args .. string.format(",thickness=%s", thickness)
     end
@@ -31,7 +31,7 @@ function create_latex_rule(element, cmd)
     if height ~= nil then
         if height:match("%d*%%") then
             _, _, percentage = string.find(height, "^(%d*)")
-            height = string.format("%0.4f", tonumber(percentage)/100.0) .. "\\baselineskip"
+            height = string.format("%0.4f", tonumber(percentage) / 100.0) .. "\\baselineskip"
         end
         args = args .. string.format(",height=%s", height)
     end
@@ -45,10 +45,10 @@ function create_latex_rule(element, cmd)
     if element.content ~= nil then
         elements = elements .. element.content
     end
-    elements = elements .. {pandoc.RawInline("latex", cmd)}
+    elements = elements .. { pandoc.RawInline("latex", cmd) }
 
     if element.classes:includes(".linebreak") then
-        elements = elements .. {pandoc.Linebreak()}
+        elements = elements .. { pandoc.Linebreak() }
     end
 
     return elements
@@ -58,12 +58,12 @@ function create_html_rule(element)
     width = element.attributes["width"]
     thickness = element.attributes["thickness"]
     height = element.attributes["height"]
-    
+
     attr = ""
     if width ~= nil then
         attr = attr .. string.format("width:%s;", width)
     end
-    
+
     if thickness ~= nil then
         attr = attr .. string.format("border-bottom-width:%s", thickness)
     end
@@ -72,7 +72,7 @@ function create_html_rule(element)
         attr = attr .. string.format("vertical-align:%s", height)
     end
 
-    return  pandoc.Span(element.content, { class = "hrule-fill" , style = attr } )
+    return pandoc.Span(element.content, { class = "hrule-fill", style = attr })
 end
 
 function add_rulers(element)
@@ -94,5 +94,5 @@ function add_rulers(element)
 end
 
 return {
-    {Span = add_rulers}
+    { Span = add_rulers },
 }

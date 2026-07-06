@@ -3,10 +3,17 @@
   # Used to find the project root
   projectRootFile = ".git/config";
 
-  settings.global.excludes = [ "external/*" ];
+  settings.global.excludes = [
+    "external/*"
+  ];
 
   # Markdown, JSON, YAML, etc.
   programs.prettier.enable = true;
+  settings.formatter.prettier = {
+    excludes = [
+      "src/*"
+    ];
+  };
 
   # Python
   programs.ruff.enable = true;

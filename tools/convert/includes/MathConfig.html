@@ -4,17 +4,28 @@
       processEnvironments: false,
       processEscapes: true,
       /* Escape dollar because its a pandoc template */
-      inlineMath: [["\\(", "\\)"], ["$$", "$$"]],
-      displayMath: [["\\[", "\\]"], ["$$$$", "$$$$"]],
+      inlineMath: [
+        ["\\(", "\\)"],
+        ["$$", "$$"],
+      ],
+      displayMath: [
+        ["\\[", "\\]"],
+        ["$$$$", "$$$$"],
+      ],
       tags: "ams",
-      packages: { '[+]': ['extpfeil', 'color', 'boldsymbol', 'newcommand'] }
+      packages: { "[+]": ["extpfeil", "color", "boldsymbol", "newcommand"] },
     },
     options: {
-      ignoreHtmlClass: 'tex2jax_ignore',
-      processHtmlClass: 'tex2jax_process'
+      ignoreHtmlClass: "tex2jax_ignore",
+      processHtmlClass: "tex2jax_process",
     },
     loader: {
-      load: ['[tex]/extpfeil', '[tex]/color', '[tex]/boldsymbol', '[tex]/newcommand']
-    }
-  };
+      load: [
+        "[tex]/extpfeil",
+        "[tex]/color",
+        "[tex]/boldsymbol",
+        "[tex]/newcommand",
+      ],
+    },
+  }
 </script>

@@ -5,12 +5,13 @@ css: css/main.css
 highlight-style: tango
 
 html-math-method:
-    method: mathjax
-    url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  method: mathjax
+  url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
-include-in-header: ["includes/ScrollIntoView.js", "includes/Anchors.js", "includes/SideNav.js"]
+include-in-header:
+  ["includes/ScrollIntoView.js", "includes/Anchors.js", "includes/SideNav.js"]
 variables:
-    include-before-partials: "includes/TemplateSidebar.html"
+  include-before-partials: "includes/TemplateSidebar.html"
 
 number-sections: true
 
