@@ -88,11 +88,6 @@ just serve
 
 TODO: not yet refurbished.
 
-If you have `docker` or `podman`, you should directly open this project in VS
-Code with the provided `.devcontainer` setup which gives you a hassle free
-experience. See [Docker Setup](#docker-build) for more information. Building on
-a native system, you need the following dependencies:
-
 ## Demo Project
 
 There is also a demo showing a
