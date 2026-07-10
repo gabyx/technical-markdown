@@ -1,142 +1,130 @@
 {
   // See https://go.microsoft.com/fwlink/?LinkId=733558
-  // for the documentation about the tasks.json format
+  // for the documentation about the tasks.json format.
+  //
+  // These tasks drive the `just` recipes defined in the root `justfile`.
+  // Run them via "Terminal → Run Task…" (or Ctrl/Cmd+Shift+B for the default build).
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "🛠️ Convert Markdown ⇉ HTML",
+      "label": "🛠️ Build HTML",
+      "detail": "just build html",
       "type": "shell",
-      "command": "${workspaceFolder}/gradlew",
-      "args": [
-        "-t",
-        "build-html",
-        "-Ppython=${command:python.interpreterPath}",
-        "--warning-mode",
-        "all"
-      ],
+      "command": "just",
+      "args": ["build", "html"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": [],
       "presentation": {
         "panel": "dedicated",
-        "group": "converter"
+        "group": "build"
       }
     },
     {
-      "label": "🛠️ Convert Markdown ⇉ PDF",
+      "label": "🛠️ Build PDF",
+      "detail": "just build pdf",
       "type": "shell",
-      "command": "${workspaceFolder}/gradlew",
-      "args": [
-        "-t",
-        "build-pdf-tex",
-        "-Ppython=${command:python.interpreterPath}",
-        "--warning-mode",
-        "all"
-      ],
+      "command": "just",
+      "args": ["build", "pdf"],
+      "group": "build",
       "problemMatcher": [],
       "presentation": {
         "panel": "dedicated",
-        "group": "converter"
+        "group": "build"
       }
     },
     {
-      "label": "🛠️ Convert Markdown ⇉ Jira",
+      "label": "🛠️ Build LaTeX",
+      "detail": "just build latex",
       "type": "shell",
-      "command": "${workspaceFolder}/gradlew",
-      "args": [
-        "-t",
-        "build-jira",
-        "-Ppython=${command:python.interpreterPath}",
-        "--warning-mode",
-        "all"
-      ],
+      "command": "just",
+      "args": ["build", "latex"],
+      "group": "build",
       "problemMatcher": [],
       "presentation": {
         "panel": "dedicated",
-        "group": "converter"
+        "group": "build"
       }
     },
-    // {
-    //     "label": "Convert Markdown ⇉ PDF [chrome]",
-    //     "type": "shell",
-    //     "command": "${workspaceFolder}/gradlew",
-    //     "args": [
-    //         "-t",
-    //         "build-pdf-chrome",
-    //         "-Ppython=${command:python.interpreterPath}",
-    //     ],
-    //     "problemMatcher": [],
-    //     "presentation": {
-    //         "group": "converter"
-    //     }
-    // },
     {
-      "label": "🛠️ Build with latexmk",
+      "label": "🛠️ Build JSON",
+      "detail": "just build json",
       "type": "shell",
-      "command": "latexmk",
-
-      "args": [
-        "-xelatex",
-        "-r",
-        "tools/.latexmkrc",
-        "-gg",
-        "-outdir=build/techmd/output-tex",
-        "build/techmd/output-tex/input.tex"
-      ],
+      "command": "just",
+      "args": ["build", "json"],
+      "group": "build",
       "problemMatcher": [],
       "presentation": {
-        "group": "converter"
+        "panel": "dedicated",
+        "group": "build"
       }
     },
     {
-      "label": "📄 View HTML",
+      "label": "🛠️ Build native",
+      "detail": "just build native",
       "type": "shell",
-      "command": "${workspaceFolder}/gradlew",
-      "args": [
-        "-t",
-        "view-html",
-        "-Ppython=${command:python.interpreterPath}",
-        "--warning-mode",
-        "all"
-      ],
+      "command": "just",
+      "args": ["build", "native"],
+      "group": "build",
       "problemMatcher": [],
       "presentation": {
-        "group": "converter"
+        "panel": "dedicated",
+        "group": "build"
       }
     },
     {
-      "label": "🛠️ Convert Markdown ⇉ HTML, PDF",
-      "type": "shell",
-      "command": "${workspaceFolder}/gradlew",
-      "args": [
-        "-parallel",
-        "-t",
-        "build-html",
-        "build-pdf",
-        "-Ppython=${command:python.interpreterPath}",
-        "--warning-mode",
-        "all"
-      ],
+      "label": "🛠️ Build HTML + PDF",
+      "detail": "just build html && just build pdf",
+      "dependsOn": ["🛠️ Build HTML", "🛠️ Build PDF"],
+      "dependsOrder": "sequence",
+      "group": "build",
       "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "group": "build"
+      }
+    },
+    {
+      "label": "🌐 Serve",
+      "detail": "just serve — run the markdown render services (long-running)",
+      "type": "shell",
+      "command": "just",
+      "args": ["serve"],
       "isBackground": true,
+      "problemMatcher": [],
       "presentation": {
         "panel": "dedicated",
-        "group": "converter"
+        "group": "build",
+        "reveal": "always"
+      },
+      "runOptions": {
+        "instanceLimit": 1
       }
     },
     {
-      "label": "🛠️ Convert Markdown ⇉ HTML, PDF  + 📄 View HTML",
-      "dependsOn": ["🛠️ Convert Markdown ⇉ HTML, PDF", "📄 View HTML"],
-      "problemMatcher": [],
-      "presentation": {
-        "group": "converter"
-      }
-    },
-    {
-      "label": "🛠️ Convert Markdown ⇉ HTML + 📄 View HTML",
+      "label": "✨ Format",
+      "detail": "just format — run treefmt over the project",
       "type": "shell",
-      "dependsOn": ["🛠️ Convert Markdown ⇉ HTML", "📄 View HTML"],
+      "command": "just",
+      "args": ["format"],
       "problemMatcher": [],
       "presentation": {
-        "group": "converter"
+        "panel": "shared",
+        "group": "maintenance"
+      }
+    },
+    {
+      "label": "🧹 Clean",
+      "detail": "just clean — remove the .output directory",
+      "type": "shell",
+      "command": "just",
+      "args": ["clean"],
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared",
+        "group": "maintenance"
       }
     }
   ]

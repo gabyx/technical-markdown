@@ -29,7 +29,7 @@
     </style>
     $for(css)$
     <link rel="stylesheet" href="$css$" />
-    $endfor$ $if(math)$ ${ MathConfig.html() } $math$ $endif$
+    $endfor$ $if(math)$ ${ math-config.html() } $math$ $endif$
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
     <![endif]-->
@@ -37,9 +37,9 @@
   </head>
 
   <body id="main">
-    $for(include-before)$ $include-before$ $endfor$ $TemplateSidebar.html()$
+    $for(include-before)$ $include-before$ $endfor$ $template-sidebar.html()$
     <div id="main-markdown">
-      $if(title)$ ${ Title.html() } $endif$ $if(abstract)$
+      $if(title)$ ${ title.html() } $endif$ $if(abstract)$
       <div class="abstract">
         <div class="abstract-title">$abstract-title$</div>
         $abstract$

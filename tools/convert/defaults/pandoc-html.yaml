@@ -1,6 +1,6 @@
 to: html5
 
-template: includes/Template.html
+template: includes/html/template.html
 css: css/main.css
 highlight-style: tango
 
@@ -10,12 +10,12 @@ html-math-method:
 
 include-in-header:
   [
-    "includes/ScrollIntoView.html",
-    "includes/Anchors.html",
-    "includes/SideNav.html",
+    "includes/html/scroll-into-view.html",
+    "includes/html/anchors.html",
+    "includes/html/side-nav.html",
   ]
 variables:
-  include-before-partials: "includes/TemplateSidebar.html"
+  include-before-partials: "includes/html/template-sidebar.html"
 
 number-sections: true
 

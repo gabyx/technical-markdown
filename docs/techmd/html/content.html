@@ -250,7 +250,7 @@
         tex: {
           processEnvironments: false,
           processEscapes: true,
-          /* Escape dollar because its a pandoc template */
+          /* Escape dollar because it's a pandoc template */
           inlineMath: [
             ["\\(", "\\)"],
             ["$", "$"],
@@ -555,8 +555,8 @@
                   >
                 </li>
                 <li>
-                  <a href="#questionaire-sample" id="toc-questionaire-sample"
-                    ><span class="toc-section-number">2.4</span> Questionaire
+                  <a href="#questionnaire-sample" id="toc-questionnaire-sample"
+                    ><span class="toc-section-number">2.4</span> Questionnaire
                     Sample</a
                   >
                 </li>
@@ -676,7 +676,7 @@
       </h3>
       <p>
         Eine Menge <span class="math inline">\(\set{C} \subseteq V\)</span>,
-        also ein Teilmenge eines Vektorraums
+        also eine Teilmenge eines Vektorraums
         <span class="math inline">\(V\)</span>, wird
         <strong>konvex</strong> genannt, falls und nur falls
       </p>
@@ -765,16 +765,17 @@
         <span class="header-section-number">2.1.3</span> Normalkegel
       </h3>
       <p>
-        Eines der <strong>wichtigsten</strong> Konzept der konvexen Analysis ist
-        die des <strong>Normalkegels</strong>. Wie der Name schon sagt, handelt
-        es sich um einen Kegel welcher durch Normalenvektoren auf der Oberfläche
-        einer konvexen Menge aufgespannt wird. Wir geben hier direkt die
-        Definition und sehen im Anschluss wie sich dieser Kegel visualisiert:
+        Eines der <strong>wichtigsten</strong> Konzepte der konvexen Analysis
+        ist die des <strong>Normalkegels</strong>. Wie der Name schon sagt,
+        handelt es sich um einen Kegel welcher durch Normalenvektoren auf der
+        Oberfläche einer konvexen Menge aufgespannt wird. Wir geben hier direkt
+        die Definition und sehen im Anschluss wie sich dieser Kegel
+        visualisiert:
       </p>
       <p>
         Ein Normalkegel <span class="math inline">\(\ncone{C}\)</span> auf ein
         konvexes Set <span class="math inline">\(\set{C}\)</span> im Punkt
-        <span class="math inline">\(\vvec{x} \in \set{C}\)</span> ist definert
+        <span class="math inline">\(\vvec{x} \in \set{C}\)</span> ist definiert
         als
         <span class="math display"
           >\[\begin{align} \ncone{C}(\vvec{x}) := \left\{ \vvec{y} \ | \
@@ -792,7 +793,7 @@
         <span class="math inline">\(\vvec{x}\)</span> in die Menge
         <span class="math inline">\(\set{C}\)</span> zeigen (das wäre
         <span class="math inline">\(\vvec{x}^* - \vvec{x}\)</span>), einen
-        <strong>stumpfen</strong> Winkel bilden (das wäre das Skalatprodukt mit
+        <strong>stumpfen</strong> Winkel bilden (das wäre das Skalarprodukt mit
         <span class="math inline">\(\leq 0\)</span>). Der Ursprung der Menge
         <span class="math inline">\(\ncone{C}(\vvec{x})\)</span> ist im Punkt
         <span class="math inline">\(\vvec{x}\)</span>.
@@ -856,7 +857,7 @@
         <strong>implizite</strong> <em>projektive</em> Gleichung gekoppelt.
       </p>
       <p>
-        Damit lässt sich nun ein interessanter wichtiget Fakt ableiten. Aus der
+        Damit lässt sich nun ein interessanter wichtiger Fakt ableiten. Aus der
         Visualisierung <a href="#fig:normalcone">1</a> entnehmen wir, dass
         <span class="math inline">\(\vvec{p}-\vvec{x}\)</span> in der Menge
         <span class="math inline">\(\ncone{C}(\vvec{x})\)</span> liegt, also
@@ -920,7 +921,7 @@
         verwiesen und die darin enthaltenen Referenzen.
       </p>
       <p>
-        Betrachte man folgendes allgemeine restriktierte
+        Betrachtet man folgendes allgemeine restriktierte
         <strong>konvexe</strong> Optimierungsproblem:
         <span class="math display"
           >\[\begin{align} \vvec{x}^* = \underset{\vvec{x} \ \in \
@@ -963,8 +964,8 @@
       <p>
         Die Frage ist nun wie kriegen wir eine Bedingung an den optimalen
         (minimierenden) Punkt <span class="math inline">\(\vvec{x}^*\)</span>.
-        Das geht ziemlich analog zu der Bedindung für Minima/Maxima einer
-        differenzierbaren Funktionen <span class="math inline">\(f\)</span> :
+        Das geht ziemlich analog zu der Bedingung für Minima/Maxima einer
+        differenzierbaren Funktion <span class="math inline">\(f\)</span> :
         <span class="math display"
           >\[\begin{align} \vvec{0} = \frac{df}{d\vvec{x}}(\vvec{x}^*)
           \label{eq:optimality-difffunc} \end{align}\]</span
@@ -991,7 +992,7 @@
         sondern auch <strong>ganze Mengen</strong> von solchen Steigungen. Das
         heisst, das Subdifferential an einem Punkt ist eine Menge aller
         Gradienten an diesen Punkt der Funktion. Das heisst direkt, dass eine
-        Gleicheit zu <span class="math inline">\(\vvec{0}\)</span> wie in
+        Gleichheit zu <span class="math inline">\(\vvec{0}\)</span> wie in
         <span class="math inline">\(\eqref{eq:optimality-difffunc}\)</span>
         nicht mehr richtig wäre und hier eine Mengen-Inklusion
         <span class="math inline">\(\vvec{0} \in \dots\)</span> stehen muss.
@@ -1187,8 +1188,8 @@ Some special text here.</code></pre>
         />
         <figcaption aria-hidden="true">Pandoc User’s Guide</figcaption>
       </figure>
-      <h2 data-number="2.4" id="questionaire-sample">
-        <span class="header-section-number">2.4</span> Questionaire Sample
+      <h2 data-number="2.4" id="questionnaire-sample">
+        <span class="header-section-number">2.4</span> Questionnaire Sample
       </h2>
       <h3 class="unnumbered unlisted" id="personal">Personal</h3>
       <ul>
@@ -1218,7 +1219,7 @@ Some special text here.</code></pre>
           <label><input type="checkbox" />medium hard</label>
         </li>
         <li>
-          <label><input type="checkbox" />ridiculuous hard</label>
+          <label><input type="checkbox" />ridiculous hard</label>
         </li>
       </ul>
       <h3
@@ -1253,8 +1254,8 @@ Some special text here.</code></pre>
       <div>
         <ul>
           <li>Included html file as <code>html</code>.</li>
-          <li>Markdown citations/cross refeferences do not work inside.</li>
-          <li>HTML citations dont work.</li>
+          <li>Markdown citations/cross references do not work inside.</li>
+          <li>HTML citations don’t work.</li>
           <li>
             Table caption is not parsed <code>table_caption</code> not allowed
             as extension.
@@ -1347,8 +1348,8 @@ Some special text here.</code></pre>
         <li>Included markdown file.</li>
         <li>Cross references do work here inside.</li>
       </ul>
-      <h4 data-number="2.5.2.1" id="multline-table">
-        <span class="header-section-number">2.5.2.1</span> Multline Table
+      <h4 data-number="2.5.2.1" id="multiline-table">
+        <span class="header-section-number">2.5.2.1</span> Multiline Table
       </h4>
       <table style="width: 85%">
         <caption>

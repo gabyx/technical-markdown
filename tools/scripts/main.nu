@@ -1,21 +1,5 @@
 #!/usr/bin/env nu
 
-# Build tasks for `src/techmd`, ported from `src/techmd/build.gradle.kts`.
-#
-# Standalone Nushell script: `nu tools/scripts/build.nu <subcommand>`.
-# See `docs/superpowers/specs/2026-07-01-build-nu-port-design.md`.
-#
-# Tools are provided externally (Nix dev shell / your environment) and invoked
-# by bare name from PATH: pandoc, python, lessc, browser-sync, latexmk.
-# The Gradle `initBuild` (yarn install) and `defineEnvironment` tasks are
-# intentionally dropped.
-
-# ---------------------------------------------------------------------------
-# Logging  --  simple colored log helpers, written to stderr.
-# Namespaced as `log <level>` (Nu already has a builtin `debug` command).
-# `log debug` only prints when TECHMD_DEBUG is truthy (1/true/yes/on).
-# ---------------------------------------------------------------------------
-
 def debug-enabled [] {
     ($env.TECHMD_DEBUG? | default "false" | str downcase) in ["1" "true" "yes" "on"]
 }
@@ -49,10 +33,6 @@ if not ($env.TECHMD_INSIDE_SHELL? | default "false" | into bool) {
 }
 
 const tooling_input = ["tools/**"]
-
-# ---------------------------------------------------------------------------
-# Paths
-# ---------------------------------------------------------------------------
 
 # Resolve all project paths from the repo root.
 #
@@ -103,7 +83,6 @@ def project-settings [] {
 # NOTE: The caching logic is implemented but its invocation is commented out in
 # every task for now, so tasks always run.
 # ---------------------------------------------------------------------------
-
 def has-glob [p: string] {
     ($p | str contains "*") or ($p | str contains "?") or ($p | str contains "[")
 }
@@ -524,7 +503,7 @@ def task-package-html [] {
 }
 
 # ---------------------------------------------------------------------------
-# Watch  --  rebuild the PDF whenever a watched folder changes (uses watchman).
+# Watch  --  rebuild the target whenever a watched folder changes (uses watchman).
 # ---------------------------------------------------------------------------
 
 # Rebuild, but never let a failed build kill the watch loop.
@@ -606,6 +585,65 @@ def task-setup [] {
     log info "Created all root files."
 }
 
+# `git config <key>`, returning the empty string when the key is unset.
+def git-config [key: string] {
+    (^git config $key | complete).stdout | str trim
+}
+
+# ---------------------------------------------------------------------------
+# Git LFS check
+# ---------------------------------------------------------------------------
+def check-git-lfs [] {
+    log info "Checking Git LFS files..."
+
+    let root = (^git rev-parse --show-toplevel | str trim)
+    cd $root
+
+    # We do not have any commits yet -> nothing to check.
+    if (^git log -1 | complete).exit_code != 0 {
+        return
+    }
+
+    if (^git lfs --version | complete).exit_code != 0 {
+        die $"You need to install Git LFS."
+    }
+
+    let filters_ok = (
+        (git-config "filter.lfs.process" | is-not-empty) and
+        (git-config "filter.lfs.smudge" | is-not-empty) and
+        (git-config "filter.lfs.clean" | is-not-empty)
+    )
+    if not $filters_ok {
+        let lfs_env = (^git lfs env | complete).stdout
+        die $"Git LFS seems installed but the filters are not configured correctly.\n($lfs_env)."
+    }
+
+    let fsck = (^git lfs fsck | complete)
+    if $fsck.exit_code != 0 {
+        let out = $"($fsck.stdout)($fsck.stderr)"
+        die ([
+            "You committed files which should be in Git LFS but are not:"
+            "-- 'git lfs fsck' output:"
+            ""
+            $out
+            ""
+            "Ensure the following to make this test pass:"
+            ""
+            "1. You need to install Git LFS on your system."
+            ""
+            "2. You NEED to rewrite the history on your branch."
+            "   Do that by rebasing your branch on to the target branch with:"
+            ""
+            "   'git rebase -i $(git merge-base HEAD origin/main)' and "
+            "   'git push --force-with-lease'"
+            ""
+            "   to upload all files to Git LFS and check again."
+        ] | str join "\n")
+    } else {
+        log info "No Git LFS errors. All files in Git LFS!"
+    }
+}
+
 # ---------------------------------------------------------------------------
 # CLI subcommands
 # ---------------------------------------------------------------------------
@@ -619,6 +657,8 @@ def "main watch" [target: string] { task-watch $target }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
 def "main setup" [] { task-setup }
+
+def "main check-git-lfs" [] { check-git-lfs }
 
 # List available tasks.
 def main [] {
