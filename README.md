@@ -27,18 +27,15 @@ technical documents:**
 
 - **fully automated conversion sequence** with
   [`pandoc`](https://github.com/jgm/pandoc) such that exporting
-  ([content.md](https://raw.githubusercontent.com/gabyx/TechnicalMarkdown/master/content.md))
-  is done in the background:
+  ([content.md](src/techmd/content.md)) is done in the background:
   - **export to PDF** with `pandoc` to `xelatex` using `latexmk`
-    [See Output](docs/output/techmd/Content.pdf)
+    [See Output](docs/techmd/pdf/content.pdf)
   - **export to HTML** with `pandoc` to `html`
-    [See Output](https://gabyx.github.io/technical-markdown/docs/html-package/techmd/Content.html)
-  - [todo] **export to PDF** with `pandoc` to `html` then to `chrome` with
-    `pupeteer`
+    [See Output](docs/techmd/html/content.html)
 
 - **[pandoc filters](https://pandoc.org/filters.html)** for different AST
   (abstract syntax tree) conversions:
-  - [own filters](https://github.com/gabyx/TechnicalMarkdown/tree/master/tools/convert/filters)
+  - [own filters](https://github.com/gabyx/technical-markdown/tree/master/tools/convert/filters)
     with [panflute](https://github.com/sergiocorreia/panflute)
     [[doc](http://scorreia.com/software/panflute)]
   - [--crosscite](https://github.com/jgm/pandoc-citeproc)

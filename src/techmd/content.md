@@ -52,7 +52,7 @@ ${env:TECHMD_ROOT_DIR}/chapters/acknowledgement.md
 # Intro
 
 Read the
-[Readme.md](https://github.com/gabyx/TechnicalMarkdown/blob/master/Readme.md)
+[Readme.md](https://github.com/gabyx/technical-markdown/blob/master/Readme.md)
 for further information.
 
 # Samples

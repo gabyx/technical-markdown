@@ -60,20 +60,16 @@ const tooling_input = ["tools/**"]
 # (empty string falls back to the default, matching `getEnvDirOrDefault`).
 def project-settings [] {
     let root = (^git rev-parse --show-toplevel | str trim)
-
-    let tools_default = $root | path join "tools"
-    let convert_default = $root | path join "tools/convert"
-
-    let tools_env = $env.TECHMD_TOOLS_DIR? | default ""
-    let convert_env = $env.TECHMD_CONVERT_DIR? | default ""
-
-    let tools_dir = (if $tools_env == "" { $tools_default } else { $tools_env })
-    let convert_dir = (if $convert_env == "" { $convert_default } else { $convert_env })
-
-    let build_dir = $env.TECHMD_OUTPUT_DIR? | default ($root | path join ".output/build/techmd")
-    let build_dir_tex = $build_dir | path join "output-tex"
-    let project_dir = $root | path join "src/techmd"
     let project_name = $env.TECHMD_PROJECT_NAME? | default "techmd"
+
+    let tools_dir = $env.TECHMD_TOOLS_DIR? | default ($root | path join "tools")
+    let convert_dir = $env.TECHMD_CONVERT_DIR? | default ($tools_dir | path join "convert")
+    let output_dir = $env.TECHMD_OUTPUT_DIR? | default ($root | path join ".output")
+
+    let project_dir = $root | path join "src" $project_name
+    let build_dir = $output_dir | path join "build" $project_name
+    let package_dir = $output_dir | path join "package" $project_name
+    let build_dir_tex = $build_dir | path join "output-tex"
 
     let filters = $convert_dir | path join "filters"
     let lua_path = $"($filters)/?;($filters)/?.lua;($env.LUA_PATH? | default '')"
@@ -86,12 +82,13 @@ def project-settings [] {
 
     return {
         root: $root
+        project_name: $project_name
         project_dir: $project_dir
         tools_dir: $tools_dir
         convert_dir: $convert_dir
+        package_dir: $package_dir
         build_dir: $build_dir
         build_dir_tex: $build_dir_tex
-        project_name: $project_name
         filters: $filters
         lua_path: $lua_path
         pythonpath: $pythonpath
@@ -489,16 +486,11 @@ def task-package-html [] {
     task-build-html
 
     let p = (project-settings)
-    let dst = $p.root | path join "docs/html-package" $p.project_name
+    let dst = $p.package_dir | path join "html"
+    log info $"Packaging HTML to '($dst)'."
 
-    let inputs = [
-        ($p.build_dir | path join "content.html")
-        ($p.build_dir | path join "css/**/*")
-        ($p.build_dir | path join "files/**/*")
-    ]
-    let outputs = [
-        ($dst | path join "content.html")
-    ]
+    let inputs = [$p.build_dir]
+    let outputs = [$dst]
     if (up-to-date $inputs $outputs "package-html") {
         return
     }
@@ -506,25 +498,29 @@ def task-package-html [] {
     mkdir $dst
 
     let content = $p.build_dir | path join "content.html"
-    if ($content | path exists) { cp $content $dst }
+    cp $content $dst
 
-    let css = $p.build_dir | path join "css"
-    if ($css | path exists) {
-        let css_dst = $dst | path join "css"
-        if ($css_dst | path exists) { rm -rf $css_dst }
-        cp -r $css $dst
+    let dirs = [
+        ($p.build_dir | path join "css")
+        ($p.build_dir | path join "files")
+    ]
+
+    for d in $dirs {
+        if ($d | path exists) {
+            let name = $d | path basename
+            let $dst_new = $dst | path join $name
+            log info $"Copy '($d)' to '($dst_new)'."
+
+            if ($dst_new | path exists) { rm -rf $dst_new }
+            cp -r $d $dst_new
+
+            # exclude files/generated/**
+            let gen = $dst_new | path join "generated"
+            if ($gen | path exists) { rm -rf $gen }
+        }
     }
 
-    let files = $p.build_dir | path join "files"
-    if ($files | path exists) {
-        let files_dst = $dst | path join "files"
-        if ($files_dst | path exists) { rm -rf $files_dst }
-        cp -r $files $dst
-
-        # exclude files/generated/**
-        let gen = $files_dst | path join "generated"
-        if ($gen | path exists) { rm -rf $gen }
-    }
+    log info $"Packaging HTML to '($dst)' finished."
 }
 
 # ---------------------------------------------------------------------------

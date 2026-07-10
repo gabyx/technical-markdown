@@ -17,20 +17,32 @@
       span.smallcaps {
         font-variant: small-caps;
       }
-      span.underline {
-        text-decoration: underline;
+      div.columns {
+        display: flex;
+        gap: min(4vw, 1.5em);
       }
       div.column {
-        display: inline-block;
-        vertical-align: top;
-        width: 50%;
+        flex: auto;
+        overflow-x: auto;
       }
       div.hanging-indent {
         margin-left: 1.5em;
         text-indent: -1.5em;
       }
-      ul.task-list {
+      /* The extra [class] is a hack that increases specificity enough to
+         override a similar rule in reveal.js */
+      ul.task-list[class] {
         list-style: none;
+      }
+      ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      html {
+        -webkit-text-size-adjust: 100%;
       }
       pre > code.sourceCode {
         white-space: pre;
@@ -118,7 +130,7 @@
         font-style: italic;
       } /* Annotation */
       code span.at {
-        color: #c4a000;
+        color: #204a87;
       } /* Attribute */
       code span.bn {
         color: #0000cf;
@@ -131,7 +143,7 @@
         color: #4e9a06;
       } /* Char */
       code span.cn {
-        color: #000000;
+        color: #8f5902;
       } /* Constant */
       code span.co {
         color: #8f5902;
@@ -163,7 +175,8 @@
         color: #0000cf;
       } /* Float */
       code span.fu {
-        color: #000000;
+        color: #204a87;
+        font-weight: bold;
       } /* Function */
       code span.im {
       } /* Import */
@@ -188,7 +201,8 @@
         font-style: italic;
       } /* Preprocessor */
       code span.sc {
-        color: #000000;
+        color: #ce5c00;
+        font-weight: bold;
       } /* SpecialChar */
       code span.ss {
         color: #4e9a06;
@@ -207,12 +221,14 @@
         font-weight: bold;
         font-style: italic;
       } /* Warning */
+      /* CSS for citations */
       div.csl-bib-body {
       }
       div.csl-entry {
         clear: both;
+        margin-bottom: 0em;
       }
-      .hanging div.csl-entry {
+      .hanging-indent div.csl-entry {
         margin-left: 2em;
         text-indent: -2em;
       }
@@ -445,12 +461,12 @@
         <div class="title-block">
           <h1 class="title">Technical Documents</h1>
           <h3 class="subtitle">
-            Demonstrating the Power of Markdown with Pandoc
+            Demonstrating the Power of Markdown with Pandoc (v3)
           </h3>
           <p class="author">
             <strong>Authors: </strong>Gabriel Nützi, The Community
           </p>
-          <p class="date"><strong>Date: </strong>2. December 2020</p>
+          <p class="date"><strong>Date: </strong>10. July 2026</p>
           <p class="location"><strong>Location: </strong>Zürich, Switzerland</p>
         </div>
         <div class="title-logo">
@@ -468,7 +484,7 @@
         </p>
       </div>
       <div class="acknowledgement">
-        <div class="acknowledgement-title">Acknowledgement</div>
+        <div class="acknowledgement-title">Thanks</div>
         <p>Acknowledgements go to the authors of this setup.</p>
       </div>
       <div id="nav-content">
@@ -476,35 +492,35 @@
         <nav id="TOC">
           <ul>
             <li>
-              <a href="#intro"
+              <a href="#intro" id="toc-intro"
                 ><span class="toc-section-number">1</span> Intro</a
               >
             </li>
             <li>
-              <a href="#samples"
+              <a href="#samples" id="toc-samples"
                 ><span class="toc-section-number">2</span> Samples</a
               >
               <ul>
                 <li>
-                  <a href="#konvexe-probleme"
+                  <a href="#konvexe-probleme" id="toc-konvexe-probleme"
                     ><span class="toc-section-number">2.1</span> Konvexe
                     Probleme</a
                   >
                   <ul>
                     <li>
-                      <a href="#konvexe-menge"
+                      <a href="#konvexe-menge" id="toc-konvexe-menge"
                         ><span class="toc-section-number">2.1.1</span> Konvexe
                         Menge</a
                       >
                     </li>
                     <li>
-                      <a href="#proximaler-punkt"
+                      <a href="#proximaler-punkt" id="toc-proximaler-punkt"
                         ><span class="toc-section-number">2.1.2</span>
                         Proximaler Punkt</a
                       >
                     </li>
                     <li>
-                      <a href="#normalkegel"
+                      <a href="#normalkegel" id="toc-normalkegel"
                         ><span class="toc-section-number">2.1.3</span>
                         Normalkegel</a
                       >
@@ -512,6 +528,7 @@
                     <li>
                       <a
                         href="#zusammenhang-von-normalkegel-und-proximaler-punkt"
+                        id="toc-zusammenhang-von-normalkegel-und-proximaler-punkt"
                         ><span class="toc-section-number">2.1.4</span>
                         Zusammenhang von Normalkegel und Proximaler Punkt</a
                       >
@@ -519,6 +536,7 @@
                     <li>
                       <a
                         href="#zusammenhang-von-normalkegel-und-konvexer-optimierung"
+                        id="toc-zusammenhang-von-normalkegel-und-konvexer-optimierung"
                         ><span class="toc-section-number">2.1.5</span>
                         Zusammenhang von Normalkegel und Konvexer Optimierung</a
                       >
@@ -526,35 +544,35 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#code-sample"
+                  <a href="#code-sample" id="toc-code-sample"
                     ><span class="toc-section-number">2.2</span> Code Sample</a
                   >
                 </li>
                 <li>
-                  <a href="#pdf-include-sample"
+                  <a href="#pdf-include-sample" id="toc-pdf-include-sample"
                     ><span class="toc-section-number">2.3</span> PDF Include
                     Sample</a
                   >
                 </li>
                 <li>
-                  <a href="#questionaire-sample"
+                  <a href="#questionaire-sample" id="toc-questionaire-sample"
                     ><span class="toc-section-number">2.4</span> Questionaire
                     Sample</a
                   >
                 </li>
                 <li>
-                  <a href="#tables"
+                  <a href="#tables" id="toc-tables"
                     ><span class="toc-section-number">2.5</span> Tables</a
                   >
                   <ul>
                     <li>
-                      <a href="#html-table"
+                      <a href="#html-table" id="toc-html-table"
                         ><span class="toc-section-number">2.5.1</span> HTML
                         Table</a
                       >
                     </li>
                     <li>
-                      <a href="#sec:tables"
+                      <a href="#sec:tables" id="toc-sec:tables"
                         ><span class="toc-section-number">2.5.2</span> Markdown
                         Tables</a
                       >
@@ -563,7 +581,7 @@
                 </li>
               </ul>
             </li>
-            <li><a href="#references">References</a></li>
+            <li><a href="#references" id="toc-references">References</a></li>
           </ul>
         </nav>
       </div>
@@ -595,10 +613,10 @@
       <p>
         Read the
         <a
-          href="https://github.com/gabyx/TechnicalMarkdown/blob/master/Readme.md"
+          href="https://github.com/gabyx/technical-markdown/blob/master/Readme.md"
           >Readme.md</a
         >
-        for futher information.
+        for further information.
       </p>
       <h1 data-number="2" id="samples">
         <span class="header-section-number">2</span> Samples
@@ -661,6 +679,8 @@
         also ein Teilmenge eines Vektorraums
         <span class="math inline">\(V\)</span>, wird
         <strong>konvex</strong> genannt, falls und nur falls
+      </p>
+      <p>
         <span class="math display"
           >\[\begin{align} \lambda \vvec{a} + (1-\lambda) \vvec{b} \in \set{C}
           \quad \forall \vvec{a},\vvec{b} \in \set{C}, \ \lambda \in [0,1] \ .
@@ -782,10 +802,9 @@
         konvexe Menge <span class="math inline">\(\set{C}\)</span> die
         verschiedenen Normalkegel.
       </p>
-      <figure>
+      <figure id="fig:normalcone">
         <img
-          src="files/NormalKegel.svg"
-          id="fig:normalcone"
+          src="files/normal-cone.svg"
           style="width: 100%; max-width: 7cm"
           alt="Figure 1: Normalkegel an die Punkte \vvec{x}, \vvec{y} und \vvec{z}. Der Normalkegel an einen innerhalb der Menge \set{C} liegenden Punkt \vvec{z} degeneriert zum \vvec{0}-Vektor. Der Vektor \vvec{v} ist in der Menge des Normalkegels an \vvec{x}."
         />
@@ -864,10 +883,9 @@
         <span class="math inline">\(2\)</span>d-Dreieck herleiten, würden wir
         folgendes Bild malen:
       </p>
-      <figure>
+      <figure id="fig:normalconetri">
         <img
-          src="files/NormalKegelDreieck.svg"
-          id="fig:normalconetri"
+          src="files/normal-cone-triangle.svg"
           style="width: 100%; max-width: 7cm"
           alt="Figure 2: Normalkegel an die Punkte \vvec{a}, \vvec{b} und \vvec{c} eines Dreiecks."
         />
@@ -1016,10 +1034,9 @@
         Das bringt uns nicht viel mehr ausser einer visuellen Erkenntnis durch
         folgende Visualisierung:
       </p>
-      <figure>
+      <figure id="fig:convex-opt-prob">
         <img
-          src="files/ConvexOptimizationProblem.svg"
-          id="fig:convex-opt-prob"
+          src="files/convex-optimization-problem.svg"
           style="width: 100%; max-width: 100%"
           alt="Figure 3: Konvexes Optimierungs Problem innerhalb der Menge \set{C} auf einer 2d-Funktion f(\vvec{x}) \in \mathbb{R}. Der negative Gradient liegt im Optimum \vvec{x}^* genau innerhalb des Normalkegels an \vvec{x}^*."
         />
@@ -1150,7 +1167,10 @@
 <span id="cb1-91"><a href="#cb1-91"></a><span class="op">};</span></span></code></pre>
       </div>
       <p>A normal code block without syntax highlighting:</p>
-      <pre><code>Some special text here.</code></pre>
+      <pre><code>Some special text here. Some special text here.
+Some special text here. Some special text here.
+Some special text here. Some special text here.
+Some special text here.</code></pre>
       <h2 data-number="2.3" id="pdf-include-sample">
         <span class="header-section-number">2.3</span> PDF Include Sample
       </h2>
@@ -1160,10 +1180,10 @@
       </p>
       <figure>
         <embed
-          src="files/PandocUsersGuide.pdf"
+          src="files/pandoc-users-guide.pdf"
           class="includepdf"
-          data-pages="5-"
           style="width: 100%; height: 20cm; max-width: 100%"
+          data-pages="5-"
         />
         <figcaption aria-hidden="true">Pandoc User’s Guide</figcaption>
       </figure>
@@ -1191,9 +1211,15 @@
         How hard is Markdown?
       </h3>
       <ul class="task-list">
-        <li><input type="checkbox" disabled="" /> easy</li>
-        <li><input type="checkbox" disabled="" /> medium hard</li>
-        <li><input type="checkbox" disabled="" /> ridiculuous hard</li>
+        <li>
+          <label><input type="checkbox" />easy</label>
+        </li>
+        <li>
+          <label><input type="checkbox" />medium hard</label>
+        </li>
+        <li>
+          <label><input type="checkbox" />ridiculuous hard</label>
+        </li>
       </ul>
       <h3
         class="unnumbered unlisted"
@@ -1247,7 +1273,7 @@
             <col style="width: 30%" />
           </colgroup>
           <thead>
-            <tr class="header">
+            <tr>
               <th><strong>Fruits asd</strong></th>
               <th><strong>Vegetables</strong></th>
               <th><strong>Constraints</strong></th>
@@ -1255,13 +1281,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="odd">
+            <tr>
               <td>Pre</td>
               <td>Zuccini</td>
               <td>ripe</td>
               <td>long</td>
             </tr>
-            <tr class="even">
+            <tr>
               <td>First</td>
               <td>
                 <ol>
@@ -1270,23 +1296,27 @@
                 </ol>
               </td>
               <td>
-                <dl>
-                  <dt>Definition 1</dt>
-                  <dd>
-                    <span class="math inline"
-                      >\(\int_0^1{x^2} := \frac{1}{3}\)</span
-                    >
-                  </dd>
-                  <dt>Definition 2</dt>
-                  <dd>
-                    <span class="math inline">\(x^2\)</span> is a squared
-                    variable
-                  </dd>
-                </dl>
+                <ul>
+                  <li>
+                    <dl>
+                      <dt>Definition 1</dt>
+                      <dd>
+                        <span class="math inline"
+                          >\(\int_0^1{x^2} := \frac{1}{3}\)</span
+                        >
+                      </dd>
+                      <dt>Definition 2</dt>
+                      <dd>
+                        <span class="math inline">\(x^2\)</span> is a squared
+                        variable
+                      </dd>
+                    </dl>
+                  </li>
+                </ul>
               </td>
               <td></td>
             </tr>
-            <tr class="odd">
+            <tr>
               <td>Second</td>
               <td>
                 <ul>
@@ -1331,7 +1361,7 @@
           <col style="width: 32%" />
         </colgroup>
         <tbody>
-          <tr class="odd">
+          <tr>
             <td style="text-align: center">First</td>
             <td style="text-align: left">row</td>
             <td style="text-align: right">12.0</td>
@@ -1339,7 +1369,7 @@
               Example of a row that spans multiple lines.
             </td>
           </tr>
-          <tr class="even">
+          <tr>
             <td style="text-align: center">Second</td>
             <td style="text-align: left">row</td>
             <td style="text-align: right">5.0</td>
@@ -1360,14 +1390,14 @@
           <col style="width: 28%" />
         </colgroup>
         <thead>
-          <tr class="header">
+          <tr>
             <th>Fruit</th>
             <th>Price</th>
             <th>Advantages</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="odd">
+          <tr>
             <td>Bananas</td>
             <td>$1.34</td>
             <td>
@@ -1377,7 +1407,7 @@
               </ul>
             </td>
           </tr>
-          <tr class="even">
+          <tr>
             <td>Oranges</td>
             <td>$2.10</td>
             <td>
@@ -1410,7 +1440,7 @@
           <col style="width: 16%" />
         </colgroup>
         <thead>
-          <tr class="header">
+          <tr>
             <th style="text-align: left">Key</th>
             <th style="text-align: left">Name</th>
             <th style="text-align: center">Italic</th>
@@ -1418,18 +1448,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="odd">
+          <tr>
             <th style="text-align: left">A</th>
             <td style="text-align: left">
               This is some random text to demonstrate line breaks across cells.
               And it should happen.
             </td>
-            <td style="text-align: center" rowspan="2">
+            <td rowspan="2" style="text-align: center">
               <code>*italic*</code>
             </td>
             <td style="text-align: center"><code>`code`</code></td>
           </tr>
-          <tr class="even">
+          <tr>
             <th style="text-align: left">B</th>
             <td style="text-align: left">
               This is some random text to demonstrate line breaks across cells.
@@ -1440,12 +1470,13 @@
         </tbody>
       </table>
       <h1 class="unnumbered" id="references">References</h1>
-      <div id="refs" class="references csl-bib-body" role="doc-bibliography">
-        <div
-          id="ref-nuetzig_thesis_2016"
-          class="csl-entry"
-          role="doc-biblioentry"
-        >
+      <div
+        id="refs"
+        class="references csl-bib-body"
+        data-entry-spacing="0"
+        role="list"
+      >
+        <div id="ref-nuetzig_thesis_2016" class="csl-entry" role="listitem">
           <div class="csl-left-margin">[1]</div>
           <div class="csl-right-inline">
             G. Nützi,
@@ -1457,11 +1488,7 @@
             >, PhD thesis, ETH Zurich; ETH Zürich, Zürich, 2016.
           </div>
         </div>
-        <div
-          id="ref-rockafellar_convex_2015"
-          class="csl-entry"
-          role="doc-biblioentry"
-        >
+        <div id="ref-rockafellar_convex_2015" class="csl-entry" role="listitem">
           <div class="csl-left-margin">[2]</div>
           <div class="csl-right-inline">
             R. T. Rockafellar, <em>Convex analysis</em>. Princeton: Princeton

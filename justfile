@@ -60,3 +60,13 @@ serve *args:
 [private]
 main *args:
     nu tools/scripts/main.nu "$@"
+
+[group('maintenance')]
+[private]
+publish *args:
+    just main package-html
+    cp -r "{{output_dir}}/package/techmd" docs
+
+    just build pdf
+    mkdir -p docs/techmd/pdf
+    cp -r "{{build_dir}}/techmd/content.pdf" docs/techmd/pdf/content.pdf

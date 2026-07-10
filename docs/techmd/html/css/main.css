@@ -166,6 +166,7 @@
   font-weight: 900;
   font-style: italic;
 }
+
 /* General defines for the document */
 /* Image with caption */
 /**
@@ -918,6 +919,10 @@ html #main-markdown pre:not(.sourceCode) {
   border-width: 1.5pt;
   margin: 0.5ex;
   border-radius: 5pt;
+  overflow: auto;
+}
+html #main-markdown pre:not(.sourceCode) code {
+  white-space: pre;
 }
 html #main-markdown pre.numberSource {
   margin-left: 2em;
@@ -1436,6 +1441,10 @@ html #main-markdown-numbered pre:not(.sourceCode) {
   border-width: 1.5pt;
   margin: 0.5ex;
   border-radius: 5pt;
+  overflow: auto;
+}
+html #main-markdown-numbered pre:not(.sourceCode) code {
+  white-space: pre;
 }
 html #main-markdown-numbered pre.numberSource {
   margin-left: 2em;
