@@ -25,5 +25,6 @@
 .prettierrc.yaml
 .yamllint.yaml
 .typos.toml
+.stylelue.toml
 
 __pycache*

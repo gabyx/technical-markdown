@@ -12,12 +12,8 @@
         {
           imports = [
             inputs.services-flake.processComposeModules.default
-            ./all.nix
-
-            inputs.services-flake.services.garage
+            ./serve.nix
           ];
-
-          garage.enable = true;
 
           cli.options = {
             keep-project = true;

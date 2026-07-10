@@ -24,8 +24,7 @@ format *args:
 
 # Setup the project.
 setup *args:
-    cd "{{root_dir}}" && ./tools/scripts/setup.sh
-
+    nu tools/scripts/build.nu setup
 
 # Run commands over the ci development shell.
 ci *args:
@@ -36,17 +35,22 @@ clean:
    rm -rf .output
 
 # Lint the project.
-[group('general')]
+[group('lint')]
 lint *args:
     echo "TODO: Not implemented"
 
 # Build.
-[group('general')]
+[group('build')]
 build *args:
     nu tools/scripts/build.nu "$@"
 
+[group('build')]
+[private]
+watch *args:
+    nu tools/scripts/build.nu watch "$@"
+
 # Run the markdown render services.
-[group('general')]
+[group('build')]
 serve *args:
     #!/usr/bin/env bash
     nix run --show-trace -L "{{flake_dir}}#serve" -- -U "$@"

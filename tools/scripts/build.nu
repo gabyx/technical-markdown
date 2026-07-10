@@ -35,6 +35,11 @@ def "log debug" [msg: string] {
         print --stderr $"🌻 (ansi magenta_bold)DEBUG(ansi reset) ($msg)"
     }
 }
+def "die" [msg: string] {
+    log error $msg
+
+    exit 1
+}
 
 def print-cmd [cmd: list<string>] {
     print $"Cmd: ($cmd | str join ' ')"
@@ -50,7 +55,7 @@ const tooling_input = ["tools/**"]
 #
 # Reproduces the Gradle `TECHMD_CONVERT_DIR` / `TECHMD_TOOLS_DIR` env overrides
 # (empty string falls back to the default, matching `getEnvDirOrDefault`).
-def repo-paths [] {
+def project-settings [] {
     let root = (^git rev-parse --show-toplevel | str trim)
 
     let tools_default = $root | path join "tools"
@@ -71,8 +76,10 @@ def repo-paths [] {
     let lua_path = $"($filters)/?;($filters)/?.lua;($env.LUA_PATH? | default '')"
     let pythonpath = $"($filters):($env.PYTHONPATH? | default '')"
 
-    let fail_if_warning = $env.FAIL_IF_WARNING | default "false" | into bool
-    let verbose = $env.VERBOSE | default "false" | into bool
+    let fail_if_warning = $env.FAIL_IF_WARNING? | default "false" | into bool
+    let verbose = $env.VERBOSE? | default "false" | into bool
+
+    let watch_dirs = [$project_dir $convert_dir $tools_dir]
 
     return {
         root: $root
@@ -85,6 +92,7 @@ def repo-paths [] {
         filters: $filters
         lua_path: $lua_path
         pythonpath: $pythonpath
+        watch_dirs: $watch_dirs
         fail_if_warning: $fail_if_warning
         verbose: $verbose
     }
@@ -204,7 +212,7 @@ def run-pandoc [
     fail_if_warning: bool
     additional_args: list<string>
 ] {
-    let p = (repo-paths)
+    let p = (project-settings)
 
     mkdir $p.build_dir
     if $export_type in ["pdf" "latex"] {
@@ -259,7 +267,7 @@ def run-pandoc [
 
 # compileLess: compile main.less -> convert/css/main.css
 def task-compile-less [] {
-    let p = (repo-paths)
+    let p = (project-settings)
     let src_dir = $p.convert_dir | path join "css/src"
     let main_less = $src_dir | path join "main.less"
     let css_file = $p.convert_dir | path join "css/main.css"
@@ -278,7 +286,7 @@ def task-compile-less [] {
 def task-copy-less [] {
     task-compile-less
 
-    let p = repo-paths
+    let p = project-settings
     let css_file = $p.convert_dir | path join "css/main.css"
     let dst = $p.build_dir | path join "css/main.css"
 
@@ -295,7 +303,7 @@ def task-copy-less [] {
 
 # copyAssets: copy src/techmd/files -> build/files
 def task-copy-assets [] {
-    let p = (repo-paths)
+    let p = (project-settings)
     let src = $p.project_dir | path join "files"
     let dst = $p.build_dir | path join "files"
 
@@ -311,7 +319,7 @@ def task-copy-assets [] {
 
 # convert-tables: run the table conversion python script.
 def task-convert-tables [] {
-    let p = (repo-paths)
+    let p = (project-settings)
     let script = $p.convert_dir | path join "scripts/convert-tables.py"
     let config = $p.project_dir | path join "includes/convert-tables.json"
 
@@ -345,7 +353,7 @@ def task-convert-tables [] {
 # transform-math: includes/Math.html -> includes/generated/Math.tex,
 # keeping only lines that start with a backslash.
 def task-transform-math [] {
-    let p = (repo-paths)
+    let p = (project-settings)
     let src = $p.project_dir | path join "includes/math.html"
     let out_dir = $p.project_dir | path join "includes/generated"
     let out = $out_dir | path join "math.tex"
@@ -368,9 +376,9 @@ def task-build-html [] {
     task-copy-less
     task-copy-assets
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let input = $p.project_dir | path join "content.md"
-    let output = $p.build_dir | path join "Content.html"
+    let output = $p.build_dir | path join "content.html"
     (run-pandoc
         "md -> html"
         $input
@@ -387,9 +395,9 @@ def task-build-pdf [] {
     task-convert-tables
     task-transform-math
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let input = $p.project_dir | path join "content.md"
-    let output = $p.build_dir | path join "Content.pdf"
+    let output = $p.build_dir | path join "content.pdf"
     (run-pandoc
         "md -> latex -> pdf"
         $input
@@ -405,9 +413,9 @@ def task-build-json [] {
     task-convert-tables
     task-transform-math
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let input = $p.project_dir | path join "content.md"
-    let output = $p.build_dir | path join "Content.json"
+    let output = $p.build_dir | path join "content.json"
     (run-pandoc
         "md -> pandoc AST -> json"
         $input
@@ -425,9 +433,9 @@ def task-build-native [] {
     task-convert-tables
     task-transform-math
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let input = $p.project_dir | path join "content.md"
-    let output = $p.build_dir | path join "Content.native"
+    let output = $p.build_dir | path join "content.native"
 
     (run-pandoc
         "md -> pandoc AST -> native"
@@ -444,7 +452,7 @@ def task-build-latex [] {
     task-convert-tables
     task-transform-math
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let input = $p.project_dir | path join "content.md"
     let output = $p.build_dir | path join "output-tex/input.tex"
     (run-pandoc
@@ -461,34 +469,32 @@ def task-build-latex [] {
 # view-html: serve the built HTML with live reload.
 # Config path corrected per spec §8.2 (real location under tools/gradle).
 def task-view-html [] {
-    let p = (repo-paths)
+    let p = (project-settings)
     let config = $p.tools_dir | path join "gradle/browser-sync-config.js"
-    let html = $p.build_dir | path join "Content.html"
+    let html = $p.build_dir | path join "content.html"
 
-    cd $p.project_dir
+    cd $p.build_dir
     (^browser-sync start
         --server
-        --config $config
         --files $html
         --files "**/*.css"
-        --startPath "build"
-        --index "Content.html")
+        --index "content.html")
 }
 
 # package-html: copy the built site into docs/html-package/<name>.
 def task-package-html [] {
     task-build-html
 
-    let p = (repo-paths)
+    let p = (project-settings)
     let dst = $p.root | path join "docs/html-package" $p.project_name
 
     let inputs = [
-        ($p.build_dir | path join "Content.html")
+        ($p.build_dir | path join "content.html")
         ($p.build_dir | path join "css/**/*")
         ($p.build_dir | path join "files/**/*")
     ]
     let outputs = [
-        ($dst | path join "Content.html")
+        ($dst | path join "content.html")
     ]
     if (up-to-date $inputs $outputs "package-html") {
         return
@@ -496,7 +502,7 @@ def task-package-html [] {
 
     mkdir $dst
 
-    let content = $p.build_dir | path join "Content.html"
+    let content = $p.build_dir | path join "content.html"
     if ($content | path exists) { cp $content $dst }
 
     let css = $p.build_dir | path join "css"
@@ -519,38 +525,110 @@ def task-package-html [] {
 }
 
 # ---------------------------------------------------------------------------
+# Watch  --  rebuild the PDF whenever a watched folder changes (uses watchman).
+# ---------------------------------------------------------------------------
+
+# Rebuild, but never let a failed build kill the watch loop.
+def watch-rebuild [rebuild: closure] {
+    try {
+        do $rebuild
+    } catch {|err| log error $"Build failed, waiting for next change ... \(($err.msg)\)" }
+}
+
+# watch: rebuild on every change under the watched folders.
+#
+# Blocks on `watchman-wait` until a change is reported, debounces a burst of
+# writes, then rebuilds. Builds once up front. Defaults to watching the source
+# (`src/techmd`) and conversion (`tools/convert`) folders; pass folders to
+# override, e.g. `nu tools/scripts/build.nu watch src tools`.
+def task-watch [target: string] {
+    let p = (project-settings)
+
+    for d in $p.watch_dirs {
+        if not ($d | path exists) {
+            die $"Watch folder does not exist: '($d)'"
+        }
+    }
+
+    log info "Building once before watching ..."
+
+    let builders = {
+        html: { task-build-html }
+        latex: { task-build-latex }
+        pdf: { task-build-pdf }
+        json: { task-build-json }
+        native: { task-build-native }
+    }
+
+    let builder = $builders | get --optional $target
+    if $builder == null {
+        die $"Target '($target)' is not configured."
+    }
+
+    watch-rebuild $builder
+
+    loop {
+        log info $"Watching for changes: ($p.watch_dirs | str join ', ')"
+        # Block until watchman reports a change. `-m 1` returns on the first
+        # event and `-t 0` waits indefinitely; a burst of writes made during a
+        # build simply queues up and collapses into the next iteration, so no
+        # edit is ever missed.
+        let changed = ["watchman-wait" "-t" "0" "-m" "1"] | append $p.watch_dirs
+        let file = (^$changed | str trim)
+
+        # Debounce: let a burst of writes (editor save + formatter) settle.
+        sleep 300ms
+
+        log info $"Change detected \(($file)\) -> rebuilding ..."
+        watch-rebuild $builder
+    }
+}
+
+def task-setup [] {
+    let p = (project-settings)
+    cd $p.root
+
+    rm -rf ".prettierrc.yaml"
+    ln -s "tools/configs/prettier/prettierrc.yaml" ".prettierrc.yaml"
+
+    rm -rf ".typos.toml"
+    ln -s "tools/configs/typos/typos.toml" ".typos.toml"
+
+    rm -rf ".yamllint.yaml"
+    ln -s "tools/configs/yamllint/yamllint.yaml" ".yamllint.yaml"
+
+    rm -rf ".stylelua.toml"
+    ln -s "tools/configs/lua/stylelua.toml" ".stylelua.toml"
+}
+
+# ---------------------------------------------------------------------------
 # CLI subcommands
 # ---------------------------------------------------------------------------
 
-def "main compile-less" [] { task-compile-less }
-def "main copy-less" [] { task-copy-less }
-def "main copy-assets" [] { task-copy-assets }
-def "main convert-tables" [] { task-convert-tables }
-def "main transform-math" [] { task-transform-math }
 def "main html" [] { task-build-html }
 def "main pdf" [] { task-build-pdf }
 def "main json" [] { task-build-json }
 def "main native" [] { task-build-native }
 def "main latex" [] { task-build-latex }
+def "main watch" [target: string] { task-watch $target }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
+def "main setup" [] { task-setup }
 
 # List available tasks.
 def main [] {
     print "Technical Markdown build tasks (ported from build.gradle.kts):"
     print ""
-    print "  compile-less     Compile main.less -> convert/css/main.css"
-    print "  copy-less        Copy compiled CSS into the build dir"
-    print "  copy-assets      Copy files/ into the build dir"
-    print "  convert-tables   Convert HTML/MD tables to .tex"
-    print "  transform-math   Extract \\ macros from Math.html -> Math.tex"
-    print "  html             md -> html"
-    print "  pdf              md -> latex -> pdf"
-    print "  latex            md -> latex"
-    print "  json             md -> pandoc JSON AST"
-    print "  native             md -> pandoc native AST"
+    print "  html             Build: md -> html"
+    print "  pdf              Build: md -> latex -> pdf"
+    print "  latex            Build: md -> latex"
+    print "  json             Build: md -> pandoc JSON AST"
+    print "  native           Build: md -> pandoc native AST"
+    print "  watch            Watch a build command continuously w."
     print "  view-html        Serve built HTML with browser-sync"
     print "  package-html     Copy built site into docs/html-package/techmd"
+
+    print "  setup            Setup config files and other stuff"
     print ""
     print "Usage: nu tools/scripts/build.nu <task>"
 }

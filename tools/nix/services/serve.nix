@@ -5,7 +5,7 @@
   ...
 }:
 {
-  settings.processes.hello = {
+  settings.processes.serve = {
     command = "${lib.getExe pkgs.cowsay}";
   };
 }

@@ -1,11 +1,11 @@
 ---
 title: "Technical Documents"
 titlepage-logo: "files/logo.svg"
-subtitle: "Demonstrating the Power of Markdown with Pandoc"
+subtitle: "Demonstrating the Power of Markdown with Pandoc (v3)"
 author:
   - "Gabriel Nützi"
   - "The Community"
-date: 2. December 2020
+date: 10. July 2026
 location: Zürich, Switzerland
 
 bibliography: ["literature/bibliography.bib"]
