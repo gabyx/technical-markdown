@@ -25,7 +25,7 @@ Check the [`Changelog.md`](Changelog.md) for the latest changes.
 **This is a markdown setup demonstrating the power and use of markdown for
 technical documents:**
 
-- **fully automated conversion sequence** with
+- **Fully automated conversion sequence** with
   [`pandoc`](https://github.com/jgm/pandoc) such that exporting
   ([content.md](src/techmd/content.md)) is done in the background:
   - **export to PDF** with `pandoc` to `xelatex` using `latexmk`
@@ -34,9 +34,9 @@ technical documents:**
     [See Output](docs/techmd/html/content.html),
     [See Live Output](https://htmlpreview.github.io/?https://github.com/gabyx/technical-markdown/blob/main/docs/techmd/html/content.html)
 
-- **[pandoc filters](https://pandoc.org/filters.html)** for different AST
+- **[Pandoc filters](https://pandoc.org/filters.html)** for different AST
   (abstract syntax tree) conversions:
-  - [own filters](https://github.com/gabyx/technical-markdown/tree/main/tools/convert/filters)
+  - [own filters](https://github.com/gabyx/technical-markdown/tree/master/tools/convert/filters)
     with [panflute](https://github.com/sergiocorreia/panflute)
     [[doc](http://scorreia.com/software/panflute)]
   - [--crosscite](https://github.com/jgm/pandoc-citeproc)
@@ -49,13 +49,14 @@ technical documents:**
     for file transclusion
 
 - Full-fledged [VS Code](https://code.visualstudio.com/) setup to write and
-  style your document in one of the best IDEs (_nvim is better 😏_).
+  style your document (_nvim is better 😏_).
 
 ## Quick-Start
 
 > [!NOTE]
 >
-> You need [`nix`](https://nixos.org/download) installed on your system. Also
+> You need [`nix`](https://nixos.org/download) installed on your system or you
+> need to use the provided devcontainer. Also
 > [direnv](https://github.com/direnv/direnv) is suggested.
 
 ### With Nix
@@ -87,6 +88,11 @@ just serve
 # With Container
 
 TODO: not yet refurbished.
+
+If you have `docker` or `podman`, you should directly open this project in VS
+Code with the provided `.devcontainer` setup which gives you a hassle free
+experience. See [Docker Setup](#docker-build) for more information. Building on
+a native system, you need the following dependencies:
 
 ## Demo Project
 
