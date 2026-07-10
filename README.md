@@ -31,11 +31,12 @@ technical documents:**
   - **export to PDF** with `pandoc` to `xelatex` using `latexmk`
     [See Output](docs/techmd/pdf/content.pdf)
   - **export to HTML** with `pandoc` to `html`
-    [See Output](docs/techmd/html/content.html)
+    [See Output](docs/techmd/html/content.html),
+    [See Live Output](https://htmlpreview.github.io/?https://github.com/gabyx/technical-markdown/blob/main/docs/techmd/html/content.html)
 
 - **[pandoc filters](https://pandoc.org/filters.html)** for different AST
   (abstract syntax tree) conversions:
-  - [own filters](https://github.com/gabyx/technical-markdown/tree/master/tools/convert/filters)
+  - [own filters](https://github.com/gabyx/technical-markdown/tree/main/tools/convert/filters)
     with [panflute](https://github.com/sergiocorreia/panflute)
     [[doc](http://scorreia.com/software/panflute)]
   - [--crosscite](https://github.com/jgm/pandoc-citeproc)
