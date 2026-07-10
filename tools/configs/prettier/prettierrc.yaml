@@ -1,0 +1,12 @@
+---
+printWidth: 80
+tabWidth: 2
+semi: false
+singleQuote: false
+overrides:
+  - files: "*.md"
+    options:
+      proseWrap: always
+      tabWidth: 2
+comments:
+  min-spaces-from-content: 2

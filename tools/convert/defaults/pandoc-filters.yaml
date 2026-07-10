@@ -1,27 +1,27 @@
 filters:
-    # - teeStart.py
-    - pandoc-include-files.lua
-    # - tee.py
-    - pandoc-codeblock-var-replace.lua
-    # - tee.py
-    - pandoc-block-filter-format.lua
-    # - tee.py
-    - pandoc-unique-identifiers.lua
-    # -  tee.py
-    - pandoc-list-table.lua
-    # - tee.py
-    - pandoc-crossref
-    # - tee.py
-    - transform-images.py
-    # - tee.py
-    - transform-emoji.lua
-    # tee.py
-    - create-rulers.lua
-    # tee.py
-    - citeproc
-    # - tee.py
-    - move-to-meta.lua
-    # - tee.py
-    # Quote replacement is not needed.
-    # - pandoc-quotes.lua
-    # - tee.py
+  # - teeStart.py
+  - pandoc-include-files.lua
+  # - tee.py
+  - pandoc-codeblock-var-replace.lua
+  # - tee.py
+  - pandoc-block-filter-format.lua
+  # - tee.py
+  - pandoc-unique-identifiers.lua
+  # -  tee.py
+  - pandoc-list-table.lua
+  # - tee.py
+  - pandoc-crossref
+  # - tee.py
+  - transform-images.py
+  # - tee.py
+  - transform-emoji.lua
+  # tee.py
+  - create-rulers.lua
+  # tee.py
+  - citeproc
+  # - tee.py
+  - move-to-meta.lua
+  # - tee.py
+  # Quote replacement is not needed.
+  # - pandoc-quotes.lua
+  # - tee.py

@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 sed -n -E "s/.*'(MuseoSans-\w+\.woff2)'.*/\1/p" museo-sans.css | xargs -P 4 -n 1 -I {} bash -c "base64 -w 0 {} >{}.dat "
 
 cp museo-sans.css museo-sans-mod.css
 
-for file in ./*.dat; do 
+for file in ./*.dat; do
     echo "$file"
     base64=$(cat "$file")
     fileName=$(basename "$file" | sed -E "s/(.*)\.dat/\1/")

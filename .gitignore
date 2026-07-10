@@ -1,12 +1,30 @@
-.DS_Store
-.gradle
+# This Git ignore file should be treated WITH care.
+#
+# Keep it easy to understand and concise that means follow these rules:
+#
+# - Add stuff when needed, DO not copy stuff from the internet
+#   just to ignore a whole set of files you think
+#   might be needed in the future.
+#
+# - Do NOT add here ignores which are deeply nested in the
+#   repository structure, instead
+#   use dedicated local `.gitignore` files inside the directories to
+#   ignore what you need. This file should ONLY deal common top-level
+#   ignores and things you want to ignore.
 
-*.bak
-*.sav
-__pycache__
-*.pyc
+# Direnv cache folder.
+.direnv
+# Devenv cache folder.
+.devenv
 
-Test*
+# General output folder.
+.output
 
-.venv
-.envrc
+# Config files which are linked.
+.env
+.prettierrc.yaml
+.yamllint.yaml
+.typos.toml
+.stylelue.toml
+
+__pycache*

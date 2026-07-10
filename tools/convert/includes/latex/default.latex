@@ -1,0 +1,81 @@
+$passoptions.latex()$
+\documentclass[
+$for(babel-otherlangs)$
+  $babel-otherlangs$,
+$endfor$
+$if(babel-lang)$
+  $babel-lang$,
+$endif$
+$if(fontsize)$
+  $fontsize$,
+$endif$
+$if(papersize)$
+  $papersize$paper,
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
+
+$packages.latex()$
+$section-numbering.latex()$
+$fonts.latex()$
+$font-settings.latex()$
+$common.latex()$
+$header.latex()$
+$hypersetup.latex()$
+$title-settings.latex()$
+$macros.latex()$
+
+\begin{document}
+%
+$if(has-frontmatter)$
+\frontmatter
+$endif$
+%
+$if(title)$
+$title.latex()$
+$endif$
+%
+\cleardoublepage
+\pagenumbering{roman}
+\pagestyle{scrheadings}
+\setcounter{page}{1}
+%
+$if(abstract)$
+$abstract.latex()$
+$endif$
+%
+$if(acknowledgement)$
+$acknowledgement.latex()$
+$endif$
+%
+$for(include-before)$
+$include-before$
+
+$endfor$
+%
+$if(toc)$
+$toc.latex()$
+$endif$
+%
+$lists.latex()$
+%
+$body-settings.latex()$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+$body$
+
+$-- %
+$-- $if(has-frontmatter)$
+$-- \backmatter
+$-- $endif$
+$-- %
+$-- $bibliography.latex()$
+$-- %
+$-- $for(include-after)$
+$-- $include-after$
+$--
+$-- $endfor$
+\end{document}

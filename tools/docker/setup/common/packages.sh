@@ -2,11 +2,10 @@
 # shellcheck disable=SC1090,SC1091
 # =============================================================================
 # TechnicalMarkdown
-# 
+#
 # @date Sun Mar 06 2022
 # @author Gabriel Nützi, gnuetzi@gmail.com
 # =============================================================================
-
 
 tempDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 . "$tempDIR/log.sh"

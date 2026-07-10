@@ -1,80 +1,71 @@
 {
-    "PandocCiter.DefaultBib": "literature/bibliography.bib",
-    "[dockerfile]": {
-        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-    },
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[jsonc]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[markdown]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "editor.tabSize": 4,
-    "fileHeaderComment.template": {
-        "header-shell": [
-            "# =============================================================================",
-            "# TechnicalMarkdown",
-            "# ",
-            "# @date ${date}",
-            "# @author ${authorName}, ${authorEmail}",
-            "# ============================================================================="
-        ]
-    },
-    "files.autoGuessEncoding": false,
-    "files.encoding": "utf8",
-    "files.exclude": {
-        "**/.DS_Store": true,
-        "**/.git": true,
-        "**/.hg": true,
-        "**/.svn": true,
-        "**/CVS": true
-    },
-    "files.trimTrailingWhitespace": false,
-    "prettier.configPath": "tools/.prettierrc",
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
-    "python.formatting.provider": "yapf",
-    "python.formatting.yapfArgs": [
-        "--style",
-        "tools/.style.yapf"
-    ],
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": false,
-    "python.linting.pycodestyleEnabled": false,
-    "python.linting.pylamaEnabled": true,
-    "python.linting.pylintEnabled": false,
-    "python.terminal.activateEnvironment": true,
-    "search.exclude": {
-        "**/node_modules": true
-    },
-    "spellright.documentTypes": [
-        "latex",
-        "plaintext",
-        "markdown"
-    ],
-    "spellright.language": [
-        "de"
-    ],
-    "vscode-lua-format.configPath": "tools/.lua-format",
-    "cSpell.words": [
-      "Collapsable",
-      "crosscite",
-      "crossref",
-      "pandoc",
-      "panflute",
-      "ridiculuous"
+  "PandocCiter.DefaultBib": "literature/bibliography.bib",
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 4,
+  "fileHeaderComment.template": {
+    "header-shell": [
+      "# =============================================================================",
+      "# TechnicalMarkdown",
+      "# ",
+      "# @date ${date}",
+      "# @author ${authorName}, ${authorEmail}",
+      "# ============================================================================="
     ]
+  },
+  "files.autoGuessEncoding": false,
+  "files.encoding": "utf8",
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true
+  },
+  "files.trimTrailingWhitespace": false,
+  "prettier.configPath": "tools/.prettierrc",
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
+  "python.formatting.provider": "yapf",
+  "python.formatting.yapfArgs": ["--style", "tools/.style.yapf"],
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.pylamaEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.terminal.activateEnvironment": true,
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "spellright.documentTypes": ["latex", "plaintext", "markdown"],
+  "spellright.language": ["de"],
+  "vscode-lua-format.configPath": "tools/.lua-format",
+  "cSpell.words": [
+    "Collapsable",
+    "crosscite",
+    "crossref",
+    "pandoc",
+    "panflute",
+    "ridiculuous"
+  ]
 }

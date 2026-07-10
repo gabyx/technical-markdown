@@ -1,5 +1,4 @@
-
-local dump = require "module-lua.dump"
+local dump = require("module-lua.dump")
 
 local utils = {}
 
@@ -19,8 +18,8 @@ end
 
 -- Define a shortcut function for testing
 function utils.dump(...)
-  utils.log(dump.DataDumper(...))
-  utils.log("\n---")
+    utils.log(dump.DataDumper(...))
+    utils.log("\n---")
 end
 
 return utils

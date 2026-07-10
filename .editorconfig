@@ -1,17 +1,18 @@
 # EditorConfig is awesome: https://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
 [*]
+charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 indent_style = space
 indent_size = 4
 
-[*.{json,yaml,yml,groovy}]
-end_of_line = lf
-insert_final_newline = true
-indent_style = space
+[*.{json,yaml,yml,toml}]
+indent_size = 2
+
+[*.md]
+indent_size = 2
+
+[*.nix]
 indent_size = 2

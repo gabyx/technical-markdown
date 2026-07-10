@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2015,SC1091
+# shellcheck disable=SC1090,SC2015,SC1091,SC2155
 # =============================================================================
 # TechnicalMarkdown
 #
@@ -141,7 +141,7 @@ function installLatexPackages() {
 function installFonts() {
     sudo apk add --no-cache fontconfig || die "Could not install fontconfig."
 
-    sudo apk add --no-cache ttf-dejavu || die "Could not install Deja Vue font."
+    sudo apk add --no-cache ttf-dejavu || die "Could not install Deja Vu font."
 
     local dir=$(mktemp -d)
     (

@@ -39,7 +39,7 @@ function setup() {
         defaultPython="$(cd && pwd)/python-envs/default/bin/python"
         local pythonExe="${PYTHON_ENV:-$defaultPython}"
 
-        printInfo "Installing addtional python modules."
+        printInfo "Installing additional python modules."
         "$pythonExe" -m pip install -r "/container-setup/python.add-requirements" ||
             die "Could not install python modules."
     fi
@@ -75,7 +75,7 @@ function setup() {
             --time-zone "$TIME_ZONE" || die "Could not setup timezone."
     fi
 
-    echo "setup-runtime.sh successfull" >"$cacheFile"
+    echo "setup-runtime.sh successful" >"$cacheFile"
     printInfo "Container setup successful."
 
     return 0

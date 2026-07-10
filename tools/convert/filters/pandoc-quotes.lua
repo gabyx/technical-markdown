@@ -91,7 +91,7 @@
 -- # ADDING LANGUAGES
 --
 -- You can add quotation marks for unsupported languages, or override the
--- defaults, by setting the metadata field quot-marks-by-lang to a maping
+-- defaults, by setting the metadata field quot-marks-by-lang to a mapping
 -- of RFC 5646-like language codes (e.g., "pt-BR", "es") to lists of quotation
 -- marks, which are given in the same format as for the quot-marks
 -- metadata field.
@@ -115,8 +115,8 @@
 -- pandoc-quotes.lua pushes quotations from the syntax of a document's
 -- representation into its semantics. That being so, you should not
 -- use pandoc-quotes.lua with output formats that represent quotes
--- syntactically (e.g., HTML, LaTeX, ConTexT). Moroever, filters running after
--- pandoc-quotes won't recognise quotes. So, it should be the last or
+-- syntactically (e.g., HTML, LaTeX, ConTexT). Moreover, filters running after
+-- pandoc-quotes won't recognize quotes. So, it should be the last or
 -- one of the last filters you apply.
 --
 -- Support for quotation marks of different languages is certainly incomplete
@@ -163,8 +163,7 @@
 -- @copyright 2018, 2020 Odin Kroeger
 -- @license MIT
 
-
--- # INITIALISATION
+-- # INITIALIZATION
 
 local M = {}
 
@@ -176,25 +175,28 @@ local table = table
 local package = package
 
 local pandoc = pandoc
-if not pandoc.utils then pandoc.utils = require 'pandoc.utils' end
+if not pandoc.utils then
+    pandoc.utils = require("pandoc.utils")
+end
 
 local _ENV = M
 
-local text = require 'text'
-
+local text = require("text")
 
 -- # CONSTANTS
 
 --- The name of this script.
-SCRIPT_NAME = 'pandoc-quotes.lua'
+SCRIPT_NAME = "pandoc-quotes.lua"
 
---- The path seperator of the operating system.
+--- The path separator of the operating system.
 PATH_SEP = package.config:sub(1, 1)
 
 --- The character sequence to end a line.
-if PATH_SEP == '\\' then EOL = '\r\n'
-                    else EOL = '\n'   end
-
+if PATH_SEP == "\\" then
+    EOL = "\r\n"
+else
+    EOL = "\n"
+end
 
 --- A list of mappings from RFC 5646-ish language codes to quotation marks.
 --
@@ -211,7 +213,7 @@ if PATH_SEP == '\\' then EOL = '\r\n'
 -- second item is a list of quotation marks, in the following order:
 -- primary left, primary right, secondary left, secondary right.
 --
--- You have to list four quotation marks, even if the langauge you add does
+-- You have to list four quotation marks, even if the language you add does
 -- not use secondary quotation marks. Just come up with something that makes
 -- sense. This is because a user may, rightly, find that just because their
 -- language does not 'officially' have secondary quotation marks, they
@@ -222,115 +224,114 @@ if PATH_SEP == '\\' then EOL = '\r\n'
 -- variants for a language that is spoken in different countries, also
 -- define a 'default' for the language alone, without the country tag.
 QUOT_MARKS_BY_LANG = {
-    bo          = {'「', '」',    '『', '』'     },
-    bs          = {'”',  '”',     '’',  '’'    },
-    cn          = {'「', '」',    '『', '』'     },
-    cs          = {'„',  '“',     '‚',  '‘'    },
-    cy          = {'‘',  '’',     '“',  '”'    },
-    da          = {'»',  '«',     '›',  '‹'    },
-    de          = {'„',  '“',     '‚',  '‘'    },
-    ['de-CH']   = {'«',  '»',     '‹',  '›'    },
-    el          = {'«',  '»',     '“',  '”'    },
-    en          = {'“',  '”',     '‘',  '’'    },
-    ['en-US']   = {'“',  '”',     '‘',  '’'    },
-    ['en-GB']   = {'‘',  '’',     '“',  '”'    },
-    ['en-UK']   = {'‘',  '’',     '“',  '”'    },
-    ['en-CA']   = {'“',  '”',     '‘',  '’'    },
-    eo          = {'“',  '”',     '‘',  '’'    },
-    es          = {'«',  '»',     '“',  '”'    },
-    et          = {'„',  '“',     '‚',  '‘'    },
-    fi          = {'”',  '”',     '’',  '’'    },
-    fil         = {'“',  '”',     '‘',  '’'    },
-    fa          = {'«',  '»',     '‹',  '›'    },
-    fr          = {'«',  '»',     '‹',  '›'    },
-    ga          = {'“',  '”',     '‘',  '’'    },
-    gd          = {'‘',  '’',     '“',  '”'    },
-    gl          = {'«',  '»',     '‹',  '›'    },
-    he          = {'“',  '”',     '‘',  '’'    },
-    hi          = {'“',  '”',     '‘',  '’'    },
-    hu          = {'„',  '”',     '»',  '«'    },
-    hr          = {'„',  '“',     '‚',  '‘'    },
-    ia          = {'“',  '”',     '‘',  '’'    },
-    id          = {'“',  '”',     '‘',  '’'    },
-    is          = {'„',  '“',     '‚',  '‘'    },
-    it          = {'«',  '»',     '“',  '”'    },
-    ['it-CH']   = {'«',  '»',     '‹',  '›'    },
-    ja          = {'「', '」',    '『',  '』'    },
-    jbo         = {'lu', 'li\'u', 'lu', 'li\'u'},
-    ka          = {'„',  '“',     '‚',  '‘'    },
-    khb         = {'《', '》',    '〈',  '〉'    },
-    kk          = {'«',  '»',     '‹',  '›'    },
-    km          = {'«',  '»',     '‹',  '›'    },
-    ko          = {'《', '》',    '〈',  '〉'    },
-    ['ko-KR']   = {'“',  '”',     '‘',  '’'    },
-    lt          = {'„',  '“',     '‚',  '‘'    },
-    lv          = {'„',  '“',     '‚',  '‘'    },
-    lo          = {'«',  '»',     '‹',  '›'    },
-    nl          = {'„',  '”',     '‚',  '’'    },
-    mk          = {'„',  '“',     '’',  '‘'    },
-    mn          = {'«',  '»',     '‹',  '›'    },
-    mt          = {'“',  '”',     '‘',  '’'    },
-    no          = {'«',  '»',     '«',  '»'    },
-    pl          = {'„',  '”',     '»',  '«'    },
-    ps          = {'«',  '»',     '‹',  '›'    },
-    pt          = {'«',  '»',     '“',  '”'    },
-    ['pt-BR']   = {'“',  '”',     '‘',  '’'    },
-    rm          = {'«',  '»',     '‹',  '›'    },
-    ro          = {'„',  '”',     '«',  '»'    },
-    ru          = {'«',  '»',     '“',  '”'    },
-    sk          = {'„',  '“',     '‚',  '‘'    },
-    sl          = {'„',  '“',     '‚',  '‘'    },
-    sq          = {'„',  '“',     '‚',  '‘'    },
-    sr          = {'„',  '“',     '’',  '’'    },
-    sv          = {'”',  '”',     '’',  '’'    },
-    tdd         = {'「', '」',    '『',  '』'    },
-    ti          = {'«',  '»',     '‹',  '›'    },
-    th          = {'“',  '”',     '‘',  '’'    },
-    thi         = {'「', '」',    '『',  '』'    },
-    tr          = {'«',  '»',     '‹',  '›'    },
-    ug          = {'«',  '»',     '‹',  '›'    },
-    uk          = {'«',  '»',     '„',  '“'    },
-    uz          = {'«',  '»',     '„',  '“'    },
-    vi          = {'“',  '”',     '‘',  '’'    },
-    wen         = {'„',  '“',     '‚',  '‘'    },
-    ka          = {'„',  '“',     '‚',  '‘'    },
-    khb         = {'《', '》',     '〈', '〉'    },
-    kk          = {'«',  '»',     '‹',  '›'    },
-    km          = {'«',  '»',     '‹',  '›'    },
-    ko          = {'《', '》',     '〈', '〉'    },
-    ['ko-KR']   = {'“',  '”',     '‘',  '’'    },
-    lt          = {'„',  '“',     '‚',  '‘'    },
-    lv          = {'„',  '“',     '‚',  '‘'    },
-    lo          = {'«',  '»',     '‹',  '›'    },
-    nl          = {'„',  '”',     '‚',  '’'    },
-    mk          = {'„',  '“',     '’',  '‘'    },
-    mn          = {'«',  '»',     '‹',  '›'    },
-    mt          = {'“',  '”',     '‘',  '’'    },
-    no          = {'«',  '»',     '«',  '»'    },
-    pl          = {'„',  '”',     '»',  '«'    },
-    ps          = {'«',  '»',     '‹',  '›'    },
-    pt          = {'«',  '»',     '“',  '”'    },
-    ['pt-BR']   = {'“',  '”',     '‘',  '’'    },
-    rm          = {'«',  '»',     '‹',  '›'    },
-    ro          = {'„',  '”',     '«',  '»'    },
-    ru          = {'«',  '»',     '“',  '”'    },
-    sk          = {'„',  '“',     '‚',  '‘'    },
-    sl          = {'„',  '“',     '‚',  '‘'    },
-    sq          = {'„',  '“',     '‚',  '‘'    },
-    sr          = {'„',  '“',     '’',  '’'    },
-    sv          = {'”',  '”',     '’',  '’'    },
-    tdd         = {'「', '」',     '『', '』'    },
-    ti          = {'«',  '»',     '‹',  '›'    },
-    th          = {'“',  '”',     '‘',  '’'    },
-    thi         = {'「', '」',     '『', '』'    },
-    tr          = {'«',  '»',     '‹',  '›'    },
-    ug          = {'«',  '»',     '‹',  '›'    },
-    uk          = {'«',  '»',     '„',  '“'    },
-    uz          = {'«',  '»',     '„',  '“'    },
-    vi          = {'“',  '”',     '‘',  '’'    },
-    wen         = {'„',  '“',     '‚',  '‘'    }
+    bo = { "「", "」", "『", "』" },
+    bs = { "”", "”", "’", "’" },
+    cn = { "「", "」", "『", "』" },
+    cs = { "„", "“", "‚", "‘" },
+    cy = { "‘", "’", "“", "”" },
+    da = { "»", "«", "›", "‹" },
+    de = { "„", "“", "‚", "‘" },
+    ["de-CH"] = { "«", "»", "‹", "›" },
+    el = { "«", "»", "“", "”" },
+    en = { "“", "”", "‘", "’" },
+    ["en-US"] = { "“", "”", "‘", "’" },
+    ["en-GB"] = { "‘", "’", "“", "”" },
+    ["en-UK"] = { "‘", "’", "“", "”" },
+    ["en-CA"] = { "“", "”", "‘", "’" },
+    eo = { "“", "”", "‘", "’" },
+    es = { "«", "»", "“", "”" },
+    et = { "„", "“", "‚", "‘" },
+    fi = { "”", "”", "’", "’" },
+    fil = { "“", "”", "‘", "’" },
+    fa = { "«", "»", "‹", "›" },
+    fr = { "«", "»", "‹", "›" },
+    ga = { "“", "”", "‘", "’" },
+    gd = { "‘", "’", "“", "”" },
+    gl = { "«", "»", "‹", "›" },
+    he = { "“", "”", "‘", "’" },
+    hi = { "“", "”", "‘", "’" },
+    hu = { "„", "”", "»", "«" },
+    hr = { "„", "“", "‚", "‘" },
+    ia = { "“", "”", "‘", "’" },
+    id = { "“", "”", "‘", "’" },
+    is = { "„", "“", "‚", "‘" },
+    it = { "«", "»", "“", "”" },
+    ["it-CH"] = { "«", "»", "‹", "›" },
+    ja = { "「", "」", "『", "』" },
+    jbo = { "lu", "li'u", "lu", "li'u" },
+    ka = { "„", "“", "‚", "‘" },
+    khb = { "《", "》", "〈", "〉" },
+    kk = { "«", "»", "‹", "›" },
+    km = { "«", "»", "‹", "›" },
+    ko = { "《", "》", "〈", "〉" },
+    ["ko-KR"] = { "“", "”", "‘", "’" },
+    lt = { "„", "“", "‚", "‘" },
+    lv = { "„", "“", "‚", "‘" },
+    lo = { "«", "»", "‹", "›" },
+    nl = { "„", "”", "‚", "’" },
+    mk = { "„", "“", "’", "‘" },
+    mn = { "«", "»", "‹", "›" },
+    mt = { "“", "”", "‘", "’" },
+    no = { "«", "»", "«", "»" },
+    pl = { "„", "”", "»", "«" },
+    ps = { "«", "»", "‹", "›" },
+    pt = { "«", "»", "“", "”" },
+    ["pt-BR"] = { "“", "”", "‘", "’" },
+    rm = { "«", "»", "‹", "›" },
+    ro = { "„", "”", "«", "»" },
+    ru = { "«", "»", "“", "”" },
+    sk = { "„", "“", "‚", "‘" },
+    sl = { "„", "“", "‚", "‘" },
+    sq = { "„", "“", "‚", "‘" },
+    sr = { "„", "“", "’", "’" },
+    sv = { "”", "”", "’", "’" },
+    tdd = { "「", "」", "『", "』" },
+    ti = { "«", "»", "‹", "›" },
+    th = { "“", "”", "‘", "’" },
+    thi = { "「", "」", "『", "』" },
+    tr = { "«", "»", "‹", "›" },
+    ug = { "«", "»", "‹", "›" },
+    uk = { "«", "»", "„", "“" },
+    uz = { "«", "»", "„", "“" },
+    vi = { "“", "”", "‘", "’" },
+    wen = { "„", "“", "‚", "‘" },
+    ka = { "„", "“", "‚", "‘" },
+    khb = { "《", "》", "〈", "〉" },
+    kk = { "«", "»", "‹", "›" },
+    km = { "«", "»", "‹", "›" },
+    ko = { "《", "》", "〈", "〉" },
+    ["ko-KR"] = { "“", "”", "‘", "’" },
+    lt = { "„", "“", "‚", "‘" },
+    lv = { "„", "“", "‚", "‘" },
+    lo = { "«", "»", "‹", "›" },
+    nl = { "„", "”", "‚", "’" },
+    mk = { "„", "“", "’", "‘" },
+    mn = { "«", "»", "‹", "›" },
+    mt = { "“", "”", "‘", "’" },
+    no = { "«", "»", "«", "»" },
+    pl = { "„", "”", "»", "«" },
+    ps = { "«", "»", "‹", "›" },
+    pt = { "«", "»", "“", "”" },
+    ["pt-BR"] = { "“", "”", "‘", "’" },
+    rm = { "«", "»", "‹", "›" },
+    ro = { "„", "”", "«", "»" },
+    ru = { "«", "»", "“", "”" },
+    sk = { "„", "“", "‚", "‘" },
+    sl = { "„", "“", "‚", "‘" },
+    sq = { "„", "“", "‚", "‘" },
+    sr = { "„", "“", "’", "’" },
+    sv = { "”", "”", "’", "’" },
+    tdd = { "「", "」", "『", "』" },
+    ti = { "«", "»", "‹", "›" },
+    th = { "“", "”", "‘", "’" },
+    thi = { "「", "」", "『", "』" },
+    tr = { "«", "»", "‹", "›" },
+    ug = { "«", "»", "‹", "›" },
+    uk = { "«", "»", "„", "“" },
+    uz = { "«", "»", "„", "“" },
+    vi = { "“", "”", "‘", "’" },
+    wen = { "„", "“", "‚", "‘" },
 }
-
 
 -- # FUNCTIONS
 
@@ -341,19 +342,20 @@ QUOT_MARKS_BY_LANG = {
 --
 -- @tparam string str A string format to be written to STDERR.
 -- @tparam string ... Arguments to that format.
-function warn (str, ...)
-    io.stderr:write(SCRIPT_NAME, ': ', string.format(str, ...), EOL)
+function warn(str, ...)
+    io.stderr:write(SCRIPT_NAME, ": ", string.format(str, ...), EOL)
 end
-
 
 --- Applies a function to every element of a list.
 --
 -- @tparam func f The function.
 -- @tparam tab list The list.
 -- @treturn tab The return values of `f`.
-function map (f, list)
+function map(f, list)
     local ret = {}
-    for k, v in pairs(list) do ret[k] = f(v) end
+    for k, v in pairs(list) do
+        ret[k] = f(v)
+    end
     return ret
 end
 
@@ -368,26 +370,27 @@ do
     --  A table of quotation marks
     -- @treturn[2] `nil` if an error occurred.
     -- @treturn[2] string An error message.
-    function get_quotation_marks (meta)
-        if meta.t == 'MetaInlines' then
+    function get_quotation_marks(meta)
+        if meta.t == "MetaInlines" then
             local marks = stringify(meta)
             if text.len(marks) ~= 4 then
-                return nil, 'not four quotation marks'
+                return nil, "not four quotation marks"
             end
             local ret = {}
-            for i = 1, 4 do ret[i] = text.sub(marks, i, i) end
+            for i = 1, 4 do
+                ret[i] = text.sub(marks, i, i)
+            end
             return ret
-        elseif meta.t == 'MetaList' then
+        elseif meta.t == "MetaList" then
             local marks = map(stringify, meta)
             if #marks ~= 4 then
-                return nil, 'not four quotation marks'
+                return nil, "not four quotation marks"
             end
             return marks
         end
-        return nil, 'neither a string nor a list'
+        return nil, "neither a string nor a list"
     end
 end
-
 
 do
     local stringify = pandoc.utils.stringify
@@ -402,48 +405,57 @@ do
     -- Prints errors to STDERR.
     --
     -- @tparam pandoc.Meta The document's metadata.
-    function configure (meta)
+    function configure(meta)
         local quot_marks, lang
-        if meta['quot-marks-by-lang'] then
-            for k, v in pairs(meta['quot-marks-by-lang']) do
+        if meta["quot-marks-by-lang"] then
+            for k, v in pairs(meta["quot-marks-by-lang"]) do
                 local quot_marks, err = get_quotation_marks(v)
                 if not quot_marks then
-                    warn('metadata field "quot-marks-by-lang": lang "%s": %s.',
-                         k, err)
+                    warn('metadata field "quot-marks-by-lang": lang "%s": %s.', k, err)
                     return
                 end
                 QUOT_MARKS_BY_LANG[k] = quot_marks
             end
         end
-        if meta['quot-marks'] then
+        if meta["quot-marks"] then
             local err
-            quot_marks, err = get_quotation_marks(meta['quot-marks'])
+            quot_marks, err = get_quotation_marks(meta["quot-marks"])
             if not quot_marks then
                 warn('metadata field "quot-marks": %s.', err)
                 return
             end
-        elseif meta['quot-lang'] then
-            lang = stringify(meta['quot-lang'])
-        elseif meta['lang'] then
-            lang = stringify(meta['lang'])
+        elseif meta["quot-lang"] then
+            lang = stringify(meta["quot-lang"])
+        elseif meta["lang"] then
+            lang = stringify(meta["lang"])
         end
         if lang then
             for i = 1, 3 do
-                if     i == 2 then lang = lang:match '^(%a+)'
+                if i == 2 then
+                    lang = lang:match("^(%a+)")
                 elseif i == 3 then
-                    local expr = '^' .. lang .. '-'
+                    local expr = "^" .. lang .. "-"
                     for k, v in pairs(QUOT_MARKS_BY_LANG) do
-                        if k:match(expr) then quot_marks = v break end
+                        if k:match(expr) then
+                            quot_marks = v
+                            break
+                        end
                     end
                 end
-                if     i  < 3 then quot_marks = QUOT_MARKS_BY_LANG[lang] end
-                if quot_marks then break end
+                if i < 3 then
+                    quot_marks = QUOT_MARKS_BY_LANG[lang]
+                end
+                if quot_marks then
+                    break
+                end
             end
         end
-        if quot_marks then QUOT_MARKS = map(pandoc.Str, quot_marks)
-        elseif lang then warn('%s: unknown language.', lang) end
+        if quot_marks then
+            QUOT_MARKS = map(pandoc.Str, quot_marks)
+        elseif lang then
+            warn("%s: unknown language.", lang)
+        end
     end
-
 
     do
         local insert = table.insert
@@ -456,19 +468,25 @@ do
         -- @treturn {pandoc.Str,pandoc.Inline,...,pandoc.Str}
         --  A list with the opening quote (as `pandoc.Str`),
         --  the content of `quoted`, and the closing quote (as `pandoc.Str`).
-        function insert_quot_marks (quoted)
-            if not QUOT_MARKS then return end
+        function insert_quot_marks(quoted)
+            if not QUOT_MARKS then
+                return
+            end
             local quote_type = quoted.c[1]
-            local inlines    = quoted.c[2]
+            local inlines = quoted.c[2]
             local left, right
-            if     quote_type == 'DoubleQuote' then left, right = 1, 2
-            elseif quote_type == 'SingleQuote' then left, right = 3, 4
-            else   error('unknown quote type') end
+            if quote_type == "DoubleQuote" then
+                left, right = 1, 2
+            elseif quote_type == "SingleQuote" then
+                left, right = 3, 4
+            else
+                error("unknown quote type")
+            end
             insert(inlines, 1, QUOT_MARKS[left])
-            insert(inlines,    QUOT_MARKS[right])
+            insert(inlines, QUOT_MARKS[right])
             return inlines
         end
     end
 end
 
-return {{Meta = configure}, {Quoted = insert_quot_marks}}
+return { { Meta = configure }, { Quoted = insert_quot_marks } }

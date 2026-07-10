@@ -1,0 +1,36 @@
+[[repos]]
+repo = "builtin"
+
+  [[repos.hooks]]
+  id = "check-added-large-files"
+
+  [[repos.hooks]]
+  id = "check-merge-conflict"
+
+  # Dangerous: for pandoc templates
+  # [[repos.hooks]]
+  # id = "end-of-file-fixer"
+
+  [[repos.hooks]]
+  id = "mixed-line-ending"
+
+  [[repos.hooks]]
+  id = "trailing-whitespace"
+
+[[repos]]
+repo = "local"
+  [[repos.hooks]]
+  id = "check-git-lfs"
+  name = "check-git-lfs"
+  language = "system"
+  entry = "just main check-git-lfs"
+  pass_filenames = false
+  require_serial = true
+
+  [[repos.hooks]]
+  id = "treefmt"
+  name = "treefmt"
+  language = "system"
+  entry = "just format"
+  pass_filenames = false
+  require_serial = true

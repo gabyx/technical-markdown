@@ -3,13 +3,15 @@
 --- Copyright: © 2019–2020 Albert Krewinkel
 --- License:   MIT – see LICENSE file for details
 -- pandoc's List type
-local List = require 'pandoc.List'
+local List = require("pandoc.List")
 
 --- Get global setting if we keep attributes on the block.
 --- Default: false
 local keep_attrs = false
 function get_vars(meta)
-    if meta['block-filter-format-attrs'] then keep_attrs = true end
+    if meta["block-filter-format-attrs"] then
+        keep_attrs = true
+    end
 end
 
 --- Include/exclude by attribute
@@ -20,12 +22,12 @@ local function is_included(block, file)
     local include = true
     local exclude = false
 
-    if block.attributes['include-if-format'] then
-        include = block.attributes['include-if-format']:match(FORMAT) ~= nil
+    if block.attributes["include-if-format"] then
+        include = block.attributes["include-if-format"]:match(FORMAT) ~= nil
     end
 
-    if block.attributes['exclude-if-format'] then
-        exclude = block.attributes['exclude-if-format']:match(FORMAT) ~= nil
+    if block.attributes["exclude-if-format"] then
+        exclude = block.attributes["exclude-if-format"]:match(FORMAT) ~= nil
     end
 
     return include == true and exclude == false
@@ -36,21 +38,21 @@ function filter_block(block)
     -- Filter by includes and excludes
     if is_included(block) then
         if not keep_attrs then
-            block.attributes['include-if-format'] = nil
-            block.attributes['exclude-if-format'] = nil
+            block.attributes["include-if-format"] = nil
+            block.attributes["exclude-if-format"] = nil
         end
         return block
     end
-    return List {}
+    return List({})
 end
 
 return {
-    {Meta = get_vars},
-    {Header = filter_block},
+    { Meta = get_vars },
+    { Header = filter_block },
     -- {Table = filter_block}, -- does not work with pandoc 2.11.0.4 (needs higher version)
-    {Div = filter_block},
-    {Span = filter_block},
-    {CodeBlock = filter_block},
-    {Code = filter_block},
-    {Image = filter_block}
+    { Div = filter_block },
+    { Span = filter_block },
+    { CodeBlock = filter_block },
+    { Code = filter_block },
+    { Image = filter_block },
 }

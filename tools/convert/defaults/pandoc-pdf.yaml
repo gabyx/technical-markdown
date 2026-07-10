@@ -1,0 +1,46 @@
+to: latex
+
+variables:
+  documentclass: scrreprt
+
+  classoption:
+    - paper=a4
+    - twoside
+    - titlepage=true
+    - openright
+    - abstract=on
+    - toc=listofnumbered
+    - numbers=noenddot
+    - chapterprefix=true
+    - headings=optiontohead
+    - svgnames
+    - dvipsnames
+
+  hyperrefoptions:
+    - linktoc=all
+    - hidelinks
+
+  linkcolor: DarkBlue
+  filecolor: DarkBlue
+  citecolor: DarkBlue
+  urlcolor: MediumBlue
+  toccolor: Black
+
+  cite-method: biblatex
+
+  mainfont: Latin Modern Roman
+  sansfont: Latin Modern Sans
+  monofont: Latin Modern Mono
+  mathfont: Latin Modern Math
+
+number-sections: true
+
+pdf-engine: latexmk
+pdf-engine-opt:
+  - "-xelatex"
+  - --silent
+  - "-gg"
+
+template: includes/latex/default.latex
+
+eol: lf

@@ -1,0 +1,19 @@
+<header>
+  <div class="title-block">
+    <h1 class="title">$title$</h1>
+    $if(subtitle)$
+    <h3 class="subtitle">$subtitle$</h3>
+    $endif$
+    <p class="author">
+      <strong>Authors: </strong>$for(author)$$author$$sep$, $endfor$
+    </p>
+    $if(date)$
+    <p class="date"><strong>Date: </strong>$date$</p>
+    $endif$ $if(location)$
+    <p class="location"><strong>Location: </strong>$location$</p>
+    $endif$
+  </div>
+  <div class="title-logo">
+    <img src="$titlepage-logo$" />
+  </div>
+</header>

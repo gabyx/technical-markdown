@@ -1,0 +1,260 @@
+% % Start: header.tex =======================================
+
+%% Geometry ==========================================
+\usepackage[]{geometry}
+% ====================================================
+
+%% Graphics ==========================================
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[]{adjustbox}
+\usepackage[]{pdfpages}
+\usepackage{wrapfig}
+\usepackage[]{placeins} % float barrier at each section
+\usepackage{svg}
+% ====================================================
+
+% Set include paths ==================================
+\makeatletter
+\providecommand*{\input@path}{}
+\edef\input@path{$for(latex-include-paths)${$latex-include-paths$}$endfor${./}\input@path}% prepend
+\makeatother
+\svgsetup{extractpath=files/generated/svg-extract,inkscapepath=files/generated/svg-inkscape}
+% ====================================================
+
+%% Caption ===========================================
+\usepackage[]{caption}
+\DeclareCaptionStyle{figcaption}{
+    justification=justified,
+    font={normal},
+    labelfont=bf,
+    belowskip=-5pt
+}
+
+\DeclareCaptionStyle{tablecaption}{
+    justification=justified,
+    font={normal},
+    labelfont=bf,
+    belowskip=5pt
+}
+
+\usepackage[]{subcaption}
+\captionsetup[figure]{style=figcaption}
+\captionsetup[table]{style=tablecaption}
+\captionsetup[longtable]{style=tablecaption}
+% ====================================================
+
+%% Header/Footer =====================================
+\usepackage[]{scrlayer-scrpage}
+\clearpairofpagestyles
+\setkomafont{pagehead}{\normalfont\rmfamily\bfseries}
+%\setkomafont{pagenumber}{\normalfont\rmfamily}
+
+\automark[chapter]{chapter}
+\renewcommand{\chaptermarkformat}{}
+\renewcommand{\sectionmarkformat}{\thesection\autodot\enskip}
+\cfoot[\pagemark]{\pagemark}
+\lehead{Chapter \thechapter}
+\rohead{\headmark}
+\rehead{}
+\lohead{}
+
+% Footnotes
+\usepackage[]{footmisc}
+% ====================================================
+
+%% Enumitems =========================================
+\usepackage{enumitem}
+\setlist[description,1]{leftmargin=0.5cm,font=\rmfamily}
+
+%% Tables ============================================
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{collcell}
+\usepackage{makecell}
+\usepackage{footnotehyper}
+\usepackage{tablefootnote}
+\AtBeginEnvironment{longtable}{%
+\setlist[itemize]{nosep=0pt,
+                 leftmargin=*,
+                 label=\textbullet,
+                 after=\end{minipage},
+                 before=\begin{minipage}[t]{\linewidth}
+}
+}
+
+% Define default table spacing...
+\usepackage{cellspace}
+\setlength{\cellspacetoplimit}{0.2\baselineskip}
+\setlength{\cellspacebottomlimit}{0.2\baselineskip}
+% ====================================================
+
+%% Quotes =============================================
+\usepackage[]{quoting}
+
+%% Todo Notes =========================================
+% \usepackage[textsize=tiny,disable]{todonotes}
+% \newcommand{\disscomment}[1]{%
+%     \todo[color=black!40]{#1}%
+% }%
+
+%% Glossary ==========================================
+% \usepackage[hyperfirst=true]{glossaries}
+% \glstoctrue
+% \renewcommand*{\glstextformat}[1]{\textnormal{#1}}
+% \newcommand{\glsp}{\protect\gls}
+% \loadglsentries{chapter/GlossaryEntries}
+%\makeglossaries
+% ====================================================
+
+
+%% Custom Part Heading ===============================
+\addtokomafont{part}{\Huge\selectfont\rmfamily\bfseries}
+\addtokomafont{partprefix}{\Large\rmfamily\bfseries}
+%\newcommand*\partcolor{\color{blue!50}}% Part is coloured blue
+\renewcommand*\partheadstartvskip{\vspace*{.2\textheight}}
+\renewcommand*\partheadmidvskip{%
+    \par
+    \vspace*{30pt}%
+}
+\makeatletter
+\renewcommand*\partheadendvskip{%
+    \vspace{\baselineskip}%
+    \partquotenote%
+    \vfil\newpage%
+    \if@twoside%
+        \if@openright%
+        \null%
+        \thispagestyle{plain}%
+        \vspace*{\fill}%
+        \partnote%
+        \vspace*{\fill}%
+        \fi%
+    \else%
+         \thispagestyle{plain}%
+         \vspace*{\fill}%
+         \partnote%
+         \vspace*{\fill}%
+         \newpage%
+    \fi%
+    \if@tempswa%
+    \twocolumn%
+    \fi%
+}
+\makeatother
+
+\newcommand\partnote{}
+\newcommand\partquotenote{}
+\renewcommand\partformat{\hfill\color{lightgray}\partname~\fontsize{60}{60}\selectfont\thepart\if@altsecnumformat.\fi}
+%=====================================================
+
+%% Custom Chapter Heading ============================
+\renewcommand*\chapterheadstartvskip{\vspace*{.02\textheight}}
+\renewcommand*\chapterheadendvskip{%
+    \noindent{\setlength{\parskip}{0pt}\hrulefill\par}%
+    \vspace*{30pt}%
+}
+\renewcommand*{\chapterformat}{%
+    \parbox{\textwidth}{\hfill\chapappifchapterprefix{\ }\fontsize{85}{70}\selectfont\thechapter\autodot\enskip}%
+    \vspace{4ex}%
+    }
+\addtokomafont{disposition}{\normalfont\bfseries}
+\addtokomafont{chapterprefix}{\Large\bfseries\color{lightgray}}
+%=====================================================
+
+%% Part Quotes =======================================
+\setkomafont{dictumtext}{\itshape\small}
+\setkomafont{dictumauthor}{\normalfont}
+\renewcommand*\dictumwidth{0.9\linewidth}
+\renewcommand*\raggeddictum{\centering}
+\renewcommand*\dictumauthorformat[1]{--- #1}
+\renewcommand*\dictumrule{
+    %\vskip-1ex\hrulefill\par}
+}
+%=====================================================
+
+%% Heading fonts =====================================
+\setkomafont{chapter}{\huge\rmfamily}
+\addtokomafont{section}{\rmfamily}
+\addtokomafont{subsection}{\rmfamily}
+\addtokomafont{subsubsection}{\rmfamily}
+%=====================================================
+
+%% Heading spacing ===================================
+% \RedeclareSectionCommand[
+%   runin=false,
+%   afterindent=false,
+%   beforeskip=1.0\baselineskip,
+%   afterskip=0.3\baselineskip]{section}
+% \RedeclareSectionCommand[
+%   runin=false,
+%   afterindent=false,
+%   beforeskip=0.5\baselineskip,
+%   afterskip=0.0\baselineskip]{subsection}
+% \RedeclareSectionCommand[
+%   runin=false,
+%   afterindent=false,
+%   beforeskip=0.5\baselineskip,
+%   afterskip=0.0\baselineskip]{subsubsection}
+%=====================================================
+
+%% Table of Content ==================================
+\usepackage{titling}
+% \usepackage{titletoc}
+% \newcommand{\setupTOC}[2]{%
+%     \titlecontents{#1}
+%     [8em] % ie, 1.5em () + 2.3em
+%     {\rightskip=10mm plus 1fil\hyphenpenalty=10000\normalsize\bfseries\protect\addvspace{15pt}\contentsmargin{3em}}
+%     {\contentslabel[{\color{gray}#2\enspace\thecontentslabel}]{8em}}
+%     {\hspace*{-8em}}
+%     {\hfill\contentspage}
+% }
+% \setupTOC{chapter}{\chaptername}
+% =====================================================
+
+% Layout Placing Settings ==============================
+% \setcounter{topnumber}{2}
+% \setcounter{bottomnumber}{2}
+% \setcounter{totalnumber}{3}     % 2 may work better
+% \setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+%\renewcommand{\dbltopfraction}{.66}
+%\renewcommand{\dblfloatpagefraction}{.8}
+
+% Allow display break
+%\allowdisplaybreaks[3]
+%=======================================================
+
+% Tocless Command ======================================
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+
+
+% Footnotes ============================================
+\usepackage{bookmark}
+\usepackage{xurl} % add URL line breaks if available
+\urlstyle{$if(urlstyle)$$urlstyle$$else$same$endif$}
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allow verbatim text in footnotes
+$endif$
+%=======================================================
+
+% Clever Refs ==========================================
+% Clever Refs: must be loaded *after* hyperref (pulled in by bookmark above).
+\usepackage[]{cleveref}
+% ======================================================
+
+% General Settings
+\KOMAoptions{cleardoublepage=empty}
+\raggedbottom
+
+% End: header.tex =======================================
+

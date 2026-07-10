@@ -2,8 +2,8 @@ from: &format markdown+markdown_in_html_blocks+link_attributes+inline_code_attri
 
 # These custom variables all go into the AST!
 metadata:
-    include-format: *format
-    include-auto: true
-    include-table-dir: "tables"
-    include-fail-if-read-error: true
-    include-paths-relative-to-cwd: true
+  include-format: *format
+  include-auto: true
+  include-table-dir: "tables"
+  include-fail-if-read-error: true
+  include-paths-relative-to-cwd: true
