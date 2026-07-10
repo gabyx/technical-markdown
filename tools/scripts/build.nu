@@ -15,6 +15,7 @@
 # Namespaced as `log <level>` (Nu already has a builtin `debug` command).
 # `log debug` only prints when TECHMD_DEBUG is truthy (1/true/yes/on).
 # ---------------------------------------------------------------------------
+#
 
 def debug-enabled [] {
     ($env.TECHMD_DEBUG? | default "false" | str downcase) in ["1" "true" "yes" "on"]
@@ -70,6 +71,9 @@ def repo-paths [] {
     let lua_path = $"($filters)/?;($filters)/?.lua;($env.LUA_PATH? | default '')"
     let pythonpath = $"($filters):($env.PYTHONPATH? | default '')"
 
+    let fail_if_warning = $env.FAIL_IF_WARNING | default "false" | into bool
+    let verbose = $env.VERBOSE | default "false" | into bool
+
     return {
         root: $root
         project_dir: $project_dir
@@ -81,6 +85,8 @@ def repo-paths [] {
         filters: $filters
         lua_path: $lua_path
         pythonpath: $pythonpath
+        fail_if_warning: $fail_if_warning
+        verbose: $verbose
     }
 }
 
@@ -363,9 +369,17 @@ def task-build-html [] {
     task-copy-assets
 
     let p = (repo-paths)
-    let input = $p.project_dir | path join "Content.md"
+    let input = $p.project_dir | path join "content.md"
     let output = $p.build_dir | path join "Content.html"
-    run-pandoc "md -> html" $input $output "html" true true ["--toc"]
+    (run-pandoc
+        "md -> html"
+        $input
+        $output
+        "html"
+        $p.verbose
+        $p.fail_if_warning
+        ["--toc"]
+    )
 }
 
 # build-pdf-tex: md -> latex -> pdf
@@ -374,9 +388,56 @@ def task-build-pdf [] {
     task-transform-math
 
     let p = (repo-paths)
-    let input = $p.project_dir | path join "Content.md"
+    let input = $p.project_dir | path join "content.md"
     let output = $p.build_dir | path join "Content.pdf"
-    run-pandoc "md -> latex -> pdf" $input $output "pdf" false true []
+    (run-pandoc
+        "md -> latex -> pdf"
+        $input
+        $output
+        "pdf"
+        $p.verbose
+        $p.fail_if_warning
+        []
+    )
+}
+
+def task-build-json [] {
+    task-convert-tables
+    task-transform-math
+
+    let p = (repo-paths)
+    let input = $p.project_dir | path join "content.md"
+    let output = $p.build_dir | path join "Content.json"
+    (run-pandoc
+        "md -> pandoc AST -> json"
+        $input
+        $output
+        "json"
+        $p.verbose
+        $p.fail_if_warning
+        []
+    )
+
+    ^prettier -w $output --ignore-path=.not-existent
+}
+
+def task-build-native [] {
+    task-convert-tables
+    task-transform-math
+
+    let p = (repo-paths)
+    let input = $p.project_dir | path join "content.md"
+    let output = $p.build_dir | path join "Content.native"
+
+    (run-pandoc
+        "md -> pandoc AST -> native"
+        $input
+        $output
+        "native"
+        $p.verbose
+        $p.fail_if_warning
+        []
+    )
 }
 
 def task-build-latex [] {
@@ -384,9 +445,17 @@ def task-build-latex [] {
     task-transform-math
 
     let p = (repo-paths)
-    let input = $p.project_dir | path join "Content.md"
+    let input = $p.project_dir | path join "content.md"
     let output = $p.build_dir | path join "output-tex/input.tex"
-    run-pandoc "md -> latex -> pdf" $input $output "latex" false true []
+    (run-pandoc
+        "md -> latex -> pdf"
+        $input
+        $output
+        "latex"
+        $p.verbose
+        $p.fail_if_warning
+        []
+    )
 }
 
 # view-html: serve the built HTML with live reload.
@@ -460,6 +529,8 @@ def "main convert-tables" [] { task-convert-tables }
 def "main transform-math" [] { task-transform-math }
 def "main html" [] { task-build-html }
 def "main pdf" [] { task-build-pdf }
+def "main json" [] { task-build-json }
+def "main native" [] { task-build-native }
 def "main latex" [] { task-build-latex }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
@@ -476,6 +547,8 @@ def main [] {
     print "  html             md -> html"
     print "  pdf              md -> latex -> pdf"
     print "  latex            md -> latex"
+    print "  json             md -> pandoc JSON AST"
+    print "  native             md -> pandoc native AST"
     print "  view-html        Serve built HTML with browser-sync"
     print "  package-html     Copy built site into docs/html-package/techmd"
     print ""

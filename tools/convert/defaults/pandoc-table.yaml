@@ -1,7 +1,7 @@
 number-sections: true
 eol: lf
 
-# TODO: Should be parsed from Content.md...(?)
+# TODO: Should be parsed from content.md...(?)
 bibliography: ["literature/bibliography.bib"]
 csl: "literature/ieee-with-url.csl"
 metadata:

@@ -21,7 +21,7 @@ technical documents:**
 
 - **fully automated conversion sequence** using [`gradle`](https://gradle.org) +
   [`pandoc`](https://github.com/jgm/pandoc) such that exporting
-  ([Content.md](https://raw.githubusercontent.com/gabyx/TechnicalMarkdown/master/Content.md))
+  ([content.md](https://raw.githubusercontent.com/gabyx/TechnicalMarkdown/master/content.md))
   is done in the background:
   - **export to PDF** with `pandoc` to `xelatex` using `latexmk`
     [See Output](docs/output/techmd/Content.pdf)
@@ -55,7 +55,7 @@ Execute the following in a shell:
 ./gradlew -t build-html
 ```
 
-This will build the HTML output from its [markdown main file](Content.md).
+This will build the HTML output from its [markdown main file](content.md).
 
 ## Demo Project
 
@@ -103,9 +103,9 @@ helpful. That is why we rely heavily on pandoc.
 The following directories of a single project in [`src`](src) (e.g.
 [`src/techmd`](src/techmd)) are important for the content of the output:
 
-- [`Content.md`](Content.md) : The main markdown document.
+- [`content.md`](content.md) : The main markdown document.
 - [`chapters`](chapters) : All markdown source included in the
-  [main markdown docucment](Content.md).
+  [main markdown docucment](content.md).
 - [`files`](files) : All additional files referenced in the markdown documents
   in [`chapters`](chapters).
 - [`literature`](literature) : All bibliography/literature related files (e.g.
@@ -317,7 +317,7 @@ tools/docker/build.sh \
 
 You can edit the [main.less](tools/convert/css/src/main.less) file to change the
 look of the markdown. Edit the [main.less](tools/convert/css/src/main.less) file
-to see changes in the conversion from [Content.md](Content.md).
+to see changes in the conversion from [content.md](content.md).
 
 ### LaTeX
 

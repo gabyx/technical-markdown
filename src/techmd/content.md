@@ -1,6 +1,6 @@
 ---
 title: "Technical Documents"
-titlepage-logo: "files/Logo.svg"
+titlepage-logo: "files/logo.svg"
 subtitle: "Demonstrating the Power of Markdown with Pandoc"
 author:
   - "Gabriel Nützi"
@@ -58,10 +58,9 @@ for futher information.
 # Samples
 
 ```{.include}
-//${env:TECHMD_ROOT_DIR}/chapters/test.md
 ${env:TECHMD_ROOT_DIR}/chapters/konvexe-probleme.md
-//${env:TECHMD_ROOT_DIR}/chapters/markdown-samples.md
-//${env:TECHMD_ROOT_DIR}/chapters/table-samples.md
+${env:TECHMD_ROOT_DIR}/chapters/markdown-samples.md
+${env:TECHMD_ROOT_DIR}/chapters/table-samples.md
 ```
 
-<!-- # References -->
+# References

@@ -21,6 +21,7 @@
 .output
 
 # Config files which are linked.
+.env
 .prettierrc.yaml
 .yamllint.yaml
 .typos.toml

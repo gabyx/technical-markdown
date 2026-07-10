@@ -1,4 +1,5 @@
 # Code Sample
+
 Some inline code `int a; a += "asd"`
 
 ```{.cpp .numberLines}
@@ -98,15 +99,19 @@ protected:
 A normal code block without syntax highlighting:
 
 ```
-Some special text here. Some special text here. Some special text here. Some special text here. Some special text here. Some special text here. Some special text here. 
+Some special text here. Some special text here.
+Some special text here. Some special text here.
+Some special text here. Some special text here.
+Some special text here.
 ```
 
 # PDF Include Sample
 
-You can also include PDFs directly by:
-Selecting pages works only in `latex` output.
+You can also include PDFs directly by: Selecting pages works only in `latex`
+output.
 
-![Pandoc User's Guide](files/PandocUsersGuide.pdf){.includepdf pages=5- style="width:100%;height:20cm;max-width:100%"}
+![Pandoc User's Guide](files/pandoc-users-guide.pdf){.includepdf pages=5-
+style="width:100%;height:20cm;max-width:100%"}
 
 # Questionaire Sample
 
@@ -120,9 +125,9 @@ Selecting pages works only in `latex` output.
 - [ ] easy
 - [ ] medium hard
 - [ ] ridiculuous hard
-  
+
 ## Which features would you like to have which Markdown does currently not support? {.unnumbered .unlisted}
 
 []{.hrule thickness=0.5pt width=100%} \
 []{.hrule thickness=0.5pt width=100%} \
-[]{.hrule thickness=0.5pt width=100%} 
+[]{.hrule thickness=0.5pt width=100%}

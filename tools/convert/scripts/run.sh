@@ -19,7 +19,7 @@ pandoc "--fail-if-warnings" \
     "--defaults=pandoc-filters.yaml" \
     -t "$format" \
     -o test.json \
-    Content.md
+    content.md
 
 if [ "$format" = "json" ]; then
     prettier --write test.json &>/dev/null

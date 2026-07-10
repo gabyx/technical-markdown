@@ -1,5 +1,6 @@
 set positional-arguments
 set shell := ["bash", "-cue"]
+set dotenv-load := true
 root_dir := `git rev-parse --show-toplevel`
 flake_dir := root_dir / "tools/nix"
 output_dir := root_dir / ".output"

@@ -14,7 +14,7 @@ import os
 import yaml
 import subprocess
 from typing import Union
-from panflute import Doc, Element, Image, RawInline, run_filter
+from panflute import Doc, Element, Image, Figure, Plain, RawInline, run_filters
 from module.utils import log
 
 assert sys.version_info >= (3, 0)
@@ -22,7 +22,7 @@ assert sys.version_info >= (3, 0)
 fName = "tfImg"
 
 
-def latexblock(code):
+def latexinline(code):
     return RawInline(code, format="tex")
 
 
@@ -37,17 +37,23 @@ def include_image(
 
     opts = ["{0}={1}".format(k, v) for k, v in graphicsOpts.items()]
 
+    # Only emit the optional label argument when we actually have a label,
+    # otherwise an empty `[]` produces `\label{}` (and several empty labels
+    # collide with "Label multiply defined").
+    labelOpt = "[{0}]".format(label) if label else ""
+
     return [
-        latexblock(r"\{0}{{{1}}}{{".format(baseCommand, url)),
+        latexinline(r"\{0}{{{1}}}{{".format(baseCommand, url)),
         *caption,
-        latexblock(r"}}{{{0}}}[{1}]".format(",".join(opts), label))
+        latexinline(r"}}{{{0}}}{1}".format(",".join(opts), labelOpt))
     ]
 
 
 def get_pdf_pages(url):
     pages = None
+    cmd = None
+
     try:
-        cmd = None
         if sys.platform == "linux":
             cmd = ["pdfinfo", url]
             info = yaml.safe_load(subprocess.check_output(cmd))
@@ -61,6 +67,8 @@ def get_pdf_pages(url):
     except Exception as e:
         log("Command '{0}' failed for '{1}':", fName, cmd, url)
         log(str(e), fName)
+
+        raise e
 
     return pages if pages else None
 
@@ -91,7 +99,7 @@ def include_pdf(
                 else:
                     pageEnd = get_pdf_pages(url)
             else:
-                pageEnd = int(p)
+                pageEnd = int(pages)
     except ValueError:
         raise ValueError("Wrong pages attribute '{0}' for '{1}'".format(
             pages,
@@ -100,7 +108,7 @@ def include_pdf(
 
     if not pageEnd:
         log(
-            "You need to specify the pages atrribute as 'pages=[<start-page>-]<end-page>",
+            "You need to specify the pages attribute as 'pages=[<start-page>-]<end-page>",
             fName,
         )
         raise ValueError("Pages could not be determined")
@@ -112,7 +120,7 @@ def include_pdf(
 
     log(" - page start: {0}, page end {1}", fName, pageStart, pageEnd)
     return [
-        latexblock(r"\{0}{{{1}}}[{2}]{{{3}}}[{4}]".format(
+        latexinline(r"\{0}{{{1}}}[{2}]{{{3}}}[{4}]".format(
             baseCommand,
             url,
             str(pageStart),
@@ -122,13 +130,14 @@ def include_pdf(
     ]
 
 
-def transform_img_to_latex(image: Image):
-
-    url = image.url
-    label = image.identifier
+def transform_img_to_latex(image: Image, label: str | None):
     caption = image.content
+    url = image.url
+    if label is None:
+        label = image.identifier
 
     log("Transforming image '{0}' to latex ...", fName, url)
+    log("- Label: {0}", fName, label)
 
     # Set `/fig.png` to `./fig.png`
     if os.path.isabs(url):
@@ -164,7 +173,7 @@ def transform_img_to_latex(image: Image):
         proportionalTo=r"\textwidth",
     )
 
-    log(" - height: {0}, width: {1}", fName, height, width)
+    log(" - Height: {0}, Width: {1}", fName, height, width)
 
     if width:
         graphicsOpts["width"] = "{0}".format(width)
@@ -181,14 +190,49 @@ def transform_img_to_latex(image: Image):
     )
 
 
+def find_image(elem: Element):
+    """Return the first `Image` contained (recursively) in `elem`, or None."""
+    for child in getattr(elem, "content", []):
+        if isinstance(child, Image):
+            return child
+
+        found = find_image(child)
+        if found is not None:
+            return found
+
+    return None
+
+
+def transform_figure_to_latex(figure: Figure):
+    label = figure.identifier
+
+    image = find_image(figure)
+    if image is None:
+        log("Could not find image in figure.", fName)
+        return None
+
+    inlines = transform_img_to_latex(image,  label)
+
+    return Plain(*inlines)
+
+
+def transform_figures(elem: Element, doc: Doc):
+    if doc.format != "latex":
+        return None
+
+    if isinstance(elem, Figure):
+        return transform_figure_to_latex(elem)
+
 def transform_images(elem: Element, doc: Doc):
-    if doc.format == "latex":
-        if isinstance(elem, Image):
-            return transform_img_to_latex(elem)
+    if doc.format != "latex":
+        return None
+
+    if isinstance(elem, Image):
+        return transform_img_to_latex(elem, None)
 
 
-def main(doc: Doc = None):
-    return run_filter(transform_images, doc=doc)
+def main(doc: Doc | None = None):
+    return run_filters([transform_figures, transform_images], doc=doc)
 
 
 if __name__ == "__main__":

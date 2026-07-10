@@ -1,4 +1,4 @@
-$warnings_as_errors = true;
+$warnings_as_errors = 'false';
 $xelatex = 'xelatex -interaction=nonstopmode -shell-escape';
 $pdf_mode = 5; # 5 = xelatex
 

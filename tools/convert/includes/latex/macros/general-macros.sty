@@ -5,7 +5,7 @@
 
 % Image with caption
 \NewDocumentCommand\imageWithCaption{mmmo}{
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \adjustbox{center}{\adjustbox{cfbox=white!90!black 2pt 0pt}{\includegraphics[#3]{#1}}}
     \caption{#2}
@@ -15,7 +15,7 @@
 
 % SVG with caption
 \NewDocumentCommand\svgWithCaption{mmmo}{
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \adjustbox{center}{\adjustbox{cfbox=white!90!black 2pt 0pt}{\includesvg[inkscapearea=page,#3]{#1}}}
     \caption{#2}
