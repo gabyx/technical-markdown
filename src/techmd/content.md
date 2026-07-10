@@ -42,7 +42,7 @@ Reasonable applied defaults before the above yaml meta block are found in:
 :::
 
 ```{.include format=html include-if-format=html;html5}
-includes/Math.html
+includes/math.html
 ```
 
 ```{.include}
@@ -53,7 +53,7 @@ ${env:TECHMD_ROOT_DIR}/chapters/acknowledgement.md
 
 Read the
 [Readme.md](https://github.com/gabyx/TechnicalMarkdown/blob/master/Readme.md)
-for futher information.
+for further information.
 
 # Samples
 

@@ -289,7 +289,7 @@ def task-copy-less [] {
     log info $"Executing copy-less: '($css_file)' -> '($dst)'"
 
     cd $p.project_dir
-    mkdir $dst
+    mkdir (dirname $dst)
     cp $css_file $dst
 }
 
