@@ -54,8 +54,7 @@ technical documents:**
 
 > [!NOTE]
 >
-> You need [`nix`](https://nixos.org/download) installed on your system or you
-> need to use the provided devcontainer. Also
+> You need [`nix`](https://nixos.org/download) installed on your system. Also
 > [direnv](https://github.com/direnv/direnv) is suggested.
 
 ### With Nix
