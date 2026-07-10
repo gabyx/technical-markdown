@@ -16,8 +16,7 @@
           (lib.hiPrio pkgs.git)
           pkgs.git-lfs
           pkgs.bash
-          pkgs.parallel
-
+          pkgs.nushell
           pkgs.coreutils
           pkgs.findutils
           pkgs.direnv # Auto apply stuff on entering directory `cd`.

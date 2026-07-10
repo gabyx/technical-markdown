@@ -9,7 +9,11 @@ html-math-method:
   url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 include-in-header:
-  ["includes/ScrollIntoView.js", "includes/Anchors.js", "includes/SideNav.js"]
+  [
+    "includes/ScrollIntoView.html",
+    "includes/Anchors.html",
+    "includes/SideNav.html",
+  ]
 variables:
   include-before-partials: "includes/TemplateSidebar.html"
 

@@ -19,12 +19,12 @@ develop *args:
 
 # Format the project.
 format *args:
-    "{{root_dir}}/tools/scripts/setup-config-files.sh"
+    just setup && \
     nix run --accept-flake-config {{flake_dir}}#treefmt -- "$@"
 
 # Setup the project.
 setup *args:
-    nu tools/scripts/build.nu setup
+    just main setup
 
 # Run commands over the ci development shell.
 ci *args:
@@ -42,15 +42,21 @@ lint *args:
 # Build.
 [group('build')]
 build *args:
-    nu tools/scripts/build.nu "$@"
+    just main build "$@"
 
 [group('build')]
 [private]
 watch *args:
-    nu tools/scripts/build.nu watch "$@"
+    just main watch "$@"
 
 # Run the markdown render services.
 [group('build')]
 serve *args:
     #!/usr/bin/env bash
     nix run --show-trace -L "{{flake_dir}}#serve" -- -U "$@"
+
+# Dispatch to the main.nu script
+[group('general')]
+[private]
+main *args:
+    nu tools/scripts/main.nu "$@"

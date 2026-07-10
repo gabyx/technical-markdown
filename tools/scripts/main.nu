@@ -15,7 +15,6 @@
 # Namespaced as `log <level>` (Nu already has a builtin `debug` command).
 # `log debug` only prints when TECHMD_DEBUG is truthy (1/true/yes/on).
 # ---------------------------------------------------------------------------
-#
 
 def debug-enabled [] {
     ($env.TECHMD_DEBUG? | default "false" | str downcase) in ["1" "true" "yes" "on"]
@@ -43,6 +42,10 @@ def "die" [msg: string] {
 
 def print-cmd [cmd: list<string>] {
     print $"Cmd: ($cmd | str join ' ')"
+}
+
+if not ($env.TECHMD_INSIDE_SHELL? | default "false" | into bool) {
+    die "You must start `just develop` or `direnv allow && direanv reload` first to run commands."
 }
 
 const tooling_input = ["tools/**"]
@@ -585,31 +588,37 @@ def task-watch [target: string] {
 }
 
 def task-setup [] {
+    log info "Setup"
+
     let p = (project-settings)
     cd $p.root
 
-    rm -rf ".prettierrc.yaml"
-    ln -s "tools/configs/prettier/prettierrc.yaml" ".prettierrc.yaml"
+    try {
+        ^rm -rf ".prettierrc.yaml"
+        ^rm -rf ".typos.toml"
+        ^rm -rf ".yamllint.yaml"
+        ^rm -rf ".stylelua.toml"
+    } catch {
+        die "Could not delete symlinks."
+    }
 
-    rm -rf ".typos.toml"
-    ln -s "tools/configs/typos/typos.toml" ".typos.toml"
+    ln -fs "tools/configs/prettier/prettierrc.yaml" ".prettierrc.yaml"
+    ln -fs "tools/configs/typos/typos.toml" ".typos.toml"
+    ln -fs "tools/configs/yamllint/yamllint.yaml" ".yamllint.yaml"
+    ln -fs "tools/configs/lua/stylelua.toml" ".stylelua.toml"
 
-    rm -rf ".yamllint.yaml"
-    ln -s "tools/configs/yamllint/yamllint.yaml" ".yamllint.yaml"
-
-    rm -rf ".stylelua.toml"
-    ln -s "tools/configs/lua/stylelua.toml" ".stylelua.toml"
+    log info "Created all root files."
 }
 
 # ---------------------------------------------------------------------------
 # CLI subcommands
 # ---------------------------------------------------------------------------
 
-def "main html" [] { task-build-html }
-def "main pdf" [] { task-build-pdf }
-def "main json" [] { task-build-json }
-def "main native" [] { task-build-native }
-def "main latex" [] { task-build-latex }
+def "main build html" [] { task-build-html }
+def "main build pdf" [] { task-build-pdf }
+def "main build json" [] { task-build-json }
+def "main build native" [] { task-build-native }
+def "main build latex" [] { task-build-latex }
 def "main watch" [target: string] { task-watch $target }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
@@ -619,16 +628,16 @@ def "main setup" [] { task-setup }
 def main [] {
     print "Technical Markdown build tasks (ported from build.gradle.kts):"
     print ""
-    print "  html             Build: md -> html"
-    print "  pdf              Build: md -> latex -> pdf"
-    print "  latex            Build: md -> latex"
-    print "  json             Build: md -> pandoc JSON AST"
-    print "  native           Build: md -> pandoc native AST"
-    print "  watch            Watch a build command continuously w."
-    print "  view-html        Serve built HTML with browser-sync"
-    print "  package-html     Copy built site into docs/html-package/techmd"
+    print "  build html        Build: md -> html"
+    print "  build pdf         Build: md -> latex -> pdf"
+    print "  build latex       Build: md -> latex"
+    print "  build json        Build: md -> pandoc JSON AST"
+    print "  build native      Build: md -> pandoc native AST"
+    print "  watch             Watch a build command continuously w."
+    print "  view-html         Serve built HTML with browser-sync"
+    print "  package-html      Copy built site into docs/html-package/techmd"
 
-    print "  setup            Setup config files and other stuff"
+    print "  setup             Setup config files and other stuff"
     print ""
     print "Usage: nu tools/scripts/build.nu <task>"
 }

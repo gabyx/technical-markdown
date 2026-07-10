@@ -6,21 +6,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      toolchains.generic = [
-        {
-          git-hooks = {
-            enable = true;
-            package = pkgs.prek;
-            configPath = "./tools/configs/prek/prek.toml";
-            # WARNING: Only `pre-commit`, because Git LFS hooks might be ignored since `prek` does not support LFS.
-            default_stages = [ "pre-commit" ];
-          };
-
-          packages = [
-            pkgs.prek
-          ];
-        }
-
+      toolchains.pandoc = [
         {
           packages = [
             pkgs.nodejs-slim_26
@@ -32,8 +18,9 @@
             pkgs.haskellPackages.pandoc-crossref
             pkgs.lessc
 
-            pkgs.texliveMedium
-            pkgs.texlivePackages.multirow
+            (pkgs.texliveFull.withPackages (p: [
+              p.multirow
+            ]))
 
             pkgs.watchman
             pkgs.python315Packages.pywatchman

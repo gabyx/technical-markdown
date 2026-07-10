@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2015,SC1091
+# shellcheck disable=SC1090,SC2015,SC1091,SC2155
 # =============================================================================
 # TechnicalMarkdown
 #

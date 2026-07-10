@@ -16,7 +16,17 @@
     {
       devShells.default = self.lib.shell.mkShell {
         inherit (args) system;
-        modules = toolchains.general ++ toolchains.generic ++ toolchains.python;
+        modules =
+          toolchains.general
+          ++ toolchains.pandoc
+          ++ toolchains.python
+          ++ [
+            {
+              env = {
+                TECHMD_INSIDE_SHELL = true;
+              };
+            }
+          ];
       };
 
       devShells.format = self.lib.shell.mkShell {
