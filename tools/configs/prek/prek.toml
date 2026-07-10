@@ -1,0 +1,29 @@
+[[repos]]
+repo = "builtin"
+
+  [[repos.hooks]]
+  id = "check-added-large-files"
+
+  [[repos.hooks]]
+  id = "check-merge-conflict"
+
+  [[repos.hooks]]
+  id = "detect-private-key"
+
+  [[repos.hooks]]
+  id = "end-of-file-fixer"
+
+  [[repos.hooks]]
+  id = "mixed-line-ending"
+
+  [[repos.hooks]]
+  id = "trailing-whitespace"
+
+[[repos]]
+repo = "local"
+
+  [[repos.hooks]]
+  id = "treefmt"
+  name = "treefmt"
+  language = "system"
+  entry = "just format"
