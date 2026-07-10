@@ -7,7 +7,7 @@
 <p align="center">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/badge/Nix,Pandoc,Tex,HTML-blue.svg" alt="License label" /></a>
+  <img src="https://img.shields.io/badge/Nix,Pandoc,LaTeX,HTML-blue.svg" alt="License label" /></a>
   <a href="https://github.com/gabyx/technical-markdown/releases/latest">
     <img src="https://img.shields.io/github/release/gabyx/technical-markdown.svg" alt="Current Release label" /></a>
   <a href="https://raw.githubusercontent.com/gabyx/technical-markdown/LICENSE.md">
