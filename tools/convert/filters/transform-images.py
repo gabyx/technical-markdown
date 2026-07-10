@@ -38,7 +38,8 @@ def include_image(
     opts = ["{0}={1}".format(k, v) for k, v in graphicsOpts.items()]
 
     return [
-        latexblock(r"\{0}{{{1}}}{{".format(baseCommand, url)), *caption,
+        latexblock(r"\{0}{{{1}}}{{".format(baseCommand, url)),
+        *caption,
         latexblock(r"}}{{{0}}}[{1}]".format(",".join(opts), label))
     ]
 

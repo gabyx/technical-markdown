@@ -12,3 +12,4 @@ $if(subtitle)$
 $endif$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 \date{$date$}
+

@@ -65,7 +65,7 @@ $body-settings.latex()$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
-$-- $body$
+$body$
 
 $-- %
 $-- $if(has-frontmatter)$
