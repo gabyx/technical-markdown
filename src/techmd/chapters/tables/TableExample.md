@@ -1,4 +1,4 @@
-# Multline Table
+# Multiline Table
 
 ----------- ------- --------------------- -------------------------
    First    row                      12.0 Example of a row that
@@ -24,7 +24,7 @@
 
 # RST-Style Table
 
-This is a `RST-style` table which is converted by 
+This is a `RST-style` table which is converted by
 [`filters/pandoc-list-table.lua`](tools/convert/filters/pandoc-list-table.lua)
 
 :::{.list-table aligns=l,l,c,c header-cols=1 header-rows=1 widths=1,3,1,1}

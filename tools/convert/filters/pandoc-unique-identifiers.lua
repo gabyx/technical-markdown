@@ -1,4 +1,4 @@
---- Make all identifiers heading indetifiers unique.
+--- Make all heading identifiers unique.
 --- Useful in combination with `include-files.lua`.
 ---
 --- Copyright: © 2019–2020 Gabriel Nützi

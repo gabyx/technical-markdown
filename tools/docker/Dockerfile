@@ -2,7 +2,7 @@
 
 ARG VERSION=latest
 
-# Make full convertion image.
+# Make full conversion image.
 FROM gabyxgabyx/technical-markdown:$VERSION-minimal as technical-markdown
 ARG USER_NAME="techmd"
 

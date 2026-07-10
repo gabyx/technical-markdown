@@ -156,7 +156,7 @@ def transform_img_to_latex(image: Image, label: str | None):
             baseCommand = r"svgWithCaption"
         blockBuilder = include_image
 
-    # Parse witdh/height
+    # Parse width/height
     def to_scaling(size: Union[str, None], proportionalTo: str):
         if size and "%" in size:
             s = float(size.strip().replace("%", "")) / 100.0

@@ -24,7 +24,7 @@ develop *args:
         "$flake_dir#$shell" \
         --command "${args[@]}"
 
-# Start an Nix interpreter with loaded flake.
+# Start a Nix interpreter with loaded flake.
 [no-cd]
 repl *args:
     #!/usr/bin/env bash

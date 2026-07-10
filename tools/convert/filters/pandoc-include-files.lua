@@ -34,7 +34,7 @@ end
 local metaMap
 local function var_replace_codeblocks(cb)
     --- Replace variable with values from environment
-    --- and meta data (stringifing).
+    --- and metadata (stringifying).
     local function replace(what, var)
         local repl = nil
         if what == "env" then
@@ -94,7 +94,7 @@ function get_vars(meta)
 
     -- If all relative include paths are treated relative to the current working directory.
     -- An attribute "relative-to-current" can be used on include blocks, images, codeblock includes
-    -- to to selectively choose if the include is relative to the current document.
+    -- to selectively choose if the include is relative to the current document.
     includes_relative_to_cwd = meta["include-paths-relative-to-cwd"]
 
     -- Save meta table for var_replace.
@@ -223,7 +223,7 @@ function transclude(cb)
             -- Include as raw inline element.
             blocks:extend({ pandoc.RawBlock(format, text) })
         else
-            -- Inlcude as parsed AST
+            -- Include as parsed AST
             local contents = pandoc.read(text, format).blocks
             last_heading_level = 0
 

@@ -22,7 +22,7 @@ function save_meta(m)
 end
 
 --- Replace variable with values from environment
---- and meta data (stringifing).
+--- and metadata (stringifying).
 local function replace(what, var)
     if what == "env" then
         return env[var]

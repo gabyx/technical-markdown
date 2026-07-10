@@ -91,7 +91,7 @@
 -- # ADDING LANGUAGES
 --
 -- You can add quotation marks for unsupported languages, or override the
--- defaults, by setting the metadata field quot-marks-by-lang to a maping
+-- defaults, by setting the metadata field quot-marks-by-lang to a mapping
 -- of RFC 5646-like language codes (e.g., "pt-BR", "es") to lists of quotation
 -- marks, which are given in the same format as for the quot-marks
 -- metadata field.
@@ -115,8 +115,8 @@
 -- pandoc-quotes.lua pushes quotations from the syntax of a document's
 -- representation into its semantics. That being so, you should not
 -- use pandoc-quotes.lua with output formats that represent quotes
--- syntactically (e.g., HTML, LaTeX, ConTexT). Moroever, filters running after
--- pandoc-quotes won't recognise quotes. So, it should be the last or
+-- syntactically (e.g., HTML, LaTeX, ConTexT). Moreover, filters running after
+-- pandoc-quotes won't recognize quotes. So, it should be the last or
 -- one of the last filters you apply.
 --
 -- Support for quotation marks of different languages is certainly incomplete
@@ -163,7 +163,7 @@
 -- @copyright 2018, 2020 Odin Kroeger
 -- @license MIT
 
--- # INITIALISATION
+-- # INITIALIZATION
 
 local M = {}
 
@@ -188,7 +188,7 @@ local text = require("text")
 --- The name of this script.
 SCRIPT_NAME = "pandoc-quotes.lua"
 
---- The path seperator of the operating system.
+--- The path separator of the operating system.
 PATH_SEP = package.config:sub(1, 1)
 
 --- The character sequence to end a line.
@@ -213,7 +213,7 @@ end
 -- second item is a list of quotation marks, in the following order:
 -- primary left, primary right, secondary left, secondary right.
 --
--- You have to list four quotation marks, even if the langauge you add does
+-- You have to list four quotation marks, even if the language you add does
 -- not use secondary quotation marks. Just come up with something that makes
 -- sense. This is because a user may, rightly, find that just because their
 -- language does not 'officially' have secondary quotation marks, they

@@ -32,7 +32,7 @@ function runWithSudo() {
     return 0
 }
 
-# Checks a file "$1" to have the expceted checksum "$2"
+# Checks a file "$1" to have the expected checksum "$2"
 function assertChecksum() {
     local file="$1"
     local expected="$2"

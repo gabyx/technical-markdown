@@ -31,7 +31,7 @@ sei hier mal das Standardwerk [@rockafellar_convex_2015] gegeben.
 
 ## Konvexe Menge
 
-Eine Menge $\set{C} \subseteq V$, also ein Teilmenge eines Vektorraums $V$, wird
+Eine Menge $\set{C} \subseteq V$, also eine Teilmenge eines Vektorraums $V$, wird
 **konvex** genannt, falls und nur falls
 
 `\begin{align} \lambda \vvec{a} + (1-\lambda) \vvec{b} \in \set{C} \quad \forall \vvec{a},\vvec{b} \in \set{C}, \ \lambda \in [0,1] \ . \end{align}`{=latex}
@@ -73,14 +73,14 @@ $\set{C}$ so, dass sein Abstand zu $\vvec{p}$ minimal ist.
 
 ## Normalkegel
 
-Eines der **wichtigsten** Konzept der konvexen Analysis ist die des
+Eines der **wichtigsten** Konzepte der konvexen Analysis ist die des
 **Normalkegels**. Wie der Name schon sagt, handelt es sich um einen Kegel
 welcher durch Normalenvektoren auf der Oberfläche einer konvexen Menge
 aufgespannt wird. Wir geben hier direkt die Definition und sehen im Anschluss
 wie sich dieser Kegel visualisiert:
 
 Ein Normalkegel $\ncone{C}$ auf ein konvexes Set $\set{C}$ im Punkt
-$\vvec{x} \in \set{C}$ ist definert als
+$\vvec{x} \in \set{C}$ ist definiert als
 `\begin{align}     \ncone{C}(\vvec{x}) := \left\{ \vvec{y} \ | \ \vvec{y}^\transp(\vvec{x}^* - \vvec{x}) \leq 0, \quad \forall \vvec{x}^* \in \set{C} \right\} \end{align}`{=latex}
 
 Das ist nun ein wenig kryptisch, heisst jedoch nichts anderes als folgendes: Der
@@ -88,7 +88,7 @@ Normalkegel $\ncone{C}(\vvec{x})$ besteht aus allen Vektoren (das wäre
 $\vvec{y}$) ausgehend von $\vvec{x}$ welche mit **allen** Vektoren welche vom
 Punkt $\vvec{x}$ in die Menge $\set{C}$ zeigen (das wäre
 $\vvec{x}^* - \vvec{x}$), einen **stumpfen** Winkel bilden (das wäre das
-Skalatprodukt mit $\leq 0$). Der Ursprung der Menge $\ncone{C}(\vvec{x})$ ist im
+Skalarprodukt mit $\leq 0$). Der Ursprung der Menge $\ncone{C}(\vvec{x})$ ist im
 Punkt $\vvec{x}$.
 
 Die Abbildung [-@fig:normalcone] visualisiert für eine konvexe Menge $\set{C}$
@@ -116,7 +116,7 @@ Das heisst, eine Normalkegel-_Inklusion_ (die Relation $\vvec{a} \in \set{B}$
 wird _Mengen-Inklusion_ genannt) ist direkt an eine **implizite** _projektive_
 Gleichung gekoppelt.
 
-Damit lässt sich nun ein interessanter wichtiget Fakt ableiten. Aus der
+Damit lässt sich nun ein interessanter wichtiger Fakt ableiten. Aus der
 Visualisierung [-@fig:normalcone] entnehmen wir, dass $\vvec{p}-\vvec{x}$ in der
 Menge $\ncone{C}(\vvec{x})$ liegt, also lässt sich schreiben
 `\begin{align} \vvec{p}-\vvec{x} \in \ncone{C}(\vvec{x}). \end{align}`{=latex}
@@ -144,7 +144,7 @@ Um hier mathematisch nicht in einen Exzess zu geraten, wird hier nur eine
 abgespeckte Erklärung gegeben. Für mehr Informationen sei auf
 [@nuetzig_thesis_2016, chap. 6] verwiesen und die darin enthaltenen Referenzen.
 
-Betrachte man folgendes allgemeine restriktierte **konvexe**
+Betrachtet man folgendes allgemeine restriktierte **konvexe**
 Optimierungsproblem:
 `\begin{align} \vvec{x}^* = \underset{\vvec{x} \ \in \ \set{C}}{\argmin} f(\vvec{x}), \label{eq:convexproblem} \end{align}`{=latex}
 wobei die Funktion $f(\vvec{x}) \in \mathbb{R}$ **strikt konvex** und
@@ -164,8 +164,8 @@ $\vvec{x} \in \set{C}$ und sonst $+\infty$. Diese Funktion wird
 **Indikatorfunktion** genannt.
 
 Die Frage ist nun wie kriegen wir eine Bedingung an den optimalen
-(minimierenden) Punkt $\vvec{x}^*$. Das geht ziemlich analog zu der Bedindung
-für Minima/Maxima einer differenzierbaren Funktionen $f$ :
+(minimierenden) Punkt $\vvec{x}^*$. Das geht ziemlich analog zu der Bedingung
+für Minima/Maxima einer differenzierbaren Funktion $f$ :
 `\begin{align} \vvec{0} = \frac{df}{d\vvec{x}}(\vvec{x}^*) \label{eq:optimality-difffunc} \end{align}`{=latex}
 was konkret heisst, dass der Nullvektor $\vvec{0}$ gleich dem Gradient
 $\frac{df}{d\vvec{x}}$ ist an der optimalen Stelle $\vvec{x}^*$.
@@ -179,7 +179,7 @@ $1$-dimensionale Funktionen $f(x)$ oder allgemeiner der Gradient für
 $n$-dimensionale Funktionen $f(\vvec{x})$) zurück geben kann sondern auch
 **ganze Mengen** von solchen Steigungen. Das heisst, das Subdifferential an
 einem Punkt ist eine Menge aller Gradienten an diesen Punkt der Funktion. Das
-heisst direkt, dass eine Gleicheit zu $\vvec{0}$ wie in
+heisst direkt, dass eine Gleichheit zu $\vvec{0}$ wie in
 $\eqref{eq:optimality-difffunc}$ nicht mehr richtig wäre und hier eine
 Mengen-Inklusion $\vvec{0} \in \dots$ stehen muss.
 

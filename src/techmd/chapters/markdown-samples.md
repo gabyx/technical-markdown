@@ -113,7 +113,7 @@ output.
 ![Pandoc User's Guide](files/pandoc-users-guide.pdf){.includepdf pages=5-
 style="width:100%;height:20cm;max-width:100%"}
 
-# Questionaire Sample
+# Questionnaire Sample
 
 ## Personal {.unnumbered .unlisted}
 
@@ -124,7 +124,7 @@ style="width:100%;height:20cm;max-width:100%"}
 
 - [ ] easy
 - [ ] medium hard
-- [ ] ridiculuous hard
+- [ ] ridiculous hard
 
 ## Which features would you like to have which Markdown does currently not support? {.unnumbered .unlisted}
 

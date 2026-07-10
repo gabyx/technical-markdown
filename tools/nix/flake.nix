@@ -61,7 +61,7 @@
     };
 
     # The devenv module to create good development shells.
-    # The `nixpkgs-devenv` must aligned with the pinned version.
+    # The `nixpkgs-devenv` must be aligned with the pinned version.
     devenv = {
       url = "github:cachix/devenv?ref=v2.1.2";
       inputs.nixpkgs.follows = "nixpkgs-devenv";

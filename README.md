@@ -103,7 +103,7 @@ There is also a demo showing a
 > The demo is still in v2 and only here as a reference, it worked with pandoc
 > `2.x`.
 
-## Rational
+## Rationale
 
 [Pandoc](https://github.com/jgm/pandoc) is awesome and the founder John
 MacFarlane develops pandoc in a meticulous and principled style. The
@@ -112,9 +112,9 @@ helpful. That is why we rely heavily on pandoc.
 
 1. We target the output formats `html5` and `latex`, because
    - HTML can be viewed in all browsers and web standards such as CSS3 etc. have
-     become a major advantage and enables ridiculuous dynamic, interactive
-     styling. Collapsable table of contents is just the beginning.
-   - LaTeX enables to produce high quality output PDF (`xelatex`). Every proper
+     become a major advantage and enables ridiculous dynamic, interactive
+     styling. Collapsible table of contents is just the beginning.
+   - LaTeX enables producing high quality output PDF (`xelatex`). Every proper
      book and distributed PDF is written and set in LaTeX.
 
 2. The orchestration around calling `pandoc` is basically only a file watcher
@@ -123,20 +123,20 @@ helpful. That is why we rely heavily on pandoc.
    That also means we _do not want_ to have lots of pre- and post-processing
    tasks aside from running `pandoc`. The main goal is, that users can write
    `markdown` as a **first-party solution** with some enhanced features enabled
-   by `pandoc` itself. **Writting technical documents should become a breeze.**
+   by `pandoc` itself. **Writing technical documents should become a breeze.**
 
-3. The common agreement in the industry about using M$ Office for writting
+3. The common agreement in the industry about using M$ Office for writing
    technical documentations as demonstrated here, is considered the most
    complete and utter bullshit you can adhere to. Certainly employees mostly
    must obey. The common argument is "people need to exchange documents and work
-   on it". experiences, a lot of time and money is spent which gets never
+   on it". In our experience, a lot of time and money is spent which never gets
    debated.
 
    **It's about high time** to turn into a direction which will likely become
-   the standard. **Technical writters should really focus on the content they
+   the standard. **Technical writers should really focus on the content they
    write and not focus on styling quirks and tricks.**
 
-4. Every technical document writter probably knows about source code management
+4. Every technical document writer probably knows about source code management
    (`git`). There you go with proper team work.
 
 ## Project Layout
@@ -146,7 +146,7 @@ The following directories of a single project in [`src`](src) (e.g.
 
 - [`content.md`](content.md) : The main markdown document.
 - [`chapters`](chapters) : All markdown source included in the
-  [main markdown docucment](content.md).
+  [main markdown document](content.md).
 - [`files`](files) : All additional files referenced in the markdown documents
   in [`chapters`](chapters).
 - [`literature`](literature) : All bibliography/literature related files (e.g.
@@ -158,14 +158,14 @@ The following directories of a single project in [`src`](src) (e.g.
 The following directories are important for the styling of the output:
 
 - [`tools/convert`](tools/convert) : The main _tools_ directory containing
-  pandoc related output configs. It acts as pandocs
+  pandoc related output configs. It acts as pandoc's
   [`data-dir`](https://pandoc.org/MANUAL.html#option--data-dir). See
   [env. variables](#environment-variables) in docker builds.
   - [`tools/convert/defaults`](tools/convert/defaults) : `pandoc` defaults .
-  - [`tools/convert/includes`](tools/convert/includes) : `pandoc` templates in
-    for HTML and PDF output settings.
+  - [`tools/convert/includes`](tools/convert/includes) : `pandoc` templates for
+    HTML and PDF output settings.
   - [`tools/convert/css`](tools/convert/css) CSS styling for HTML output.
-  - [`tools/convert/filters`](tools/convert/filters) : `pandoc` filters in for
+  - [`tools/convert/filters`](tools/convert/filters) : `pandoc` filters for
     modifying `pandoc`s abstract syntax tree.
   - [`tools/convert/scripts`](tools/convert/scripts) : Some workaround scripts
     for converting tables based on a config file in
@@ -263,4 +263,4 @@ clears all output before doing the same as
 When you use Githooks and you would like to say thank you for its development
 and its future maintenance: I am happy to receive any donation:
 
-[🌻 Sponser Me 🌻](https://github.com/sponsors/gabyx)
+[🌻 Sponsor Me 🌻](https://github.com/sponsors/gabyx)

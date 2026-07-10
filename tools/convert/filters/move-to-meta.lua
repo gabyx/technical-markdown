@@ -1,4 +1,4 @@
---- Pandoc filter to move content to a  meta data variable
+--- Pandoc filter to move content to a metadata variable
 --- Usage with attributes `{.move-to-meta var=myvariable}`.
 
 local List = require("pandoc.List")
@@ -18,7 +18,7 @@ function move_to_meta(d)
         metaVars[varName] = d.content
         return List() -- remove the content
     end
-    return nil -- dont do anything
+    return nil -- don't do anything
 end
 
 return {

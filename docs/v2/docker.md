@@ -25,7 +25,7 @@ Numbers refer to the container images above:
 | ------------------------ | --------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | `TECHMD_TOOLS_DIR`       | 1. not set                                          | The tools directory containing all files needed for the conversion.                             |
 |                          | 2 . `/home/techmd/technical-markdown/tools`         |                                                                                                 |
-| `TECHMD_CONVERT_DIR`     | 1. not set                                          | The convert directory containing the files needed for the `pandoc` converstion.                 |
+| `TECHMD_CONVERT_DIR`     | 1. not set                                          | The convert directory containing the files needed for the `pandoc` conversion.                  |
 |                          | 2 . `/home/techmd/technical-markdown/tools/convert` |                                                                                                 |
 | `TECHMD_USE_SYSTEM_NODE` | 1. `true`                                           | Use the node installation on the system instead of installing a local one into the build folder |
 |                          | 2. `true`                                           |                                                                                                 |
@@ -45,7 +45,7 @@ docker run -v "<path-to-your-repo>:/workspace" \
 
 ### Extending the Technical-Markdown Docker Images
 
-If you need special other tools and an other setup which might be useful for the
+If you need special other tools and another setup which might be useful for the
 general images above, consider submitting an issue. Otherwise you can always
 extend the existing images for [layout/styling](#editing-styles) changes with
 another Dockerfile like:

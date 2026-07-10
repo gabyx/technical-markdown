@@ -27,3 +27,5 @@ repo = "local"
   name = "treefmt"
   language = "system"
   entry = "just format"
+  pass_filenames = false
+  require_serial = true
