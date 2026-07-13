@@ -66,16 +66,15 @@ $if(has-frontmatter)$
 \mainmatter
 $endif$
 $body$
+%
+$if(has-frontmatter)$
+\backmatter
+$endif$
+%
+$bibliography.latex()$
+%
+$for(include-after)$
+$include-after$
 
-$-- %
-$-- $if(has-frontmatter)$
-$-- \backmatter
-$-- $endif$
-$-- %
-$-- $bibliography.latex()$
-$-- %
-$-- $for(include-after)$
-$-- $include-after$
-$--
-$-- $endfor$
+$endfor$
 \end{document}
