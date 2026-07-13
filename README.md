@@ -55,8 +55,7 @@ technical documents:**
 
 > [!NOTE]
 >
-> You need [`nix`](https://nixos.org/download) installed on your system or you
-> need to use the provided devcontainer. Also
+> You need [`nix`](https://nixos.org/download) installed on your system. Also
 > [direnv](https://github.com/direnv/direnv) is suggested.
 
 ### With Nix
@@ -88,11 +87,6 @@ just serve
 # With Container
 
 TODO: not yet refurbished.
-
-If you have `docker` or `podman`, you should directly open this project in VS
-Code with the provided `.devcontainer` setup which gives you a hassle free
-experience. See [Docker Setup](#docker-build) for more information. Building on
-a native system, you need the following dependencies:
 
 ## Demo Project
 
