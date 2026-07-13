@@ -37,10 +37,7 @@ $if(title)$
 $title.latex()$
 $endif$
 %
-\cleardoublepage
-\pagenumbering{roman}
-\pagestyle{scrheadings}
-\setcounter{page}{1}
+$frontmatter-settings.latex()$
 %
 $if(abstract)$
 $abstract.latex()$
@@ -61,10 +58,10 @@ $endif$
 %
 $lists.latex()$
 %
-$body-settings.latex()$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
+$mainmatter-settings.latex()$
 $body$
 %
 $if(has-frontmatter)$
