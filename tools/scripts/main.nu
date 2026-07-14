@@ -1,28 +1,6 @@
 #!/usr/bin/env nu
 
-def debug-enabled [] {
-    ($env.TECHMD_DEBUG? | default "false" | str downcase) in ["1" "true" "yes" "on"]
-}
-
-def "log info" [msg: string] {
-    print --stderr $"🌻 (ansi blue_bold)INFO (ansi reset) ($msg)"
-}
-def "log warn" [msg: string] {
-    print --stderr $"🌻 (ansi yellow_bold)WARN (ansi reset) ($msg)"
-}
-def "log error" [msg: string] {
-    print --stderr $"🌻 (ansi red_bold)ERROR(ansi reset) ($msg)"
-}
-def "log debug" [msg: string] {
-    if (debug-enabled) {
-        print --stderr $"🌻 (ansi magenta_bold)DEBUG(ansi reset) ($msg)"
-    }
-}
-def "die" [msg: string] {
-    log error $msg
-
-    exit 1
-}
+use lib/log.nu *
 
 def print-cmd [cmd: list<string>] {
     print $"Cmd: ($cmd | str join ' ')"
