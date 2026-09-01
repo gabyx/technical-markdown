@@ -8,6 +8,7 @@ import commentjson as json
 import glob
 import subprocess
 import yaml
+from os import path
 from concurrent.futures import ProcessPoolExecutor
 
 
@@ -164,7 +165,7 @@ def add_mid_rules(match):
 def post_process_latex_tables(config, output):
     print("Post-process latex tables ...")
     rTable = re.compile(r"\\begin\{longtable\}.*?\\end\{longtable\}", re.DOTALL)
-    rLines = re.compile(r"\\endhead.*?\\bottomrule", re.DOTALL)
+    rLines = re.compile(r"\\endlastfoot.*?\\end\{longtable\}", re.DOTALL)
 
     def postProcessLatexTable(match):
         table = match.group(0)
@@ -228,6 +229,7 @@ def convertTable(file, config, rootDir, dataDir, pandocDefaults):
                                      encoding="utf-8")
 
     # Pre save...
+    os.makedirs(path.dirname(outFile), exist_ok=True)
     with open(outFile, "w") as o:
         o.write(output)
 

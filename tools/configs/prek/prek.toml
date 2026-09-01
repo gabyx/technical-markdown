@@ -14,9 +14,6 @@ repo = "builtin"
   [[repos.hooks]]
   id = "mixed-line-ending"
 
-  [[repos.hooks]]
-  id = "trailing-whitespace"
-
 [[repos]]
 repo = "local"
   [[repos.hooks]]

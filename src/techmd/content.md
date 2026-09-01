@@ -8,12 +8,27 @@ author:
 date: 10. July 2026
 location: Zürich, Switzerland
 
+thesis-where:
+  - Study of "Open Source Software"
+  - Institute for Anti-AI-Slop, Zurich
+
+handed-in-by: "handed-in-by"
+author:
+  - "Gabriel Nützi"
+  - "The Community"
+on-date: "on"
+date: "July 2026"
+recommended-by:
+  - "Begleitung: Prof. Dr. No-Slop"
+location: "Luzern, 2026"
+
 bibliography: ["literature/bibliography.bib"]
 csl: "literature/ieee-with-url.csl"
 crossrefYaml: "includes/pandoc-crossref.yaml"
 link-citations: true
 
 fontsize: 12pt
+linestrech: 1.2
 lang: en-GB
 
 abstract-title: Abstract
@@ -28,6 +43,8 @@ toc: true
 toc-depth: 2
 top-level-division: chapter
 secnumdepth: 3
+lot: true
+lof: true
 ---
 
 :::{include-if-format=}

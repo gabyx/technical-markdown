@@ -16,22 +16,12 @@
     {
       devShells.default = self.lib.shell.mkShell {
         inherit (args) system;
-        modules =
-          toolchains.general
-          ++ toolchains.pandoc
-          ++ toolchains.python
-          ++ [
-            {
-              env = {
-                TECHMD_INSIDE_SHELL = true;
-              };
-            }
-          ];
+        modules = toolchains.general ++ toolchains.pandoc ++ toolchains.python;
       };
 
-      devShells.format = self.lib.shell.mkShell {
+      devShells.agent = self.lib.shell.mkShell {
         inherit (args) system;
-        modules = toolchains.format;
+        modules = toolchains.general-nogh ++ toolchains.pandoc ++ toolchains.python;
       };
 
       # The CI shell is the same as the default.

@@ -12,6 +12,8 @@ filters:
   # - tee.py
   - pandoc-crossref
   # - tee.py
+  - strip-table-ids.lua
+  # - tee.py
   - transform-images.py
   # - tee.py
   - transform-emoji.lua

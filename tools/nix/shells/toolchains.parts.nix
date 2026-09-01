@@ -49,13 +49,37 @@
             packages = [
               self'.packages.bootstrap
             ];
+
+            enterShell = ''
+              just --list
+            '';
+            env = {
+              TECHMD_INSIDE_SHELL = true;
+            };
           }
         ];
+
+      general-nogh = format ++ [
+        {
+          packages = [
+            self'.packages.bootstrap
+          ];
+
+          enterShell = ''
+            just --list
+          '';
+        }
+      ];
     in
     {
       # Define some toolchains.
       toolchains = {
-        inherit format changelog general;
+        inherit
+          format
+          changelog
+          general
+          general-nogh
+          ;
       };
     };
 }
