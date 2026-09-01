@@ -3,6 +3,10 @@
 \RequirePackage{xparse}
 \RequirePackage{svg}
 
+% Tocless Command
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+
 % Image with caption
 \NewDocumentCommand\imageWithCaption{mmmo}{
 \begin{figure}[ht]

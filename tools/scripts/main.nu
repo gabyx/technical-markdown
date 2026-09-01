@@ -347,6 +347,25 @@ def task-build-html [] {
     )
 }
 
+# task-build-docx: md -> docx
+def task-build-docx [] {
+    task-convert-tables
+    task-transform-math
+
+    let p = (project-settings)
+    let input = $p.project_dir | path join "content.md"
+    let output = $p.build_dir | path join "content.docx"
+    (run-pandoc
+        "md -> docx"
+        $input
+        $output
+        "docx"
+        $p.verbose
+        $p.fail_if_warning
+        []
+    )
+}
+
 # build-pdf-tex: md -> latex -> pdf
 def task-build-pdf [] {
     task-convert-tables
@@ -626,11 +645,15 @@ def check-git-lfs [] {
 # CLI subcommands
 # ---------------------------------------------------------------------------
 
+def "main build" [] { main }
+def "main build tables" [] { task-convert-tables }
 def "main build html" [] { task-build-html }
 def "main build pdf" [] { task-build-pdf }
+def "main build docx" [] { task-build-docx }
 def "main build json" [] { task-build-json }
 def "main build native" [] { task-build-native }
 def "main build latex" [] { task-build-latex }
+
 def "main watch" [target: string] { task-watch $target }
 def "main view-html" [] { task-view-html }
 def "main package-html" [] { task-package-html }
@@ -640,7 +663,7 @@ def "main check-git-lfs" [] { check-git-lfs }
 
 # List available tasks.
 def main [] {
-    print "Technical Markdown build tasks (ported from build.gradle.kts):"
+    print "Technical Markdown build tasks:"
     print ""
     print "  build html        Build: md -> html"
     print "  build pdf         Build: md -> latex -> pdf"

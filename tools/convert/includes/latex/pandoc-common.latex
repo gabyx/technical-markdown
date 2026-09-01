@@ -1,60 +1,6 @@
-$if(linestretch)$
-\usepackage{setspace}
-$endif$
-
-$--
-$-- paragraph formatting
-$--
-$if(indent)$
-$else$
-\KOMAoptions{parskip=half}
-$endif$
-
-$--
-$-- verbatim in notes
-$--
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-$endif$
-
-$-- highlighting
-$if(listings)$
-\usepackage{listings}
-\newcommand{\passthrough}[1]{#1}
-\lstset{defaultdialect=[5.3]Lua}
-\lstset{defaultdialect=[x86masm]Assembler}
-$endif$
-$if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
-$endif$
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
-
-$--
-$-- tables
-$--
-$if(tables)$
-\usepackage{longtable,booktabs,array}
-$if(multirow)$
-\usepackage{multirow}
-$endif$
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-$endif$
-
-$--
-$-- graphics
-$--
+% Pandoc Graphics misc.
+%===============================================================
 $if(graphics)$
-\usepackage{graphicx}
 \makeatletter
 \newsavebox\pandoc@box
 \newcommand*\pandocbounded[1]{% scales image to fit in text height/width
@@ -70,20 +16,10 @@ $if(graphics)$
 \def\fps@figure{htbp}
 \makeatother
 $endif$
-$if(svg)$
-\usepackage{svg}
-$endif$
+%===============================================================
 
-$--
-$-- strikeout/underline
-$--
-$if(strikeout)$
-\usepackage{soul}
-$endif$
-
-$--
-$-- CSL citations
-$--
+% CSL citations
+%===============================================================
 $if(csl-refs)$
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
@@ -119,10 +55,10 @@ $if(csl-refs)$
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
+%===============================================================
 
-$--
-$-- Babel language support
-$--
+% Babel language support
+%===============================================================
 $if(lang)$
 \usepackage[bidi=default,shorthands=off,$for(babeloptions)$,$babeloptions$$endfor$]{babel}
 $if(babel-lang)$
@@ -134,34 +70,16 @@ $for(babelfonts/pairs)$
 \babelfont[$babelfonts.key$]{rm}{$babelfonts.value$}
 $endfor$
 $endif$
+%===============================================================
 
-$--
-$-- pagestyle
-$--
-$if(pagestyle)$
-\pagestyle{$pagestyle$}
-$endif$
-
-$--
-$-- prevent overfull lines
-$--
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-
-$--
-$-- tight lists
-$--
+% Tight lists.
+%===============================================================
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-$--
-$-- subfigure support
-$--
-$if(subfigure)$
-\usepackage{subcaption}
-$endif$
+%===============================================================
 
-$--
-$-- bibliography support support for natbib and biblatex
-$--
+% Bibliography support support for natbib and biblatex
+%===============================================================
 $if(natbib)$
 \usepackage[$natbiboptions$]{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
@@ -172,10 +90,4 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
-
-$--
-$-- csquotes
-$--
-$if(csquotes)$
-\usepackage[$for(csquotesoptions)$$csquotesoptions$$sep$,$endfor$]{csquotes}
-$endif$
+%===============================================================

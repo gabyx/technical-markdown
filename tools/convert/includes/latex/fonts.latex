@@ -3,7 +3,45 @@ $if(mathspec)$
 $else$
 \usepackage{unicode-math} % this also loads fontspec
 $endif$
-%
+
+% Strikeout/underline.
+\usepackage{soul}
+
 \defaultfontfeatures{Scale=MatchLowercase}
 \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 
+% Font settings.
+$if(mainfont)$
+\setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+%
+$if(sansfont)$
+\setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+%
+$if(monofont)$
+\setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
+$endif$
+%
+$for(fontfamilies)$
+\newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+$endfor$
+%
+$if(mathfont)$
+\setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+%
+% Use upquote if available, for straight quotes in verbatim environments.
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% Use microtype if available.
+\IfFileExists{microtype.sty}{%
+  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+\setkomafont{chapter}{\huge\rmfamily}
+\addtokomafont{section}{\rmfamily}
+\addtokomafont{subsection}{\rmfamily}
+\addtokomafont{subsubsection}{\rmfamily}
+\setkomafont{pagenumber}{\normalfont\rmfamily}
+\setkomafont{pagehead}{\normalfont\rmfamily\bfseries}

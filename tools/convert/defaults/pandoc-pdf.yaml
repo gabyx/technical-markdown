@@ -9,10 +9,11 @@ variables:
     - titlepage=true
     - openright
     - abstract=on
-    - toc=listofnumbered
+    - toc=listof
     - numbers=noenddot
     - chapterprefix=true
     - headings=optiontohead
+    - cleardoublepage=empty
     - svgnames
     - dvipsnames
 

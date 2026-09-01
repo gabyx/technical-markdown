@@ -1,4 +1,2 @@
-% Own styles! ========================================
 \input{latex/macros/general-macros.sty}
 \input{latex/macros/math-macros.sty}
-% ====================================================

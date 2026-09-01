@@ -17,12 +17,9 @@ $for(classoption)$
 $endfor$
 ]{$documentclass$}
 
-$packages.latex()$
-$section-numbering.latex()$
-$fonts.latex()$
-$font-settings.latex()$
-$common.latex()$
 $header.latex()$
+$pandoc-common.latex()$
+$fonts.latex()$
 $hypersetup.latex()$
 $title-settings.latex()$
 $macros.latex()$
@@ -56,8 +53,6 @@ $if(toc)$
 $toc.latex()$
 $endif$
 %
-$lists.latex()$
-%
 $if(has-frontmatter)$
 \mainmatter
 $endif$
@@ -66,7 +61,10 @@ $body$
 %
 $if(has-frontmatter)$
 \backmatter
+$backmatter-settings.latex()$
 $endif$
+%
+$lists.latex()$
 %
 $bibliography.latex()$
 %

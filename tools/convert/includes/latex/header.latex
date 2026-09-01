@@ -1,28 +1,54 @@
-% % Start: header.tex =======================================
+% General functionality
+%===============================================================
+\usepackage{etoolbox}
+\usepackage{calc}
+\usepackage{xcolor}
+%===============================================================
 
-%% Geometry ==========================================
-\usepackage[]{geometry}
-% ====================================================
+% Math
+%===============================================================
+\usepackage{amsmath,amssymb}
+%===============================================================
 
-%% Graphics ==========================================
+% Geometry
+%===============================================================
+\newlength{\innermargin}
+\setlength{\innermargin}{2.1cm}
+\usepackage[
+    nomarginpar,
+    textwidth=16.5cm,
+    textheight=240mm,
+    bottom=2.5cm,
+    headheight=15pt,
+    headsep=30pt,
+    footskip=30pt,
+    bindingoffset=7mm,
+    inner=\innermargin,
+    twoside
+]{geometry}
+%===============================================================
+
+% Graphics
+%===============================================================
 \usepackage{graphicx}
 \usepackage{tikz}
-\usepackage[]{adjustbox}
-\usepackage[]{pdfpages}
+\usepackage[export]{adjustbox}
+\usepackage[final]{pdfpages}
 \usepackage{wrapfig}
-\usepackage[]{placeins} % float barrier at each section
+\usepackage[section]{placeins} % float barrier at each section
 \usepackage{svg}
-% ====================================================
 
-% Set include paths ==================================
+% Set include paths
 \makeatletter
 \providecommand*{\input@path}{}
 \edef\input@path{$for(latex-include-paths)${$latex-include-paths$}$endfor${./}\input@path}% prepend
 \makeatother
 \svgsetup{extractpath=files/generated/svg-extract,inkscapepath=files/generated/svg-inkscape}
-% ====================================================
+%===============================================================
 
-%% Caption ===========================================
+
+% Caption
+%===============================================================
 \usepackage[]{caption}
 \DeclareCaptionStyle{figcaption}{
     justification=justified,
@@ -42,14 +68,12 @@
 \captionsetup[figure]{style=figcaption}
 \captionsetup[table]{style=tablecaption}
 \captionsetup[longtable]{style=tablecaption}
-% ====================================================
+%===============================================================
 
-%% Header/Footer =====================================
-\usepackage[]{scrlayer-scrpage}
+% Header/Footer
+%===============================================================
+\usepackage[automark,headsepline]{scrlayer-scrpage}
 \clearpairofpagestyles
-\setkomafont{pagehead}{\normalfont\rmfamily\bfseries}
-%\setkomafont{pagenumber}{\normalfont\rmfamily}
-
 \automark[chapter]{chapter}
 \renewcommand{\chaptermarkformat}{}
 \renewcommand{\sectionmarkformat}{\thesection\autodot\enskip}
@@ -58,16 +82,41 @@
 \rohead{\headmark}
 \rehead{}
 \lohead{}
+%===============================================================
 
 % Footnotes
-\usepackage[]{footmisc}
-% ====================================================
+%===============================================================
+\usepackage[perpage,para]{footmisc}
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+%===============================================================
 
-%% Enumitems =========================================
+% Listings
+%===============================================================
+$if(listings)$
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+$endif$
+%
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+%===============================================================
+
+% Enumitems
+%===============================================================
 \usepackage{enumitem}
 \setlist[description,1]{leftmargin=0.5cm,font=\rmfamily}
+%===============================================================
 
-%% Tables ============================================
+% Tables
+%===============================================================
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{booktabs}
@@ -75,6 +124,9 @@
 \usepackage{makecell}
 \usepackage{footnotehyper}
 \usepackage{tablefootnote}
+\usepackage{multirow}
+% Allow footnotes in longtable head/foot.
+\makesavenoteenv{longtable}
 \AtBeginEnvironment{longtable}{%
 \setlist[itemize]{nosep=0pt,
                  leftmargin=*,
@@ -88,28 +140,38 @@
 \usepackage{cellspace}
 \setlength{\cellspacetoplimit}{0.2\baselineskip}
 \setlength{\cellspacebottomlimit}{0.2\baselineskip}
-% ====================================================
+%===============================================================
 
-%% Quotes =============================================
-\usepackage[]{quoting}
+% Quotes
+%===============================================================
+\usepackage[font=itshape,vskip=5pt]{quoting}
+$if(csquotes)$
+\usepackage[$for(csquotesoptions)$$csquotesoptions$$sep$,$endfor$]{csquotes}
+$endif$
+%===============================================================
 
-%% Todo Notes =========================================
+% Todo Notes
+%===============================================================
 % \usepackage[textsize=tiny,disable]{todonotes}
 % \newcommand{\disscomment}[1]{%
 %     \todo[color=black!40]{#1}%
 % }%
+%===============================================================
 
-%% Glossary ==========================================
+
+% Glossary
+%===============================================================
 % \usepackage[hyperfirst=true]{glossaries}
 % \glstoctrue
 % \renewcommand*{\glstextformat}[1]{\textnormal{#1}}
 % \newcommand{\glsp}{\protect\gls}
 % \loadglsentries{chapter/GlossaryEntries}
 %\makeglossaries
-% ====================================================
+%===============================================================
 
 
-%% Custom Part Heading ===============================
+% Custom Part Heading
+%===============================================================
 \addtokomafont{part}{\Huge\selectfont\rmfamily\bfseries}
 \addtokomafont{partprefix}{\Large\rmfamily\bfseries}
 %\newcommand*\partcolor{\color{blue!50}}% Part is coloured blue
@@ -147,9 +209,10 @@
 \newcommand\partnote{}
 \newcommand\partquotenote{}
 \renewcommand\partformat{\hfill\color{lightgray}\partname~\fontsize{60}{60}\selectfont\thepart\if@altsecnumformat.\fi}
-%=====================================================
+%===============================================================
 
-%% Custom Chapter Heading ============================
+% Custom Chapter Heading
+%===============================================================
 \renewcommand*\chapterheadstartvskip{\vspace*{.02\textheight}}
 \renewcommand*\chapterheadendvskip{%
     \noindent{\setlength{\parskip}{0pt}\hrulefill\par}%
@@ -161,9 +224,10 @@
     }
 \addtokomafont{disposition}{\normalfont\bfseries}
 \addtokomafont{chapterprefix}{\Large\bfseries\color{lightgray}}
-%=====================================================
+%===============================================================
 
-%% Part Quotes =======================================
+% Part Quotes
+%===============================================================
 \setkomafont{dictumtext}{\itshape\small}
 \setkomafont{dictumauthor}{\normalfont}
 \renewcommand*\dictumwidth{0.9\linewidth}
@@ -172,16 +236,28 @@
 \renewcommand*\dictumrule{
     %\vskip-1ex\hrulefill\par}
 }
-%=====================================================
+%===============================================================
 
-%% Heading fonts =====================================
-\setkomafont{chapter}{\huge\rmfamily}
-\addtokomafont{section}{\rmfamily}
-\addtokomafont{subsection}{\rmfamily}
-\addtokomafont{subsubsection}{\rmfamily}
-%=====================================================
+% Numbering
+%===============================================================
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+$endif$
+%===============================================================
 
-%% Heading spacing ===================================
+% Spacing
+%===============================================================
+$if(linestretch)$
+\usepackage{setspace}
+$endif$
+%
+$if(indent)$
+$else$
+\KOMAoptions{parskip=half}
+$endif$
+
 % \RedeclareSectionCommand[
 %   runin=false,
 %   afterindent=false,
@@ -197,9 +273,11 @@
 %   afterindent=false,
 %   beforeskip=0.5\baselineskip,
 %   afterskip=0.0\baselineskip]{subsubsection}
-%=====================================================
+%
+%===============================================================
 
-%% Table of Content ==================================
+% Table of Content
+%===============================================================
 \usepackage{titling}
 % \usepackage{titletoc}
 % \newcommand{\setupTOC}[2]{%
@@ -211,9 +289,11 @@
 %     {\hfill\contentspage}
 % }
 % \setupTOC{chapter}{\chaptername}
-% =====================================================
+%===============================================================
 
-% Layout Placing Settings ==============================
+% Layout Placing Settings
+%===============================================================
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 % \setcounter{topnumber}{2}
 % \setcounter{bottomnumber}{2}
 % \setcounter{totalnumber}{3}     % 2 may work better
@@ -227,14 +307,10 @@
 
 % Allow display break
 %\allowdisplaybreaks[3]
-%=======================================================
+%===============================================================
 
-% Tocless Command ======================================
-\newcommand{\nocontentsline}[3]{}
-\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
-
-
-% Footnotes ============================================
+% Footnotes (links & bookmarks)
+%===============================================================
 \usepackage{bookmark}
 \usepackage{xurl} % add URL line breaks if available
 \urlstyle{$if(urlstyle)$$urlstyle$$else$same$endif$}
@@ -245,16 +321,15 @@ $endif$
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
 $endif$
-%=======================================================
+%===============================================================
 
-% Clever Refs ==========================================
+% Clever Refs
+%===============================================================
 % Clever Refs: must be loaded *after* hyperref (pulled in by bookmark above).
-\usepackage[]{cleveref}
-% ======================================================
+\usepackage[capitalise]{cleveref}
+%===============================================================
 
 % General Settings
-\KOMAoptions{cleardoublepage=empty}
+%===============================================================
 \raggedbottom
-
-% End: header.tex =======================================
-
+%===============================================================

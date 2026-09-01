@@ -49,6 +49,10 @@
             packages = [
               self'.packages.bootstrap
             ];
+
+            enterShell = ''
+              just --list
+            '';
           }
         ];
     in
